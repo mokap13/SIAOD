@@ -17,6 +17,7 @@ namespace SIAOD_Routing
         private static List<Road> srcRoads;
         List<Town> checkedTowns;
         DekstraAlgorim da;
+        float[][] matrix;
         private static void InitializeTownsAndRoads()
         {
             srcTowns = new List<Town>()
@@ -67,7 +68,6 @@ namespace SIAOD_Routing
                 checkedListBox1.Items.Add(town);
             }
         }
-
         private void selectIndexChanhedHandler(object sender, EventArgs e)
         {
             checkedTowns = new List<Town>();
@@ -76,18 +76,31 @@ namespace SIAOD_Routing
             {
                 checkedTowns.Add(srcTowns[(int)index]);
             }
-            
 
             if (checkedTowns.Count == 0)
                 return;
-
-            float[][] matrix = da.GetFullMatrix(checkedTowns);
-
+            matrix = da.GetFullMatrix(checkedTowns);
+            
             dataGridView1.RowCount = matrix[0].Length;
             dataGridView1.ColumnCount = matrix.Length;
             for (int i = 0; i < matrix.Length; i++)
                 for (int j = 0; j < matrix[i].Length; j++)
                     dataGridView1.Rows[i].Cells[j].Value = matrix[i][j];
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int[] path;
+            if (matrix != null)
+                path = BranchAndBoundAlgorytm.getFullMatrix(matrix);
+        }
+
+        private void checkedListBoxDoubleClickHandler(object sender, EventArgs e)
+        {
+            for (int i = 0; i < (sender as CheckedListBox).Items.Count; i++)
+            {
+                (sender as CheckedListBox).SetItemChecked(i, true);
+            }
         }
     }
 }
