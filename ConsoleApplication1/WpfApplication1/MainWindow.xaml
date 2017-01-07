@@ -1,0 +1,27 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="32,29,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="32,54,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="button2" Content="Button" HorizontalAlignment="Left" Margin="32,79,0,0" VerticalAlignment="Top" Width="75"/>
+        
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="176,54,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <StackPanel>
+            <Rectangle Fill="Chocolate" Width="100" Height="100" Margin="322,0,95,0"/>
+            <Rectangle Width="100" Height="100">
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Chocolate" Offset="0"></GradientStop>
+                        <GradientStop Color="Black" Offset="1"></GradientStop>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </StackPanel>
+    </Grid>
+</Window>
