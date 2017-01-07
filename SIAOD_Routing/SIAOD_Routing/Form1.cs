@@ -13,19 +13,81 @@ namespace SIAOD_Routing
     
     public partial class Form1 : Form
     {
+        private static List<Town> srcTowns;
+        private static List<Road> srcRoads;
+        List<Town> checkedTowns;
+        DekstraAlgorim da;
+        private static void InitializeTownsAndRoads()
+        {
+            srcTowns = new List<Town>()
+        {
+            new Town("1"),
+            new Town("2"),
+            new Town("3"),
+            new Town("4"),
+            new Town("5"),
+            new Town("6"),
+            new Town("7")
+        };
+
+            srcRoads = new List<Road>() {
+            new Road(srcTowns[0],srcTowns[1],12),
+            new Road(srcTowns[0],srcTowns[3],28),
+
+            new Road(srcTowns[1],srcTowns[0],12),
+            new Road(srcTowns[1],srcTowns[2],10),
+            new Road(srcTowns[1],srcTowns[3],43),
+
+            new Road(srcTowns[2],srcTowns[1],10),
+            new Road(srcTowns[2],srcTowns[4],10),
+
+            new Road(srcTowns[3],srcTowns[0],28),
+            new Road(srcTowns[3],srcTowns[1],43),
+            new Road(srcTowns[3],srcTowns[2],17),
+
+            new Road(srcTowns[4],srcTowns[1],31),
+            new Road(srcTowns[4],srcTowns[2],10),
+            new Road(srcTowns[4],srcTowns[5],8),
+
+            new Road(srcTowns[5],srcTowns[4],14),
+            new Road(srcTowns[5],srcTowns[6],6),
+
+            new Road(srcTowns[6],srcTowns[5],6)
+        };
+        }
         public Form1()
         {
             InitializeComponent();
-            DeikstraAlgorytm.Execute();
-            //srcMatrix = new int[][]{
-            //    new int[]{ 0  ,12 ,inf,28 ,inf,inf,inf },
-            //    new int[]{ 12 ,0  ,10 ,43 ,inf,inf,inf },
-            //    new int[]{ inf,10 ,0  ,inf,10 ,inf,inf },
-            //    new int[]{ 28 ,43 ,17 ,0  ,inf,inf,inf },
-            //    new int[]{ inf,31 ,10 ,inf,0  ,8  ,inf },
-            //    new int[]{ inf,inf,inf,inf,14 ,0  ,6   },
-            //    new int[]{ inf,inf,inf,inf,inf,6  ,0   }
-            //};
+
+            InitializeTownsAndRoads();
+                  
+            da = new DekstraAlgorim(srcTowns, srcRoads);
+            foreach (var town in srcTowns)
+            {
+                checkedListBox1.Items.Add(town);
+            }
+        }
+
+        private void selectIndexChanhedHandler(object sender, EventArgs e)
+        {
+            checkedTowns = new List<Town>();
+            
+            foreach (var index in checkedListBox1.CheckedIndices)
+            {
+                checkedTowns.Add(srcTowns[(int)index]);
+            }
+            
+
+            if (checkedTowns.Count == 0)
+                return;
+
+            float[][] matrix = da.GetFullMatrix(checkedTowns);
+
+            dataGridView1.RowCount = matrix[0].Length;
+            dataGridView1.ColumnCount = matrix.Length;
+            for (int i = 0; i < matrix.Length; i++)
+                for (int j = 0; j < matrix[i].Length; j++)
+                    dataGridView1.Rows[i].Cells[j].Value = matrix[i][j];
         }
     }
 }

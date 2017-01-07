@@ -14,7 +14,7 @@ class DekstraAlgorim
     public Town StartTown { get; private set; }
 
     public DekstraAlgorim(List<Town> towns, List<Road> roads)
-    {
+    {   
         this.Towns = towns;
         this.Roads = roads;
     }
@@ -24,7 +24,13 @@ class DekstraAlgorim
     /// <param name="startTown"></param>
     public void AlgoritmRun(Town startTown)
     {
+        foreach (var town in this.Towns)
+        {
+            town.IsChecked = false;
+            town.ValueMetka = float.PositiveInfinity;
+        }
         startTown.ValueMetka = 0;
+
         if (this.Towns.Count() == 0 || this.Roads.Count() == 0)
         {
             throw new DekstraException("Массив вершин или ребер не задан!");
@@ -71,10 +77,10 @@ class DekstraAlgorim
                 }
             }
         }
-        List<Road> roads = new List<Road>();
-        roads = GetMinimumRoad(startTown);
-        if(roads.Count != 0)
-            Roads.Add(new Road(roads));
+        //List<Road> roads = new List<Road>();
+        //roads = GetMinimumRoad(startTown);
+        //if(roads.Count != 0)
+        //    Roads.Add(new Road(roads));
         startTown.IsChecked = true;//вычеркиваем
     }
     /// <summary>
@@ -136,20 +142,6 @@ class DekstraAlgorim
         }
     }
 
-    public float[,] GetFullMatrix(List<Town> towns)
-    {
-        int size = towns.Count;
-        float[,] matrix = new float[size, size];
-        for (int i = 0; i < size; i++)
-        {
-            AlgoritmRun(towns[i]);
-            for (int j = 0; j < size; j++)
-            {
-                matrix[i, j] = GetMinimumRoad(towns[j])[;
-            }
-        }
-        return matrix;
-    }
     public List<Town> MinPath1(Town endTown)
     {
         List<Town> towns = new List<Town>();
@@ -176,6 +168,31 @@ class DekstraAlgorim
         }
         
         return roads;
+    }
+
+    public float[][] GetFullMatrix(List<Town> towns)
+    {
+        int size = towns.Count;
+        float[][] matrix = new float[size][];
+        for (int i = 0; i < matrix.Length; i++)
+        {
+            matrix[i] = new float[size];
+        }
+        List<Town> minPath;
+        for (int i = 0; i < size; i++)
+        {
+            AlgoritmRun(towns[i]);
+            
+            for (int j = 0; j < size; j++)
+            {
+                minPath = this.MinPath1(towns[j]);
+                if (minPath.Count == 0)
+                    matrix[i][j] = float.PositiveInfinity;
+                else
+                    matrix[i][j] = minPath.First().ValueMetka;
+            }
+        }
+        return matrix;
     }
 }
 
@@ -220,13 +237,18 @@ class Town
     }
     public Town(string name)
     {
-        ValueMetka = int.MaxValue;
+        ValueMetka = float.PositiveInfinity;
         IsChecked = false;
         Name = name;
         prevTown = new Town();
     }
     public Town()
     {
+    }
+
+    public override string ToString()
+    {
+        return this.Name;
     }
 }
 
@@ -281,6 +303,42 @@ static class PrintGrath
         }
         return retListOfPointsAndPaths;
     }
+    public static float[] GetRowMinRoads(List<Town> towns,DekstraAlgorim da)
+    {
+        int size = towns.Count;
+        //List<Road> road;
+        float[] row = new float[size];
+        for (int i = 0; i < size; i++)
+        {
+            if (towns[i].Name != da.Towns[i].Name)
+                continue;
+            if (da.Towns[i] != da.StartTown)
+            {
+                row[i] = da.Towns[i].ValueMetka;
+            }
+            else
+            {
+                row[i] = float.PositiveInfinity;
+            }
+        }
+
+        return row;
+    }
+    public static void PrintMatrix(float[][] matrix)
+    {
+        for (int i = 0; i < matrix.Length; i++)
+        {
+            for (int j = 0; j < matrix.Length; j++)
+            {
+                if (matrix[i][j] == float.PositiveInfinity)
+                    Console.Write("M");
+                else
+                    Console.Write(matrix[i][j]);
+                Console.Write("  ");
+            }
+            Console.WriteLine();
+        }
+    }
 }
 
 class DekstraException : ApplicationException
@@ -292,9 +350,12 @@ class DekstraException : ApplicationException
 
 public class DeikstraAlgorytm
 {
-    public static void Execute()
+    private static List<Town> towns;
+    private static List<Road> roads;
+
+    private static void Init()
     {
-        List<Town> towns = new List<Town>()
+        towns = new List<Town>()
         {
             new Town("1"),
             new Town("2"),
@@ -304,8 +365,8 @@ public class DeikstraAlgorytm
             new Town("6"),
             new Town("7")
         };
-        
-        List<Road> roads = new List<Road>() {
+
+        roads = new List<Road>() {
             new Road(towns[0],towns[1],12),
             new Road(towns[0],towns[3],28),
 
@@ -329,12 +390,16 @@ public class DeikstraAlgorytm
 
             new Road(towns[6],towns[5],6)
         };
-        DekstraAlgorim da = new DekstraAlgorim(towns, roads);
-        da.AlgoritmRun(towns[6]);
+    }
+    public static void Execute()
+    {
+        Init();
         
-        List<string> b = PrintGrath.PrintRoads(da);
-        for (int i = 0; i < b.Count; i++)
-            Console.WriteLine(b[i]);
+        DekstraAlgorim da = new DekstraAlgorim(towns, roads);
+
+        float[][] matrix = da.GetFullMatrix(towns);
+        PrintGrath.PrintMatrix(matrix);
+
         Console.ReadKey(true);
     }
 }
