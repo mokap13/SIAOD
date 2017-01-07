@@ -22,8 +22,17 @@ namespace SIAOD_Routing
             Node headNode = new Node(startMatrixSize, null);
             headNode.matrix = srcMatrix;
             List<Node> nodes = new List<Node>();
-            nodes.Add(headNode);
+            for (int i = 0; i < srcMatrix.Length; i++)
+            {
+                headNode.startTowns.Add(i+1);
+            }
+            for (int i = 0; i < srcMatrix.Length; i++)
+            {
+                headNode.finishTowns.Add(i + 1);
+            }
 
+            nodes.Add(headNode);
+            
             /*Пусть последовательный маршрут 1-2-3-4...-1 будет лучшим*/
             for (int i = 0; i < srcMatrix.Length; i++)
             {
@@ -42,6 +51,9 @@ namespace SIAOD_Routing
                 if (nodes.First().SecondRaiting < Smin)
                 {
                     float[][] matrix = nodes.First().matrix;
+                    
+                    #region Редукция и оценка матрицы
+
                     /*Находим минимумы по строкам и вычитаем из матрицы*/
                     for (int i = 0; i < matrix.Length; i++)
                     {
@@ -69,7 +81,7 @@ namespace SIAOD_Routing
                     {
                         for (int j = 0; j < matrix.Length; j++)
                         {
-                            if(matrix[i][j] == 0)
+                            if (matrix[i][j] == 0)
                             {
                                 float minInRow = nodes.First().GetMinRowRaiting(j, i);
                                 float minInColumn = nodes.First().GetMinColumnRaiting(i, j);
@@ -78,11 +90,16 @@ namespace SIAOD_Routing
                             }
                         }
                     }
+                    #endregion
+                    
                     Tuple<int, int, float> tuple = nodes.First().nullElements.Max(x => x);
                     maxRaiting = tuple.Item3;
                     nodes.First().SecondRaiting += maxRaiting;
-                    nodes.First().Route[tuple.Item1] = tuple.Item2; 
+                    nodes.First().Route[tuple.Item1] = tuple.Item2;
 
+                    nodes.First().startTowns.Remove(tuple.Item1);
+                    nodes.First().finishTowns.Remove(tuple.Item2);
+                    /////////////////остановился здесь - план - удалить из масива лишнии города
                     if (nodes.First().SecondRaiting < Smin)
                     {
                         if (nodes.First().SizeMatrix == 2)
@@ -96,8 +113,6 @@ namespace SIAOD_Routing
                             {
                                 newMatrix[i] = new float[matrix.Length];
                             }
-
-
                         }
                     }
                     else
@@ -119,8 +134,8 @@ namespace SIAOD_Routing
         public float FirstRaiting { get; set; }
         public float SecondRaiting { get; set; }
         public float[][] matrix { get; set; }
-        public int[] startTowns { get; set; }
-        public int[] finishTowns { get; set; }
+        public List<int> startTowns { get; set; }
+        public List<int> finishTowns { get; set; }
         public List<Tuple<int,int,float>> nullElements { get; set; }
         private List<int> nullUnitInRow { get; set; }
         private List<int> nullUnitInColumn { get; set; }
@@ -135,8 +150,8 @@ namespace SIAOD_Routing
             {
                 matrix[i] = new float[SizeMatrix];
             }
-            startTowns = new int[SizeMatrix];
-            finishTowns = new int[SizeMatrix];
+            startTowns = new List<int>();
+            finishTowns = new List<int>();
             nullUnitInRow = new List<int>();
             nullUnitInColumn = new List<int>();
             minimumUnitInRow = new int[SizeMatrix];
@@ -146,14 +161,7 @@ namespace SIAOD_Routing
             this.PrevNode = prevNode;
             FirstRaiting = 0;
             SecondRaiting = 0;
-            for (int i = 0; i < startTowns.Length; i++)
-            {
-                startTowns[i] = i;
-            }
-            for (int i = 0; i < finishTowns.Length; i++)
-            {
-                finishTowns[i] = i;
-            }
+            
             nullElements = new List<Tuple<int, int, float>>();
         }
 
