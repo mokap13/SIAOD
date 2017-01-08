@@ -90,7 +90,7 @@ namespace SIAOD_Routing
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int[] path;
+            List<int> path;
             if (matrix != null)
                 path = BranchAndBoundAlgorytm.getFullMatrix(matrix);
         }

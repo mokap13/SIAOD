@@ -11,75 +11,86 @@ namespace SIAOD_Routing
     {
         private static float Smin;
         public static int startMatrixSize;
-        private static int[] bestRoute;
+        private static List<int> bestRoute;
 
-        public static int[] getFullMatrix(float[][] srcMatrix)
+        public static List<int> getFullMatrix(float[][] srcMatrix)
         {
+
+            #region beforWhile
             startMatrixSize = srcMatrix.Length;
-            bestRoute = new int[startMatrixSize];
+            bestRoute = new List<int>();
             Smin = float.PositiveInfinity;
 
-            Node headNode = new Node(startMatrixSize, null);
-            headNode.matrix = srcMatrix;
+            Node headNode = new Node();
+
+            for (int i = 0; i < srcMatrix.Length; i++)
+            {
+                headNode.matrix.Add(new List<float>());
+                for (int j = 0; j < srcMatrix.Length; j++)
+                {
+                    headNode.matrix[i].Add(srcMatrix[i][j]);
+                }
+            }
             List<Node> nodes = new List<Node>();
             for (int i = 0; i < srcMatrix.Length; i++)
             {
-                headNode.startTowns.Add(i+1);
+                headNode.startTowns.Add(i);
             }
             for (int i = 0; i < srcMatrix.Length; i++)
             {
-                headNode.finishTowns.Add(i + 1);
+                headNode.finishTowns.Add(i);
             }
 
             nodes.Add(headNode);
-            
+
             /*Пусть последовательный маршрут 1-2-3-4...-1 будет лучшим*/
             for (int i = 0; i < srcMatrix.Length; i++)
             {
-                bestRoute[i] = i + 1;
+                bestRoute.Add(i + 1);
             }
             Smin = 0;
-            for (int i = 0; i < srcMatrix.Length-1; i++)
+            for (int i = 0; i < srcMatrix.Length - 1; i++)
             {
                 Smin += srcMatrix[i][i + 1];
                 if (i == srcMatrix.Length - 2)
-                    Smin += srcMatrix[i + 1][i-(srcMatrix.Length-2)];
+                    Smin += srcMatrix[i + 1][i - (srcMatrix.Length - 2)];
             }
+
+            List<List<float>> matrix = nodes.First().matrix;
+            /*Находим минимумы по строкам и вычитаем из матрицы*/
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                float minimumInRow = matrix[i].Min();
+                nodes.First().FirstRaiting += minimumInRow;
+                for (int j = 0; j < matrix.Count; j++)
+                {
+                    matrix[i][j] -= minimumInRow;
+                }
+            }
+            /*Находим минимумы по столбцам и вычитаем*/
+            for (int i = 0; i < nodes.First().matrix.Count; i++)
+            {
+                float minimumInColumn = nodes.First().GetMinInMatrixColumn(i);
+                nodes.First().FirstRaiting += minimumInColumn;
+                for (int j = 0; j < matrix.Count; j++)
+                {
+                    matrix[j][i] -= minimumInColumn;
+                }
+            } 
+            #endregion
 
             while (nodes != null)
             {
                 if (nodes.First().SecondRaiting < Smin)
                 {
-                    float[][] matrix = nodes.First().matrix;
-                    
-                    #region Редукция и оценка матрицы
 
-                    /*Находим минимумы по строкам и вычитаем из матрицы*/
-                    for (int i = 0; i < matrix.Length; i++)
-                    {
-                        float minimumInRow = matrix[i].Min();
-                        nodes.First().FirstRaiting += minimumInRow;
-                        for (int j = 0; j < matrix.Length; j++)
-                        {
-                            matrix[i][j] -= minimumInRow;
-                        }
-                    }
-                    /*Находим минимумы по столбцам и вычитаем*/
-                    for (int i = 0; i < nodes.First().matrix.Length; i++)
-                    {
-                        float minimumInColumn = nodes.First().GetMinInMatrixColumn(i);
-                        nodes.First().FirstRaiting += minimumInColumn;
-                        for (int j = 0; j < matrix.Length; j++)
-                        {
-                            matrix[j][i] -= minimumInColumn;
-                        }
-                    }
-                    nodes.First().SecondRaiting = nodes.First().FirstRaiting;
+                    #region Редукция и оценка матрицы
+                    matrix = nodes.First().matrix;
+                   
                     /*Оценка нулевых элементов*/
-                    float maxRaiting = 0;
-                    for (int i = 0; i < matrix.Length; i++)
+                    for (int i = 0; i < matrix.Count; i++)
                     {
-                        for (int j = 0; j < matrix.Length; j++)
+                        for (int j = 0; j < matrix.Count; j++)
                         {
                             if (matrix[i][j] == 0)
                             {
@@ -91,36 +102,42 @@ namespace SIAOD_Routing
                         }
                     }
                     #endregion
-                    
-                    Tuple<int, int, float> tuple = nodes.First().nullElements.Max(x => x);
-                    maxRaiting = tuple.Item3;
-                    nodes.First().SecondRaiting += maxRaiting;
-                    nodes.First().Route[tuple.Item1] = tuple.Item2;
 
-                    nodes.First().startTowns.Remove(tuple.Item1);
-                    nodes.First().finishTowns.Remove(tuple.Item2);
-                    /////////////////остановился здесь - план - удалить из масива лишнии города
-                    int newSize = matrix.Length - 1;
-                    for (int i = 0; i < newSize; i++)
-                    {
-                        for (int j = 0; j < newSize; j++)
-                        {
-                            //if(i == tuple.Item1 && j == tup)
-                        }
-                    }
+                    Tuple<int, int, float> tuple = nodes.First().nullElements.Where(x => x.Item3 == nodes.First().nullElements.Max(y => y.Item3)).First();
+                    nodes.First().SecondRaiting = tuple.Item3 + nodes.First().FirstRaiting;
+                    nodes.First().Route[tuple.Item1] = tuple.Item2;
+                    
                     if (nodes.First().SecondRaiting < Smin)
                     {
-                        if (nodes.First().SizeMatrix == 2)
+                        if (nodes.First().matrix.Count == 2)
                         {
-
+                           
                         }
                         else
                         {
-                            float[][] newMatrix = new float[newSize][];
-                            for (int i = 0; i < newSize; i++)
+                            matrix = nodes.First().matrix;
+                            /////////////////остановился здесь - Удалять не всегда , сделать условие
+                            List<int> newStartTowns = nodes.First().startTowns.Where(x => x != tuple.Item1).ToList();
+                            List<int> newFinishTowns = nodes.First().finishTowns.Where(x => x != tuple.Item2).ToList();
+
+                            List<List<float>> newMatrix = matrix
+                                .Where(x => x != matrix[tuple.Item1])
+                                .Select(x => x.Where(y => y != x[tuple.Item2]).ToList())
+                                .ToList();
+                            /*Присваиваем бесконечность обратному пути т.е если маршрут 1-2 то 2-1 не существует*/
+                            int finishTownIndex = newStartTowns.FindIndex(x => x == tuple.Item2);
+                            int startTownIndex = newFinishTowns.FindIndex(x => x == tuple.Item1);
+                            newMatrix[startTownIndex][finishTownIndex] = float.PositiveInfinity;
+                            float newRaiting = nodes.First().FirstRaiting;
+                            /*Проверка на преждевременное замыкание(если пересекающихся столбце и строке нет бесконечности)*/
+                            /**/
+                            nodes.Insert(0, new Node()
                             {
-                                newMatrix[i] = new float[newSize];
-                            }
+                                startTowns = newStartTowns,
+                                finishTowns = newFinishTowns,
+                                matrix = newMatrix,
+                                FirstRaiting = newRaiting
+                            });
                         }
                     }
                     else
@@ -128,9 +145,7 @@ namespace SIAOD_Routing
                         nodes.Remove(nodes.First());
                     }
                 }
-                
             } 
-            
             return bestRoute;
         }
     }
@@ -138,35 +153,31 @@ namespace SIAOD_Routing
     class Node
     {
         public Node PrevNode { get; set; }
-        public int SizeMatrix { get; set; }
+        //public int SizeMatrix { get; set; }
         public float FirstRaiting { get; set; }
         public float SecondRaiting { get; set; }
-        public float[][] matrix { get; set; }
+        public List<List<float>> matrix { get; set; }
         public List<int> startTowns { get; set; }
         public List<int> finishTowns { get; set; }
         public List<Tuple<int,int,float>> nullElements { get; set; }
-        private List<int> nullUnitInRow { get; set; }
-        private List<int> nullUnitInColumn { get; set; }
-        private int[] minimumUnitInRow { get; set; }
-        private int[] minimumUnitInColumn { get; set; }
+        //private List<int> nullUnitInRow { get; set; }
+        //private List<int> nullUnitInColumn { get; set; }
+        //private int[] minimumUnitInRow { get; set; }
+        //private int[] minimumUnitInColumn { get; set; }
         public int[] Route { get; set; }
-        public Node(int size,Node prevNode)
+        public Node()
         {
-            this.SizeMatrix = size;
-            matrix = new float[SizeMatrix][];
-            for (int i = 0; i < SizeMatrix; i++)
-            {
-                matrix[i] = new float[SizeMatrix];
-            }
+            
+            matrix = new List<List<float>>();
+            
             startTowns = new List<int>();
             finishTowns = new List<int>();
-            nullUnitInRow = new List<int>();
-            nullUnitInColumn = new List<int>();
-            minimumUnitInRow = new int[SizeMatrix];
-            minimumUnitInColumn = new int[SizeMatrix];
+            //nullUnitInRow = new List<int>();
+            //nullUnitInColumn = new List<int>();
+            
             Route = new int[BranchAndBoundAlgorytm.startMatrixSize];
 
-            this.PrevNode = prevNode;
+            //this.PrevNode = prevNode;
             FirstRaiting = 0;
             SecondRaiting = 0;
             
@@ -176,7 +187,7 @@ namespace SIAOD_Routing
         public float GetMinInMatrixColumn(int columnIndex)
         {
             float minimum = float.PositiveInfinity;
-            for (int j = 0; j < this.matrix.Length; j++)
+            for (int j = 0; j < this.matrix.Count; j++)
             {
                 if (matrix[j][columnIndex] < minimum)
                     minimum = matrix[j][columnIndex];
@@ -186,7 +197,7 @@ namespace SIAOD_Routing
         public float GetMinNotNullInMatrixColumn(int columnIndex)
         {
             float minimum = float.PositiveInfinity;
-            for (int j = 0; j < this.matrix.Length; j++)
+            for (int j = 0; j < this.matrix.Count; j++)
             {
                 if (matrix[j][columnIndex] < minimum && matrix[j][columnIndex] != 0)
                     minimum = matrix[j][columnIndex];
@@ -196,7 +207,7 @@ namespace SIAOD_Routing
         public float GetMinRowRaiting(int colNumOfNull, int rowNum)
         {
             float minimum = float.PositiveInfinity;
-            for (int j = 0; j < this.matrix.Length; j++)
+            for (int j = 0; j < this.matrix.Count; j++)
             {
                 if (j == colNumOfNull)
                     continue;
@@ -208,7 +219,7 @@ namespace SIAOD_Routing
         public float GetMinColumnRaiting(int rowNumOfNull, int colNum)
         {
             float minimum = float.PositiveInfinity;
-            for (int i = 0; i < this.matrix.Length; i++)
+            for (int i = 0; i < this.matrix.Count; i++)
             {
                 if (i == rowNumOfNull)
                     continue;
