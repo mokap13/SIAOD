@@ -100,6 +100,14 @@ namespace SIAOD_Routing
                     nodes.First().startTowns.Remove(tuple.Item1);
                     nodes.First().finishTowns.Remove(tuple.Item2);
                     /////////////////остановился здесь - план - удалить из масива лишнии города
+                    int newSize = matrix.Length - 1;
+                    for (int i = 0; i < newSize; i++)
+                    {
+                        for (int j = 0; j < newSize; j++)
+                        {
+                            //if(i == tuple.Item1 && j == tup)
+                        }
+                    }
                     if (nodes.First().SecondRaiting < Smin)
                     {
                         if (nodes.First().SizeMatrix == 2)
@@ -108,10 +116,10 @@ namespace SIAOD_Routing
                         }
                         else
                         {
-                            float[][] newMatrix = new float[matrix.Length - 1][];
-                            for (int i = 0; i < matrix.Length-1; i++)
+                            float[][] newMatrix = new float[newSize][];
+                            for (int i = 0; i < newSize; i++)
                             {
-                                newMatrix[i] = new float[matrix.Length];
+                                newMatrix[i] = new float[newSize];
                             }
                         }
                     }
