@@ -15,8 +15,8 @@ namespace SIAOD_Routing
 
         public static List<int> getFullMatrix(float[][] srcMatrix)
         {
-
             #region beforWhile
+
             startMatrixSize = srcMatrix.Length;
             bestRoute = new List<int>();
             Smin = float.PositiveInfinity;
@@ -56,31 +56,34 @@ namespace SIAOD_Routing
                     Smin += srcMatrix[i + 1][i - (srcMatrix.Length - 2)];
             }
 
-            List<List<float>> matrix = nodes.First().matrix;
-            /*Находим минимумы по строкам и вычитаем из матрицы*/
-            for (int i = 0; i < matrix.Count; i++)
-            {
-                float minimumInRow = matrix[i].Min();
-                nodes.First().FirstRaiting += minimumInRow;
-                for (int j = 0; j < matrix.Count; j++)
-                {
-                    matrix[i][j] -= minimumInRow;
-                }
-            }
-            /*Находим минимумы по столбцам и вычитаем*/
-            for (int i = 0; i < nodes.First().matrix.Count; i++)
-            {
-                float minimumInColumn = nodes.First().GetMinInMatrixColumn(i);
-                nodes.First().FirstRaiting += minimumInColumn;
-                for (int j = 0; j < matrix.Count; j++)
-                {
-                    matrix[j][i] -= minimumInColumn;
-                }
-            } 
+           
+            
             #endregion
 
             while (nodes != null)
             {
+                List<List<float>> matrix = nodes.First().matrix;
+                /*Находим минимумы по строкам и вычитаем из матрицы*/
+                for (int i = 0; i < matrix.Count; i++)
+                {
+                    float minimumInRow = matrix[i].Min();
+                    nodes.First().FirstRaiting += minimumInRow;
+                    for (int j = 0; j < matrix.Count; j++)
+                    {
+                        matrix[i][j] -= minimumInRow;
+                    }
+                }
+                /*Находим минимумы по столбцам и вычитаем*/
+                for (int i = 0; i < nodes.First().matrix.Count; i++)
+                {
+                    float minimumInColumn = nodes.First().GetMinInMatrixColumn(i);
+                    nodes.First().FirstRaiting += minimumInColumn;
+                    for (int j = 0; j < matrix.Count; j++)
+                    {
+                        matrix[j][i] -= minimumInColumn;
+                    }
+                }
+
                 if (nodes.First().SecondRaiting < Smin)
                 {
 
@@ -111,12 +114,16 @@ namespace SIAOD_Routing
                     {
                         if (nodes.First().matrix.Count == 2)
                         {
-                           
+                            
                         }
-                        else
+                        else if(nodes.Count == 2)
                         {
-                            matrix = nodes.First().matrix;
-                            /////////////////остановился здесь - Удалять не всегда , сделать условие
+                            List<List<float>> newMatrix2 = new List<List<float>>();
+                            for (int i = 0; i < matrix.Count - 1; i++)
+                            {
+                                newMatrix2.Add(new List<float>());
+                            }
+                            /*Удаление ребра из матрицы*/
                             List<int> newStartTowns = nodes.First().startTowns.Where(x => x != tuple.Item1).ToList();
                             List<int> newFinishTowns = nodes.First().finishTowns.Where(x => x != tuple.Item2).ToList();
 
@@ -127,10 +134,12 @@ namespace SIAOD_Routing
                             /*Присваиваем бесконечность обратному пути т.е если маршрут 1-2 то 2-1 не существует*/
                             int finishTownIndex = newStartTowns.FindIndex(x => x == tuple.Item2);
                             int startTownIndex = newFinishTowns.FindIndex(x => x == tuple.Item1);
-                            newMatrix[startTownIndex][finishTownIndex] = float.PositiveInfinity;
+                            
+                            if(newMatrix.Count > startTownIndex || newMatrix.Count > finishTownIndex)
+                                newMatrix[startTownIndex][finishTownIndex] = float.PositiveInfinity;
+                           
                             float newRaiting = nodes.First().FirstRaiting;
-                            /*Проверка на преждевременное замыкание(если пересекающихся столбце и строке нет бесконечности)*/
-                            /**/
+                            
                             nodes.Insert(0, new Node()
                             {
                                 startTowns = newStartTowns,
@@ -138,6 +147,11 @@ namespace SIAOD_Routing
                                 matrix = newMatrix,
                                 FirstRaiting = newRaiting
                             });
+                            nodes.Remove(nodes.Last());
+                        }
+                        else
+                        {
+
                         }
                     }
                     else
