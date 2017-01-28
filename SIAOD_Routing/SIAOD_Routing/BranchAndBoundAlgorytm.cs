@@ -108,11 +108,17 @@ namespace SIAOD_Routing
                 }
             }
             #endregion
+
             while (nodes != null)
             {
-                
-                Tuple<int, int, float> tuple = Tuple.Create(0,0,0f);
-             
+
+                if (nodes.Count == 2)
+                {
+                    if (nodes.First().SecondRaiting < nodes.Last().SecondRaiting)
+                        nodes.Remove(nodes.Last());
+                }
+                Tuple<int, int, float> tuple = Tuple.Create(0, 0, 0f);
+
                 #region Редукция и оценка матрицы
                 matrix = nodes.First().matrix;
 
@@ -133,11 +139,12 @@ namespace SIAOD_Routing
                 #endregion
 
                 tuple = nodes.First().nullElements.Where(x => x.Item3 == nodes.First().nullElements.Max(y => y.Item3)).First();
-                
-                nodes.First().SecondRaiting = nodes.First().FirstRaiting;
+
                 //nodes.First().Route[tuple.Item1] = tuple.Item2;
 
                 matrix[tuple.Item1][tuple.Item2] = float.PositiveInfinity;
+
+                nodes.First().SecondRaiting = nodes.First().FirstRaiting;
 
                 #region Вычет по строкам и столбцам
 
@@ -163,11 +170,9 @@ namespace SIAOD_Routing
                 }
                 #endregion
 
-                ConsolePrintMatrix(nodes.First());
-
                 /*Удаление ребра из матрицы(Включение маршрута)*/
-                List<int> newStartTowns = nodes.First().startTowns.Where(x => x != tuple.Item1).ToList();
-                List<int> newFinishTowns = nodes.First().finishTowns.Where(x => x != tuple.Item2).ToList();
+                List<int> newStartTowns = nodes.First().startTowns.Where(x => x != nodes.First().startTowns.ElementAt(tuple.Item1)).ToList();
+                List<int> newFinishTowns = nodes.First().finishTowns.Where(x => x != nodes.First().startTowns.ElementAt(tuple.Item2)).ToList(); ;
                 //List<List<float>> newMatrix = matrix
                 //    .Where(x => x != matrix[tuple.Item1])
                 //    .Select(x => x.Where(y => y != x[tuple.Item2]).ToList())
@@ -175,6 +180,7 @@ namespace SIAOD_Routing
 
                 #region Удаление Ребра
                 List<List<float>> newMatrix = new List<List<float>>();
+                /*Инициализация*/
                 for (int i = 0; i < matrix.Count; i++)
                 {
                     newMatrix.Add(new List<float>());
@@ -186,7 +192,10 @@ namespace SIAOD_Routing
                         newMatrix[i].Add(matrix[i][j]);
                     }
                 }
-
+                /*Бесконечность для обратного пути*/
+                if (tuple.Item1 <= newMatrix.Count && tuple.Item2 <= newMatrix.Count)
+                    newMatrix[tuple.Item2][tuple.Item1] = float.PositiveInfinity;
+                /*Удаление*/
                 for (int i = 0; i < newMatrix.Count; i++)
                 {
                     newMatrix[i].RemoveAt(tuple.Item2);
@@ -194,28 +203,43 @@ namespace SIAOD_Routing
                 newMatrix.RemoveAt(tuple.Item1); 
                 #endregion
 
-                /*Присваиваем бесконечность обратному пути т.е если маршрут 1-2 то 2-1 не существует*/
-                int startTownIndex = newStartTowns.FindIndex(x => x == tuple.Item2);
-                int finishTownIndex = newFinishTowns.FindIndex(x => x == tuple.Item1);
-
-                if (startTownIndex != -1 && finishTownIndex != -1)
-                    newMatrix[startTownIndex][finishTownIndex] = float.PositiveInfinity;
-
                 float newRaiting = nodes.First().FirstRaiting;
 
-                if (nodes.Count == 2)
+                #region Вычет по строкам и столбцам
+
+                /*Находим минимумы по строкам и вычитаем из матрицы*/
+                for (int i = 0; i < newMatrix.Count; i++)
                 {
-                    if (nodes.First().FirstRaiting < nodes.Last().SecondRaiting)
-                        nodes.Remove(nodes.Last());
+                    float minimumInRow = newMatrix[i].Min();
+                    newRaiting += minimumInRow;
+                    for (int j = 0; j < newMatrix.Count; j++)
+                    {
+                        newMatrix[i][j] -= minimumInRow;
+                    }
                 }
+                /*Находим минимумы по столбцам и вычитаем*/
+                for (int i = 0; i < newMatrix.Count; i++)
+                {
+                    float minimumInColumn = nodes.First().GetMinInMatrixColumn(i);
+                    newRaiting += minimumInColumn;
+                    for (int j = 0; j < newMatrix.Count; j++)
+                    {
+                        newMatrix[j][i] -= minimumInColumn;
+                    }
+                }
+                #endregion
 
                 nodes.Insert(0, new Node()
                 {
                     startTowns = newStartTowns,
                     finishTowns = newFinishTowns,
                     matrix = newMatrix,
-                    FirstRaiting = newRaiting
-                });                
+                    FirstRaiting = nodes.First().FirstRaiting,
+                    SecondRaiting = newRaiting
+                });
+                ConsolePrintMatrix(nodes.Last());
+                ConsolePrintMatrix(nodes.First());
+                Console.WriteLine(new String('-',20));
             } 
             return bestRoute;
         }
