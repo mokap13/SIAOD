@@ -101,6 +101,7 @@ namespace SIAOD_Routing
             {
                 (sender as CheckedListBox).SetItemChecked(i, true);
             }
-        }
+            selectIndexChanhedHandler(sender, e);
+        }   
     }
 }
