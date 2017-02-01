@@ -7,16 +7,18 @@ using System.Text;
 /// <summary>
 /// Реализация алгоритма Дейкстры. Содержит матрицу смежности в виде массивов вершин и ребер
 /// </summary>
-class DekstraAlgorim
+class DekstraAlgoritm
 {
     public List<Town> Towns { get; private set; }
     public List<Road> Roads { get; private set; }
+    public List<Road> newRoads { get; private set; }
     public Town StartTown { get; private set; }
 
-    public DekstraAlgorim(List<Town> towns, List<Road> roads)
+    public DekstraAlgoritm(List<Town> towns, List<Road> roads)
     {   
         this.Towns = towns;
         this.Roads = roads;
+        newRoads = new List<Road>();
     }
     /// <summary>
     /// Запуск алгоритма расчета
@@ -65,7 +67,7 @@ class DekstraAlgorim
         {
             if (nextTown.IsChecked == false)//не отмечена
             {
-                float newValue = startTown.ValueMetka + GetRoad(nextTown, startTown).Weight;
+                float newValue = startTown.ValueMetka + GetRoad(startTown,nextTown).Weight;
                 if (nextTown.ValueMetka > newValue)
                 {
                     nextTown.ValueMetka = newValue;
@@ -79,8 +81,9 @@ class DekstraAlgorim
         }
         //List<Road> roads = new List<Road>();
         //roads = GetMinimumRoad(startTown);
-        //if(roads.Count != 0)
-        //    Roads.Add(new Road(roads));
+        //if (roads.Count != 0)
+        //    CompoziteRoads.Add(new Road(roads));
+
         startTown.IsChecked = true;//вычеркиваем
     }
     /// <summary>
@@ -105,7 +108,7 @@ class DekstraAlgorim
     /// <returns></returns>
     private Road GetRoad(Town firstTown, Town secondTown)
     {//ищем ребро по 2 точкам
-        IEnumerable<Road> road = from r in Roads where  (r.SecondTown == firstTown && r.FirstTown == secondTown) select r;
+        List<Road> road = Roads.Where(x => x.FirstTown == firstTown && x.SecondTown == secondTown).ToList();
         if (road.Count() == 0)
         {
             throw new DekstraException("Не найдено ребро между соседями!");
@@ -163,7 +166,7 @@ class DekstraAlgorim
         tempTown = endTown;
         while (tempTown != this.StartTown)
         {
-            roads.Add(GetRoad(tempTown.prevTown, tempTown));
+            Road tempRoad = GetRoad(tempTown.prevTown, tempTown);
             tempTown = tempTown.prevTown;
         }
         
@@ -172,6 +175,8 @@ class DekstraAlgorim
 
     public float[][] GetFullMatrix(List<Town> towns)
     {
+        newRoads.Clear();
+
         int size = towns.Count;
         float[][] matrix = new float[size][];
         for (int i = 0; i < matrix.Length; i++)
@@ -182,7 +187,9 @@ class DekstraAlgorim
         for (int i = 0; i < size; i++)
         {
             AlgoritmRun(towns[i]);
-            
+            //List<string> str = PrintGrath.PrintAllMinRoads(this);
+            List<Road> roads = GetRoads();
+            newRoads.AddRange(roads);
             for (int j = 0; j < size; j++)
             {
                 minPath = this.MinPath1(towns[j]);
@@ -191,8 +198,30 @@ class DekstraAlgorim
                 else
                     matrix[i][j] = minPath.First().ValueMetka;
             }
+  //          List<Road> roads = PrintGrath.GetMinRoads(this);
         }
         return matrix;
+    }
+
+    public List<Road> GetRoads()
+    {
+        List<Road> roads = new List<Road>();
+        List<Road> allRoads = new List<Road>();
+        Town tempTown = StartTown;
+        foreach (Town townFinish in this.Towns)
+        {
+            if (townFinish != this.StartTown)
+            {
+                List<Town> towns = new List<Town>();
+                towns.AddRange(this.MinPath1(townFinish));
+                towns.Add(StartTown);
+                roads.Add(new Road(towns
+                    .Where(x=>x!=towns.Last())
+                    .Select(x => GetRoad(x.prevTown, x)).Reverse()
+                    .ToList()));
+            }
+        }
+        return roads;
     }
 }
 
@@ -216,7 +245,7 @@ class Road
         this.compoziteRoad = compoziteRoad;
         this.FirstTown = compoziteRoad.First().FirstTown;
         this.SecondTown = compoziteRoad.Last().SecondTown;
-        this.Weight = FirstTown.ValueMetka;
+        this.Weight = compoziteRoad.Sum(x=>x.Weight);
     }
 }
 
@@ -257,7 +286,7 @@ class Town
 /// </summary>
 static class PrintGrath
 {
-    public static List<string> PrintAllTowns(DekstraAlgorim da)
+    public static List<string> PrintAllTowns(DekstraAlgoritm da)
     {
         List<string> retListOfPoints = new List<string>();
         foreach (Town town in da.Towns)
@@ -266,9 +295,8 @@ static class PrintGrath
         }
         return retListOfPoints;
     }
-    public static List<string> PrintAllMinRoads(DekstraAlgorim da)
+    public static List<string> PrintAllMinRoads(DekstraAlgoritm da)
     {
-        
         List<string> retListOfPointsAndPaths = new List<string>();
         foreach (Town town in da.Towns)
         {
@@ -284,10 +312,9 @@ static class PrintGrath
         }
         return retListOfPointsAndPaths;
     }
-
-    public static List<string> PrintRoads(DekstraAlgorim da)
+    
+    public static List<string> PrintRoads(DekstraAlgoritm da)
     {
-
         List<string> retListOfPointsAndPaths = new List<string>();
         foreach (Town town in da.Towns)
         {
@@ -303,10 +330,9 @@ static class PrintGrath
         }
         return retListOfPointsAndPaths;
     }
-    public static float[] GetRowMinRoads(List<Town> towns,DekstraAlgorim da)
+    public static float[] GetRowMinRoads(List<Town> towns,DekstraAlgoritm da)
     {
         int size = towns.Count;
-        //List<Road> road;
         float[] row = new float[size];
         for (int i = 0; i < size; i++)
         {
@@ -339,6 +365,29 @@ static class PrintGrath
             Console.WriteLine();
         }
     }
+    public static List<Road> GetMinRoads(DekstraAlgoritm da)
+    {
+        List<Road> roads = new List<Road>();
+        List<Road> allRoads = new List<Road>();
+        foreach (Town town in da.Towns)
+        {
+            if (town != da.StartTown)
+            {
+                foreach (Road road in da.GetMinimumRoad(town))
+                {
+                    roads.Add(road);      
+                }
+            }
+            if(roads.Count != 0)
+            {
+                Road compoziteRoad = new Road(roads);
+                allRoads.Add(compoziteRoad);
+                roads = new List<Road>();
+            }
+            
+        }
+        return allRoads;
+    } 
 }
 
 class DekstraException : ApplicationException
@@ -395,7 +444,7 @@ public class DeikstraAlgorytm
     {
         Init();
         
-        DekstraAlgorim da = new DekstraAlgorim(towns, roads);
+        DekstraAlgoritm da = new DekstraAlgoritm(towns, roads);
 
         float[][] matrix = da.GetFullMatrix(towns);
         PrintGrath.PrintMatrix(matrix);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,21 +16,22 @@ namespace SIAOD_Routing
     {
         private static List<Town> srcTowns;
         private static List<Road> srcRoads;
+        private static List<Road> shortRoads;
         List<Town> checkedTowns;
-        DekstraAlgorim da;
+        DekstraAlgoritm da;
         float[][] matrix;
         private static void InitializeTownsAndRoads()
         {
             srcTowns = new List<Town>()
-        {
-            new Town("1"),
-            new Town("2"),
-            new Town("3"),
-            new Town("4"),
-            new Town("5"),
-            new Town("6"),
-            new Town("7")
-        };
+            {
+                new Town("1"),
+                new Town("2"),
+                new Town("3"),
+                new Town("4"),
+                new Town("5"),
+                new Town("6"),
+                new Town("7")
+            };
 
             srcRoads = new List<Road>() {
             new Road(srcTowns[0],srcTowns[1],12),
@@ -54,7 +56,9 @@ namespace SIAOD_Routing
             new Road(srcTowns[5],srcTowns[6],6),
 
             new Road(srcTowns[6],srcTowns[5],6)
-        };
+            };
+
+            shortRoads = new List<Road>();
         }
         public Form1()
         {
@@ -62,7 +66,7 @@ namespace SIAOD_Routing
 
             InitializeTownsAndRoads();
                   
-            da = new DekstraAlgorim(srcTowns, srcRoads);
+            da = new DekstraAlgoritm(srcTowns, srcRoads);
             foreach (var town in srcTowns)
             {
                 checkedListBox1.Items.Add(town);
@@ -80,7 +84,7 @@ namespace SIAOD_Routing
             if (checkedTowns.Count == 0)
                 return;
             matrix = da.GetFullMatrix(checkedTowns);
-            
+
             dataGridView1.RowCount = matrix[0].Length;
             dataGridView1.ColumnCount = matrix.Length;
             for (int i = 0; i < matrix.Length; i++)
@@ -90,9 +94,39 @@ namespace SIAOD_Routing
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<int> path;
+            List<int> path = null;
             if (matrix != null)
                 path = BranchAndBoundAlgorytm.getFullMatrix(matrix);
+
+            List<Road> finishPath = new List<Road>();
+            for (int i = 0; i < path.Count; i++)
+            {
+                finishPath.AddRange(da.newRoads.
+                    Where(x => x.FirstTown.Name == checkedListBox1.CheckedItems[i].ToString() 
+                        && x.SecondTown.Name == checkedListBox1.CheckedItems[path[i]].ToString()));
+            }
+            float pathLenght = finishPath.Sum(x => x.Weight);
+
+            string start = "1";
+
+            List<Road> sortPath = new List<Road>();
+            sortPath.Add(finishPath.First(x => x.FirstTown.Name == start));
+
+            for (int i = 0; i < finishPath.Count-1; i++)
+            {
+                sortPath.Add(finishPath.First(x => x.FirstTown == sortPath.Last().SecondTown));
+            }
+
+            textBox1.Clear();
+            textBox1.Text += sortPath.First().FirstTown.Name;
+            foreach (var road in sortPath)
+            {
+                foreach (var compoziteRoad in road.compoziteRoad)
+                {
+                    textBox1.Text += " -> " + compoziteRoad.SecondTown.Name;
+                }
+            }
+            textBox1.Text += "   ***   " + pathLenght;
         }
 
         private void checkedListBoxDoubleClickHandler(object sender, EventArgs e)
@@ -102,6 +136,12 @@ namespace SIAOD_Routing
                 (sender as CheckedListBox).SetItemChecked(i, true);
             }
             selectIndexChanhedHandler(sender, e);
-        }   
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<Road> road = da.newRoads;
+
+        }
     }
 }
