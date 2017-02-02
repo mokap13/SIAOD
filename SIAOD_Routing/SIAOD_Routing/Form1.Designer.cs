@@ -34,6 +34,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,20 +46,21 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ColumnHeadersVisible = false;
-            this.dataGridView1.Location = new System.Drawing.Point(503, 12);
-            this.dataGridView1.MaximumSize = new System.Drawing.Size(250, 250);
+            this.dataGridView1.Location = new System.Drawing.Point(435, 12);
+            this.dataGridView1.MaximumSize = new System.Drawing.Size(300, 300);
             this.dataGridView1.MinimumSize = new System.Drawing.Size(100, 100);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(212, 179);
+            this.dataGridView1.Size = new System.Drawing.Size(280, 250);
             this.dataGridView1.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.button1.Location = new System.Drawing.Point(422, 154);
+            this.button1.Location = new System.Drawing.Point(12, 276);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 37);
+            this.button1.Size = new System.Drawing.Size(120, 36);
             this.button1.TabIndex = 2;
             this.button1.Text = "Рассчитать Маршрут";
             this.button1.UseVisualStyleBackColor = false;
@@ -73,21 +75,32 @@
             this.checkedListBox1.Size = new System.Drawing.Size(120, 229);
             this.checkedListBox1.TabIndex = 3;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.selectIndexChanhedHandler);
-            this.checkedListBox1.DoubleClick += new System.EventHandler(this.checkedListBoxDoubleClickHandler);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(168, 12);
+            this.textBox1.Location = new System.Drawing.Point(138, 291);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(312, 118);
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(577, 21);
             this.textBox1.TabIndex = 5;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 247);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(120, 23);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Выбрать все";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 324);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.button1);
@@ -107,6 +120,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

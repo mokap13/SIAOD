@@ -74,7 +74,10 @@ namespace SIAOD_Routing
             /*Пусть последовательный маршрут 1-2-3-4...-1 будет лучшим*/
             for (int i = 0; i < srcMatrix.Length; i++)
             {
-                firstBestRoute.Add(i + 1);
+                if (i == srcMatrix.Length - 1)
+                    firstBestRoute.Add(firstBestRoute.First()-1);
+                else
+                    firstBestRoute.Add(i+1);
                 bestRoute.Add(-1);
             }
             Smin = 0;
@@ -107,7 +110,7 @@ namespace SIAOD_Routing
                 }
                 if (Smin <= nodes.First().SecondRaiting)
                 {
-                    //Console.WriteLine($"firstBestRoute {Smin}");
+                    Console.WriteLine($"firstBestRoute {Smin}");
                     return firstBestRoute;
                 }
 
@@ -202,9 +205,9 @@ namespace SIAOD_Routing
 
                 for (int i = 0; i < bestRoute.Count; i++)
                 {
-                    //Console.Write($"{i + 1}->{bestRoute[i] + 1}, ");
+                    Console.Write($"{i + 1}->{bestRoute[i] + 1}, ");
                 }
-                //Console.WriteLine();
+                Console.WriteLine();
             }
 
             return bestRoute;
