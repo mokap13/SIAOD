@@ -84,7 +84,7 @@ namespace SIAOD_Routing
             InitializeComponent();
 
             InitializeTownsAndRoads();
-                  
+            pictureBox1.Image = Image.FromFile("C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/SIAOD_Routing/Map.bmp");
             da = new DekstraAlgoritm(srcTowns, srcRoads);
             foreach (var town in srcTowns)
             {

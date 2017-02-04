@@ -205,9 +205,9 @@ namespace SIAOD_Routing
 
                 for (int i = 0; i < bestRoute.Count; i++)
                 {
-                    Console.Write($"{i + 1}->{bestRoute[i] + 1}, ");
+                    //Console.Write($"{i + 1}->{bestRoute[i] + 1}, ");
                 }
-                Console.WriteLine();
+                //Console.WriteLine();
             }
 
             return bestRoute;
