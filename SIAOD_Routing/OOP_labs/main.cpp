@@ -15,7 +15,7 @@ void main() {
 	Phone *phone = new Phone(samsung, "79652346523");
 	phone->setOwner(marketManager);
 	phone->printConsole();
-
+ 
 	delete marketManager;
 	delete trader;
 	delete phone;
