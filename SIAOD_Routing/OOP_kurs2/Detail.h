@@ -1,7 +1,7 @@
+#pragma once
 #include <list>
 #include <memory>
 #include <string>
-#pragma once
 
 enum Material
 {

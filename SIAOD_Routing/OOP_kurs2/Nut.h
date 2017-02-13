@@ -1,5 +1,6 @@
 #pragma once
 #include "SingleDetail.h"
+
 class Nut :
 	public SingleDetail
 {

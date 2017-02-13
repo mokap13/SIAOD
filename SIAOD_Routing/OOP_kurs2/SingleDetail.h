@@ -1,5 +1,5 @@
-#include "Detail.h"
 #pragma once
+#include "Detail.h"
 
 class SingleDetail :
 	public Detail
