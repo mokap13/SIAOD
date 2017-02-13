@@ -6,13 +6,14 @@ using namespace std;
 class Hotel
 {
 public:
-	Hotel(std::list<Room>* rooms);
+	Hotel();
 	~Hotel();
+
 	void buyService(Client *client, list<Service>* services);
 
 	void setClientForRoom(Client * client);
 
 private:
-	std::list<Room> *_rooms;
+	std::list<Room> _rooms;
 };
 
