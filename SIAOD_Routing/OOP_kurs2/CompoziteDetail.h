@@ -5,11 +5,11 @@ class CompoziteDetail :
 	public Detail
 {
 public:
-	CompoziteDetail(char* name) :Detail(name) {};
+	CompoziteDetail(std::string name);
 	~CompoziteDetail();
-	virtual double getWeight();
-	virtual double getCost();
-	virtual unsigned long getMaufacturedTime();
+	double getWeight();
+	double getCost();
+	unsigned long getMaufacturedTime();
 private:
 	std::list<Sptr> _details;
 };

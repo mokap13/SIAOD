@@ -23,9 +23,10 @@
     <ClCompile Include="CompoziteDetail.cpp" />
     <ClCompile Include="Detail.cpp" />
     <ClCompile Include="FemaleScrew.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaleScrew.cpp" />
-    <ClCompile Include="Nut.cpp" />
+    <ClCompile Include="Screw.cpp" />
     <ClCompile Include="SingleDetail.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,8 +34,9 @@
     <ClInclude Include="CompoziteDetail.h" />
     <ClInclude Include="Detail.h" />
     <ClInclude Include="FemaleScrew.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="MaleScrew.h" />
-    <ClInclude Include="Nut.h" />
+    <ClInclude Include="Screw.h" />
     <ClInclude Include="SingleDetail.h" />
   </ItemGroup>
   <ItemGroup>

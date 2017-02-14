@@ -36,7 +36,10 @@
     <ClCompile Include="Bearing.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="Nut.cpp">
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Screw.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +62,10 @@
     <ClInclude Include="Bearing.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Nut.h">
+    <ClInclude Include="FileManager.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Screw.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

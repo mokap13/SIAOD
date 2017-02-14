@@ -1,11 +1,11 @@
 #pragma once
-#include "SingleDetail.h"
-
+#include "Screw.h"
+/*Гайка*/
 class FemaleScrew :
-	public SingleDetail
+	public Screw
 {
 public:
-	FemaleScrew() :SingleDetail("FemaleScrew") {};
+	FemaleScrew();
 	~FemaleScrew();
 };
 

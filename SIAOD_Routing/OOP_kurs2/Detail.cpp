@@ -1,10 +1,9 @@
 #include "Detail.h"
 #include <exception>
 
-Detail::Detail(char* name)
+Detail::Detail(std::string name)
 {
-	if(name)
-		_name = name;
+	_name = name;
 }
 
 
@@ -20,6 +19,13 @@ void Detail::add(const Sptr &)
 void Detail::remove(const Sptr &)
 {
 	throw new std::exception("Can't remove to a SingleDetail");
+}
+
+
+
+std::string Detail::getName()
+{
+	return _name;
 }
 
 Material Detail::getMaterial()

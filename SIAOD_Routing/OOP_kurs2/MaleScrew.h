@@ -1,11 +1,16 @@
 #pragma once
-#include "SingleDetail.h"
-
+#include "Screw.h"
+/*Болт*/
 class MaleScrew :
-	public SingleDetail
+	public Screw
 {
 public:
-	MaleScrew() :SingleDetail("MaleScrew") {};
+	MaleScrew();
 	~MaleScrew();
+
+	int getLength();
+	void setLength(int value);
+protected:
+	int _length;
 };
 

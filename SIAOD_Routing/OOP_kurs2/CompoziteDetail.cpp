@@ -1,35 +1,37 @@
 #include "CompoziteDetail.h"
 
+CompoziteDetail::CompoziteDetail(std::string name) :Detail(name) {};
+
 CompoziteDetail::~CompoziteDetail()
 {
 }
 
 double CompoziteDetail::getWeight()
 {
-	_weight = 0;
+	int childrensWeight = 0;
 	for (Sptr& sptr : _details)
 	{
-		_weight += sptr->getWeight();
+		childrensWeight += sptr->getWeight();
 	}
-	return _weight;
+	return _weight+childrensWeight;
 }
 
 double CompoziteDetail::getCost()
 {
-	_cost = 0;
+	int childrensCost = 0;
 	for (Sptr& sptr : _details)
 	{
-		_cost += sptr->getCost();
+		childrensCost += sptr->getCost();
 	}
-	return _cost;
+	return _cost + childrensCost;
 }
 
 unsigned long CompoziteDetail::getMaufacturedTime()
 {
-	_manufacturedTime = 0;
+	int childrensManufacturedTime = 0;
 	for (Sptr& sptr : _details)
 	{
-		_manufacturedTime += sptr->getMaufacturedTime();
+		childrensManufacturedTime += sptr->getMaufacturedTime();
 	}
-	return _manufacturedTime;
+	return _manufacturedTime + childrensManufacturedTime;
 }
