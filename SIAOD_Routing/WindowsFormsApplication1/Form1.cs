@@ -468,4 +468,11 @@ namespace WindowsFormsApplication1
             dataGridView2.Columns.RemoveAt(0);
         }
     }
+
+    public enum Direction
+    {
+        N,
+        R,
+        L
+    }
 }
