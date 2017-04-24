@@ -457,5 +457,15 @@ namespace WindowsFormsApplication1
     Таблицы переходов(щелчок правой кнопкой мыши по ячейке
 Кнопкой <Задать программу счетчик> можно установить пример работающей небольшой программы>","Машина Тьюринга");
         }
+
+        private void button_addCell_Click_1(object sender, EventArgs e)
+        {
+            dataGridView2.Columns.Insert(0, new DataGridViewColumn(dataGridView2.Rows[0].Cells[0]));
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dataGridView2.Columns.RemoveAt(0);
+        }
     }
 }
