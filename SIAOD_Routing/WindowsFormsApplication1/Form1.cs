@@ -249,7 +249,7 @@ namespace WindowsFormsApplication1
         }
 
         private void TuringMove()
-        {
+        {          
             var currentSymbol = dataGridView2
                 .SelectedCells[0]
                 .Value
@@ -334,6 +334,7 @@ namespace WindowsFormsApplication1
         {
             delay = numericUpDown1.Value;
             isStop = false;
+            button_start.Enabled = false;
             while (!isStop)
             {
                 TuringMove();
@@ -345,6 +346,7 @@ namespace WindowsFormsApplication1
         private void buttonStop_Click(object sender, EventArgs e)
         {
             isStop = true;
+            button_start.Enabled = true;
         }
 
         private void buttonSetCounterTable_Click(object sender, EventArgs e)
@@ -379,7 +381,7 @@ namespace WindowsFormsApplication1
             dataGridView1.Height = (dataGridView1.RowCount + 1) * dataGridView1.Rows[0].Height + 3;
             //dataGridView1.Width = (dataGridView1.ColumnCount) * dataGridView1.Columns[0].Width;
             dataGridView1.ScrollBars = ScrollBars.None;
-            
+            dataGridView1.Rows[0].Cells[0].Selected = true;
             dataGridView1.Update();
         }
     }
