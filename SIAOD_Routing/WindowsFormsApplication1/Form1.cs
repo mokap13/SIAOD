@@ -30,6 +30,8 @@ namespace WindowsFormsApplication1
                 alphabet[1], alphabet[1], alphabet[1], alphabet[1],
                 alphabet[2], alphabet[2], alphabet[2] };
 
+            
+
             InitPassageTable(alphabet, states);
             InitTape(tape,alphabet);
         }
@@ -288,6 +290,12 @@ namespace WindowsFormsApplication1
 
         private void TuringMove()
         {          
+            if(dataGridView2.SelectedCells.Count == 0)
+            {
+                MessageBox.Show("Выберите начальное положение \n пишущей головки на ленте");
+                isStop = true;
+                return;
+            }
             var currentSymbol = dataGridView2
                 .SelectedCells[0]
                 .Value
@@ -337,11 +345,24 @@ namespace WindowsFormsApplication1
                 case "R":
                     columnIndexTape = dataGridView2.SelectedCells[0].ColumnIndex;
                     dataGridView2.SelectedCells[0].Selected = false;
+                    if (columnIndexTape + 1 > dataGridView2.Rows[0].Cells.Count)
+                    {
+                        MessageBox.Show("Память ленты кончилась");
+                        break;
+                    }
+
                     dataGridView2.Rows[0].Cells[columnIndexTape + 1].Selected = true;
                     break;
                 case "L":
                     columnIndexTape = dataGridView2.SelectedCells[0].ColumnIndex;
                     dataGridView2.SelectedCells[0].Selected = false;
+
+                    if(columnIndexTape - 1 < 0)
+                    {
+                        MessageBox.Show("Память ленты кончилась");
+                        break;
+                    }
+
                     dataGridView2.Rows[0].Cells[columnIndexTape - 1].Selected = true;
                     break;
                 default:
@@ -421,16 +442,20 @@ namespace WindowsFormsApplication1
             dataGridView1.Rows[0].Cells[0].Selected = true;
             dataGridView1.Update();
         }
+
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                @" Здравствуй пользователь! Перед тобой эмулятор абстрактной машины 
+    великого британского математика Алана Тьюринга
+  С помощью полей - 
+    Алфавит и Состояния можно задать 
+    произволные параметры(через запятую <,>)
+    после чего нажать <Применить>
+  C помощью контекстного меню - 
+    можно выбрать параметры Ленты и 
+    Таблицы переходов(щелчок правой кнопкой мыши по ячейке
+Кнопкой <Задать программу счетчик> можно установить пример работающей небольшой программы>","Машина Тьюринга");
+        }
     }
 }
-//      q1          q2         q3
-//1    1q1R        0q2L       1q3L
-//0    0q1R        1q3L       0q3L
-//B    Bq2L        1STOP      Bq1R
-
-
-
-
-
-
-
