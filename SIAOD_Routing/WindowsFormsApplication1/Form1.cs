@@ -141,18 +141,56 @@ namespace WindowsFormsApplication1
         }
         private void DirectionMenuHandler(object sender, EventArgs e)
         {
+            //var currentCell = dataGridView1.CurrentCell;
+            //currentCell.Value = ReplaceCharInString((currentCell.Value as string), 1, (sender as ToolStripMenuItem).Text[0]);
             var currentCell = dataGridView1.CurrentCell;
-            currentCell.Value = ReplaceCharInString((currentCell.Value as string), 1, (sender as ToolStripMenuItem).Text[0]);
+            var newDirection = (sender as ToolStripMenuItem).Text;
+
+            var cellValue = currentCell
+                .Value
+                .ToString();
+            var trimmedCellValue = cellValue.Trim('(', ')', '\n', '\r');
+            var splittedTrimmedCellValue = trimmedCellValue.Split(',');
+
+            var newSymbol = new String(splittedTrimmedCellValue[1].Skip(1).ToArray());
+            //var newDirection = splittedTrimmedCellValue[0];
+            var newState = new String(splittedTrimmedCellValue[2].Skip(1).ToArray());
+
+            currentCell.Value = Tuple.Create<string, string, string>(newDirection, newSymbol, newState);
         }
         private void SymbolMenuHandler(object sender, EventArgs e)
         {
             var currentCell = dataGridView1.CurrentCell;
-            currentCell.Value = ReplaceCharInString((currentCell.Value as string), 4, (sender as ToolStripMenuItem).Text[0]);
+            var newSymbol = (sender as ToolStripMenuItem).Text;
+
+            var cellValue = currentCell
+                .Value
+                .ToString();
+            var trimmedCellValue = cellValue.Trim('(', ')', '\n', '\r');
+            var splittedTrimmedCellValue = trimmedCellValue.Split(',');
+
+            //var newSymbol = new String(splittedTrimmedCellValue[1].Skip(1).ToArray());
+            var direction = splittedTrimmedCellValue[0];
+            var newState = new String(splittedTrimmedCellValue[2].Skip(1).ToArray());
+
+            currentCell.Value = Tuple.Create<string, string, string>(direction, newSymbol, newState);
         }
         private void StateMenuHandler(object sender, EventArgs e)
         {
             var currentCell = dataGridView1.CurrentCell;
-            currentCell.Value = ReplaceCharInString((currentCell.Value as string), 7, (sender as ToolStripMenuItem).Text[0]);
+            var newState = (sender as ToolStripMenuItem).Text;
+
+            var cellValue = currentCell
+                .Value
+                .ToString();
+            var trimmedCellValue = cellValue.Trim('(', ')', '\n', '\r');
+            var splittedTrimmedCellValue = trimmedCellValue.Split(',');
+
+            var newSymbol = new String(splittedTrimmedCellValue[1].Skip(1).ToArray());
+            var direction = splittedTrimmedCellValue[0];
+            //var newState = new String(splittedTrimmedCellValue[2].Skip(1).ToArray());
+
+            currentCell.Value = Tuple.Create<string, string, string>(direction, newSymbol, newState);
         }
 
         private List<List<Tuple<Direction, string, string>>> InitDefaultPassageTable(List<string> alphabet, List<string> states)
@@ -175,7 +213,7 @@ namespace WindowsFormsApplication1
                  new List<Tuple<Direction, string, string>>() {
                     Tuple.Create(Direction.L, alphabet[2], states[1]),
                     Tuple.Create(Direction.N, alphabet[0], states[3]),
-                    Tuple.Create(Direction.R, alphabet[2], states[3]),
+                    Tuple.Create(Direction.R, alphabet[2], states[0]),
                     Tuple.Create(Direction.N, alphabet[0], states[3])
                     },
 
@@ -317,14 +355,13 @@ namespace WindowsFormsApplication1
         private void ExecuteStateCommand(string newState)
         {
             int columnIndex = 0;
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 //cells.Add(dataGridView1.Rows[i].Cells[columnIndex].Value.ToString().Split(',', '(', ')'));
                 var a = (dataGridView1.Columns[i].HeaderCell.Value.ToString());
                 if ((dataGridView1.Columns[i].HeaderCell.Value.ToString() == newState))
                     columnIndex = i;
             }
-
             
             dataGridView1.SelectedCells[0].Selected = false;
             dataGridView1.Rows[0].Cells[columnIndex].Selected = true;
@@ -386,3 +423,14 @@ namespace WindowsFormsApplication1
         }
     }
 }
+//      q1          q2         q3
+//1    1q1R        0q2L       1q3L
+//0    0q1R        1q3L       0q3L
+//B    Bq2L        1STOP      Bq1R
+
+
+
+
+
+
+
