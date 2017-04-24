@@ -1,8 +1,11 @@
 #include "SingleDetail.h"
-
+#include <iostream>
+using namespace std;
 
 SingleDetail::SingleDetail(std::string name)
-	:Detail(name) {};
+	:Detail(name) {
+	_weight = 0;
+};
 
 SingleDetail::~SingleDetail()
 {
@@ -23,6 +26,11 @@ unsigned long SingleDetail::getMaufacturedTime()
 	return _manufacturedTime;
 }
 
+void SingleDetail::display()
+{
+	cout << " " << _name;	
+}
+
 void SingleDetail::setName(std::string name)
 {
 	_name = name;
@@ -36,4 +44,14 @@ void SingleDetail::setMaterial(Material material)
 void SingleDetail::setWeight(double weight)
 {
 	_weight = weight;
+}
+
+void SingleDetail::setCost(double cost)
+{
+	_cost = cost;
+}
+
+void SingleDetail::setManufacturedTime(double manufacturedTime)
+{
+	_manufacturedTime = manufacturedTime;
 }

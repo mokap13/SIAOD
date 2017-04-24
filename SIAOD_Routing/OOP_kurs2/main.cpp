@@ -5,23 +5,40 @@
 #include "Bearing.h"
 #include "MaleScrew.h"
 #include "FemaleScrew.h"
+#include <conio.h>
 
 using namespace std;
 
-void main() {
-	Detail::Sptr maleScrew_1(new MaleScrew());
-	Detail::Sptr femaleScrew_1(new FemaleScrew());
+void main() {	
+	MaleScrew maleScrew;
+	maleScrew.setWeight(8.8);
+	FemaleScrew femaleScrew;
+	femaleScrew.setWeight(12.5);
+	Bearing bearing;
+	bearing.setWeight(4.6);
+
 
 	Detail::Sptr detailA(new CompoziteDetail("ANode"));
-	detailA->add(maleScrew_1);
-	detailA->add(maleScrew_1);
-	detailA->add(femaleScrew_1);
-	detailA->add(femaleScrew_1);
+	detailA->add(Detail::Sptr(&maleScrew));
+	detailA->add(Detail::Sptr(&maleScrew));
+	detailA->add(Detail::Sptr(&femaleScrew));
+	detailA->add(Detail::Sptr(&femaleScrew));
 
 	Detail::Sptr detailB(new CompoziteDetail("BNode"));
-	Detail::Sptr detailC(new CompoziteDetail("CNode"));
+	detailB->add(Detail::Sptr(&bearing));
+	detailB->add(Detail::Sptr(&bearing));
+	detailB->add(Detail::Sptr(&bearing));
 
-	
+	Detail::Sptr detailC(new CompoziteDetail("CNode"));
+	detailC->add(Detail::Sptr(&maleScrew));
+	detailC->add(Detail::Sptr(&maleScrew));
+	detailC->add(detailB);
 
 	Detail::Sptr mainDetail(new CompoziteDetail("MainNode"));
+	mainDetail->add(detailB);
+	mainDetail->add(detailA);
+	mainDetail->add(detailC);
+
+	mainDetail->display();
+	_getch();
 }

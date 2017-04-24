@@ -1,19 +1,43 @@
 #include "CompoziteDetail.h"
+#include <iostream>
+#include <Windows.h>
 
-CompoziteDetail::CompoziteDetail(std::string name) :Detail(name) {};
+using namespace std;
+
+CompoziteDetail::CompoziteDetail(std::string name) :Detail(name) { _weight = 0; };
 
 CompoziteDetail::~CompoziteDetail()
 {
 }
 
-double CompoziteDetail::getWeight()
+void CompoziteDetail::add(const Sptr & obj)
 {
-	int childrensWeight = 0;
+	_details.push_back(obj);
+}
+
+void CompoziteDetail::remove(const Sptr & obj)
+{
+	_details.remove(obj);
+}
+
+void CompoziteDetail::display()
+{
+	cout << _name << "("<< getWeight() << ")";
+	cout << "\n";
 	for (Sptr& sptr : _details)
 	{
-		childrensWeight += sptr->getWeight();
+		sptr->display();
+		cout << "\n";
 	}
-	return _weight+childrensWeight;
+}
+
+double CompoziteDetail::getWeight()
+{
+	for (Sptr& sptr : _details)
+	{
+		_weight += sptr->getWeight();
+	}
+	return _weight;
 }
 
 double CompoziteDetail::getCost()

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Bearing" Collapsed="true">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAUAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Bearing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompoziteDetail" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAAEAAAAAAAgEBAAAAAAAAAEAAACAAAAIAAACAAA=</HashCode>
+      <FileName>CompoziteDetail.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Detail" Collapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAABIAEAACBAAAgEAAAAAAAAAAEAAAAACAAEIAACCAA=</HashCode>
+      <FileName>Detail.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FemaleScrew" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>FemaleScrew.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MaleScrew" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAABAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAA=</HashCode>
+      <FileName>MaleScrew.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Screw" Collapsed="true">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAUAAAAAAggAAAAAAAAQAAAAAAAAQAAAAAAAABAAA=</HashCode>
+      <FileName>Screw.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SingleDetail" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAAAAEAgACAAAgAAAAQAAAAAQUAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>SingleDetail.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Material" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABCAAAFAAAAA=</HashCode>
+      <FileName>Detail.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

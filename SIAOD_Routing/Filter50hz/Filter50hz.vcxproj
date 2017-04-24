@@ -18,33 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Bearing.cpp" />
-    <ClCompile Include="CompoziteDetail.cpp" />
-    <ClCompile Include="Detail.cpp" />
-    <ClCompile Include="FemaleScrew.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MaleScrew.cpp" />
-    <ClCompile Include="Screw.cpp" />
-    <ClCompile Include="SingleDetail.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Bearing.h" />
-    <ClInclude Include="CompoziteDetail.h" />
-    <ClInclude Include="Detail.h" />
-    <ClInclude Include="FemaleScrew.h" />
-    <ClInclude Include="MaleScrew.h" />
-    <ClInclude Include="Screw.h" />
-    <ClInclude Include="SingleDetail.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9146C1F7-73EB-4E25-873B-43444E8625D6}</ProjectGuid>
+    <ProjectGuid>{76F8E7E6-BD63-4288-B265-FB09D81110C6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>OOP_kurs2</RootNamespace>
+    <RootNamespace>Filter50hz</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -168,6 +145,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

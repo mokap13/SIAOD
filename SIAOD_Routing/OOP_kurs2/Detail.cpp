@@ -21,7 +21,10 @@ void Detail::remove(const Sptr &)
 	throw new std::exception("Can't remove to a SingleDetail");
 }
 
-
+void Detail::display()
+{
+	throw new std::exception("display not implementation");
+}
 
 std::string Detail::getName()
 {

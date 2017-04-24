@@ -20,8 +20,7 @@ public:
 	typedef std::shared_ptr<Detail> Sptr;
 	virtual void add(const Sptr&);
 	virtual void remove(const Sptr&);
-	
-	
+	virtual void display();
 
 	std::string getName();
 	virtual Material getMaterial();

@@ -10,6 +10,7 @@ public:
 	virtual double getWeight();
 	virtual double getCost();
 	virtual unsigned long getMaufacturedTime();
+	void display();
 
 	void setName(std::string name);
 	void setMaterial(Material material);
