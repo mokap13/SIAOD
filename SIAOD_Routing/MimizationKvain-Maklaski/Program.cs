@@ -46,16 +46,34 @@ namespace MimizationKvain_Maklaski
             var a = getDifferentBits(0x2, 0xa);
 
             Console.WriteLine(new String('*',30));
+            //var asd = groupsByOneBits
+            //    .SelectMany(group => group
+            //        .SelectMany(term => groupsByOneBits.Where(x => (x.Key == (group.Key + 1)) && x != groupsByOneBits.Last())
+            //            .SelectMany(group2 => group2
+            //                .Select(term2 => getDifferentBits(term,term2))
+            //                .Where(x=>getOneBitCount(x,count)==1)
+            //                ))).ToList();
+
             var asd = groupsByOneBits
                 .SelectMany(group => group
                     .SelectMany(term => groupsByOneBits.Where(x => (x.Key == (group.Key + 1)) && x != groupsByOneBits.Last())
                         .SelectMany(group2 => group2
-                            .Select(term2 => getDifferentBits(term,term2))
-                            .Where(x=>getOneBitCount(x,count)==1)
-                            ))).ToList();
+                            .Select(term2 => term2)
+                            .Where(x => getOneBitCount(getDifferentBits(term,x), count) == 1)
+                            .GroupBy(g => getDifferentBits(term, g))
+                            .OrderBy(x=>x.Key)
+                            )));
 
+            foreach (var group in asd)
+            {
+                Console.Write(group.Key + " - ");
+                foreach (var term in group)
+                {
+                    Console.Write(Convert.ToString(term, 2) + " ");
+                }
+            }
 
-            var g = groupsByOneBits.Where(x=>x.Key == 2).SelectMany(x=>x.Select(y=>y)).ToList();
+            //var g = groupsByOneBits.Where(x=>x.Key == 2).SelectMany(x=>x.Select(y=>y)).ToList();
 
             foreach (var group in groupsByOneBits)
             {
