@@ -25,79 +25,96 @@ namespace MimizationKvain_Maklaski
                 return;
             }
 
-            var miniTerms = function
-                .Select((x, index) => new { Item = x, Index = index })
-                .Where(x => x.Item == '1')
+            var minTerms = function
+                .Select((x, index) => new { Term = x, Index = index })
+                .Where(x => x.Term == '1')
                 .Select(x => x.Index);
 
-            var groupsByOneBits = miniTerms
+            var groupsByOneBits = minTerms
                 .GroupBy(x => getOneBitCount(x, count));
 
 
             foreach (var group in groupsByOneBits)
             {
                 Console.Write(group.Key + " - ");
-                foreach (var item in group)
-                {
-                    Console.Write(Convert.ToString(item, 2)+" ");
-                }
-                Console.WriteLine();
-            }
-            var a = getDifferentBits(0x2, 0xa);
-
-            Console.WriteLine(new String('*',30));
-            //var asd = groupsByOneBits
-            //    .SelectMany(group => group
-            //        .SelectMany(term => groupsByOneBits.Where(x => (x.Key == (group.Key + 1)) && x != groupsByOneBits.Last())
-            //            .SelectMany(group2 => group2
-            //                .Select(term2 => getDifferentBits(term,term2))
-            //                .Where(x=>getOneBitCount(x,count)==1)
-            //                ))).ToList();
-
-            var asd = groupsByOneBits
-                .SelectMany(group => group
-                    .SelectMany(term => groupsByOneBits.Where(x => (x.Key == (group.Key + 1)) && x != groupsByOneBits.Last())
-                        .SelectMany(group2 => group2
-                            .Select(term2 => term2)
-                            .Where(x => getOneBitCount(getDifferentBits(term,x), count) == 1)
-                            .GroupBy(g => getDifferentBits(term, g))
-                            .OrderBy(x=>x.Key)
-                            )));
-
-            foreach (var group in asd)
-            {
-                Console.Write(group.Key + " - ");
                 foreach (var term in group)
                 {
-                    Console.Write(Convert.ToString(term, 2) + " ");
-                }
-            }
-
-            //var g = groupsByOneBits.Where(x=>x.Key == 2).SelectMany(x=>x.Select(y=>y)).ToList();
-
-            foreach (var group in groupsByOneBits)
-            {
-                foreach (var item in group)
-                {
-                    foreach (var group2 in groupsByOneBits.Where(x=>x.Key == group.Key+1 && x!= groupsByOneBits.Last()))
-                    {
-                        foreach (var item2 in group2)
-                        {
-                            var temp = getDifferentBits(item, item2);
-                            if(getOneBitCount(temp,count)==1)
-                                Console.Write(Convert.ToString(getDifferentBits(item, item2), 16) + " ");
-                        }
-                    }
+                    Console.Write(Convert.ToString(term, 2)+" ");
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(new String('*',30));
 
+            var firstMerge = groupsByOneBits
+                .SelectMany(group => group
+                    .SelectMany(term1 => groupsByOneBits
+                        .Where(x => (x.Key == (group.Key + 1)) && x != groupsByOneBits.Last())
+                        .SelectMany(group2 => group2
+                            .Where(term2 => getOneBitCount(getBitsDefferent(term1, term2), count) == 1)
+                            .Select(term2 => new{
+                                Value = term1,
+                                DiffBit = getBitsDefferent(term1, term2)
+                                })
+                        )
+                    )
+                )
+                .GroupBy(key => key.DiffBit)
+                .OrderByDescending(group=>group.Key);
 
+            foreach (var group in firstMerge)
+            {
+                Console.Write(Convert.ToString(group.Key, 16) + " - ");
+                foreach (var term in group)
+                {
+                    Console.Write(Convert.ToString(term.Value, 2) + " ");
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine(new String('*',50));
+
+            //IEnumerable<IGrouping<int,void>> a;
+            var secondMerge = firstMerge
+                .SelectMany(group => group
+                    .SelectMany(term1 => firstMerge
+                        .Where(group2 => group2.Key == group.Key)
+                        .SelectMany(group2 => group2
+                            .Where(term2 => getOneBitCount(getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key), count) == 1)
+                            .Select(term2 => new {
+                                Value = term1.Value | getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key,
+                                DiffBit = getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key
+                                }
+                            )
+                        )
+                    )
+                )
+                .GroupBy(key => key.DiffBit)
+                .Select(group3 => group3.First())
+                .GroupBy(key => key.DiffBit);
+
+            while (true)
+            {
+
+            }
+
+            foreach (var group in secondMerge)
+            {
+                Console.Write(Convert.ToString(group.Key,16) + " - ");
+                foreach (var item in group)
+                {
+                    Console.Write(Convert.ToString(item.Value, 2) + " ");
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine(new String('*', 50));
             Console.Read();
 
             Console.WriteLine(result);
         }
+        public static bool comporator()
+        {
 
+            return true;
+        }
         public static int getOneBitCount(int data,int bitCount)
         {
             int oneBitCount = 0;
@@ -109,11 +126,8 @@ namespace MimizationKvain_Maklaski
             }
             return oneBitCount;
         }
-        public static int getDifferentBits(int leftData,int rightData)
+        public static int getBitsDefferent(int leftData,int rightData)
         {
-            //Console.WriteLine();
-            //Console.WriteLine($"{Convert.ToString(leftData,2)}   {Convert.ToString(rightData,2)}");
-            //Console.WriteLine($"Diff ^   {Convert.ToString(leftData^rightData,2)}");
             return (leftData ^ rightData);
         }
     }
