@@ -109,17 +109,17 @@ namespace MimizationKvain_Maklaski
                         .SelectMany(group2 => group2
                             .Where(term2 => getOneBitCount(getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key), count) == 1)
                             .Select(term2 => new Term
-                            {
-                                Value = term1.Value | getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key,
-                                DiffBit = getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key
-                            }
+                                {
+                                    Value = term1.Value | getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key,
+                                    DiffBit = getBitsDefferent(term1.Value | group.Key, term2.Value | group.Key) | group.Key
+                                }
                             )
                         )
                     )
                 )
                 .GroupBy(key => key.DiffBit)
-                .Select(group3 => group3.First()
-                    
+                .Select(group3 => group3
+                    .First()
                 )
                 .GroupBy(key => key.DiffBit);
         }
