@@ -168,6 +168,7 @@ namespace MimizationKvain_Maklaski
         }
         public static void PrintTermResult(List<Term> list)
         {
+            char[] charTable = { 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g'};
             foreach (var item in list)
             {
                 for (int i = 0; i < count; i++)
@@ -178,9 +179,9 @@ namespace MimizationKvain_Maklaski
                     if (diffBit != 1)
                     {
                         if (valueBit == 0)
-                            Console.Write((char)(97+ i));
+                            Console.Write(charTable[i]);
                         else
-                            Console.Write(Char.ToUpperInvariant((char)(97 + i)));
+                            Console.Write(Char.ToUpperInvariant(charTable[i]));
                     }
                 }
                 if (item == list.Last())

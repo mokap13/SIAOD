@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAOD_Routing", "SIAOD_Routing\SIAOD_Routing.csproj", "{DBC44CE3-F3B4-4E40-982E-B3BB20C8195F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExploreOperations", "SIAOD_Routing\ExploreOperations.csproj", "{DBC44CE3-F3B4-4E40-982E-B3BB20C8195F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP_labs", "OOP_labs\OOP_labs.vcxproj", "{F3074B5D-3552-4896-8C48-E2D2F0CBC2BF}"
 EndProject
