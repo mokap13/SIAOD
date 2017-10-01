@@ -21,11 +21,8 @@ namespace SerialPortAnalyzer
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            for (int i = 1; i < 255; i++)
-            {
-                comboBox_PortName.Items.Add($"COM{ i.ToString()}");
-            }
+        { 
+            comboBox_PortName.Items.AddRange(SerialPort.GetPortNames());
             comboBox_PortName.SelectedIndex = 0;
 
             comboBox_DataBits.Items.AddRange(new object[] { 5, 6, 7, 8 });
@@ -69,23 +66,48 @@ namespace SerialPortAnalyzer
 
             serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBit);
 
+            if (serialPort != null)
+                serialPort.Open();
+
             if (!serialPort.IsOpen)
             {
                 label_portState.Text = "Порт занят или отсутствует!";
             }
             else
             {
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
                 label_portState.Text = "Порт открыт!";
-                serialPort.Open();
+                
 
                 label_portState.Update();
             }
         }
 
+        private void DataReceivedHandler(
+                       object sender,
+                       SerialDataReceivedEventArgs e)
+        {
+            byte[] buffer = new byte[2];
+            (sender as SerialPort).Read(buffer,0,2);
+            int indata;
+            indata = buffer[0];
+            indata |= buffer[1] << 8;
+            Console.WriteLine("Data Received:");
+            Console.Write(indata);
+            //richTextBox1.Text += indata;
+            //if (richTextBox1.TextLength == 10000)
+            //    richTextBox1.ResetText();
+            richTextBox1.Invoke(new Action(() => { richTextBox1.Text += (indata.ToString() + ' '); }));
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            if(serialPort.IsOpen)
+            if (serialPort.IsOpen)
+            {
+                serialPort.DataReceived -= DataReceivedHandler;
                 serialPort.Close();
+            }
+                
         }
     }
 }
