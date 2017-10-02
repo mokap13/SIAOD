@@ -13,34 +13,15 @@ using System.Linq;
 
 namespace encog_sample_csharp
 {
-    internal class Program
+    class Program
     {
-        /// <summary>
-        /// Input for the XOR function.
-        /// </summary>
-        public static double[][] XORInput =
-        {
-            new[] {0.0, 0.0},
-            new[] {1.0, 0.0},
-            new[] {0.0, 1.0},
-            new[] {1.0, 1.0}
-        };
+        public static double[][] XORInput;
 
-        /// <summary>
-        /// Ideal output for the XOR function.
-        /// </summary>
-        public static double[][] XORIdeal =
-        {
-            new[] {0.0},
-            new[] {1.0},
-            new[] {1.0},
-            new[] {0.0}
-        };
-        private static double[][] readFile()
+        public static double[][] XORIdeal;
+        private static List<double[]> readFile(string path)
         {
             List<double[]> inputData = new List<double[]>();
             //List<double> result = new List<double>();
-            string path = @"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/deads.txt";
             try
             {
                 using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
@@ -53,12 +34,7 @@ namespace encog_sample_csharp
                             .Select(x => Double.Parse(x))
                             .ToArray());
                     }
-                    var inputDataWithoutResult = inputData
-                        .Select(d => d
-                            .Where(x => x != inputData[0].Length-1)
-                            .ToArray())
-                        .ToArray();
-                    return inputDataWithoutResult;
+                    return inputData;
                 }
             }
             catch (Exception e)
@@ -88,53 +64,80 @@ namespace encog_sample_csharp
                     if (minOfColumn > srcData[j][i])
                         minOfColumn = srcData[j][i];
                 }
-                for (int j = 0; j < srcData[i].Length; j++)
+                for (int j = 0; j < srcData.Length; j++)
                 {
                     srcData[j][i] = InterpolationLinear(min, max, minOfColumn, maxOfColumn, srcData[j][i]);
                 }
             }
             
-            //srcData = linesTuples.Select(x=>InterpolationLinear(1,0,x.Item3,x.Item2,x.Item1))
             return srcData;
         }
         private static void Main(string[] args)
         {
-            double[][] lines = readFile();
-           
-            lines = OptimizeRange(lines, 0, 1);
+            List<double[]> result = new List<double[]>();
+
+            List<double[]> input = readFile(@"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/all.txt");
+            var fileSize = input.Count;
+            result = input
+                .Select(x => new double[] { x.Last() })
+                .ToList();
+            var Sinput = input
+                .Select(x => x.ToList()).ToList();
+            for (int i = 0; i < Sinput.Count(); i++)
+            {
+                Sinput[i].RemoveAt(Sinput[i].Count - 1);
+            }
+            input = Sinput
+                .Select(x => x.ToArray())
+                .ToList();
+
+            input = OptimizeRange(input.ToArray(), 0, 1).ToList();
+
+            var testInput = input.GetRange(0, 5);
+            var testResult = result.GetRange(0, 5);
+            testInput.AddRange(input.GetRange(105, 15));
+            testResult.AddRange(result.GetRange(105, 15));
+
+            input.RemoveRange(0, 5);
+            result.RemoveRange(0, 5);
+            input.RemoveRange(100, 15);
+            result.RemoveRange(100, 15);
+
+            var testInputArr = testInput.ToArray();
+
+            XORInput = input.ToArray();
+            XORIdeal = result.ToArray();
             // create a neural network, without using a factory
             var network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(null, true, 2));
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 7));
+            network.AddLayer(new BasicLayer(null, true, input[0].Length));
+            var hiddenLayerSize = 80;
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, hiddenLayerSize));
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
-            
+
             network.Structure.FinalizeStructure();
             network.Reset();
 
             // create training data
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
+            IMLDataSet testSet = new BasicMLDataSet(testInputArr, testResult.ToArray());
+
             // train the neural network
             IMLTrain train = new ResilientPropagation(network, trainingSet);
 
-            int epoch = 1;
-
-            do
+            for (int i = 0; i < XORInput.Length; i++)
             {
                 train.Iteration();
-                Console.WriteLine(@"Epoch #" + epoch + @" Error:" + train.Error);
-                epoch++;
-            } while (train.Error > 0.01);
+                //Console.WriteLine(@"Epoch #" + i + @" Error:" + train.Error);
+            }
 
             train.FinishTraining();
-
             // test the neural network
             Console.WriteLine(@"Neural Network Results:");
-            foreach (IMLDataPair pair in trainingSet)
+            foreach (IMLDataPair pair in testSet)
             {
                 IMLData output = network.Compute(pair.Input);
-                Console.WriteLine(pair.Input[0] + @"," + pair.Input[1]
-                                  + @", actual=" + output[0] + @",ideal=" + pair.Ideal[0]);
+                Console.WriteLine(@"actual=" + Math.Round(output[0],2) + @",ideal=" + pair.Ideal[0]);
             }
             Console.Read();
             EncogFramework.Instance.Shutdown();
