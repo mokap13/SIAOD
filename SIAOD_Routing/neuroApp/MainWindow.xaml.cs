@@ -20,6 +20,7 @@ namespace neuroApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        ApplicationContext db;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +30,14 @@ namespace neuroApp
         {
             AddPatientWIndow addPatientWindow = new AddPatientWIndow();
             addPatientWindow.Show();
+        }
+
+        private void dataGrid_Patients_Loaded(object sender, RoutedEventArgs e)
+        {
+            db = new ApplicationContext();
+
+            var patients = db.Patients.ToList();
+            dataGrid_Patients.ItemsSource = patients;
         }
     }
 }

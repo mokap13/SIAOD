@@ -34,7 +34,6 @@ namespace neuroApp
         {
             textBox_patientWeigth_TextChanged(sender,e);
         }
-
         private void textBox_patientWeigth_TextChanged(object sender, TextChangedEventArgs e)
         {
             if ((textBox_patientHeight.Text != String.Empty)
