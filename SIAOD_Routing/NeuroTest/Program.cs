@@ -3,7 +3,10 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Engine.Network.Activation;
 using Encog.ML.Data;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Neural.Networks.Training.Propagation.Back;
+using Encog.Neural.Networks.Training.Propagation.Manhattan;
+using Encog.Neural.Networks.Training.Propagation.SGD;
+using Encog.Neural.Networks.Training.Propagation.SCG;
 using Encog.ML.Train;
 using Encog.ML.Data.Basic;
 using Encog;
@@ -110,7 +113,7 @@ namespace encog_sample_csharp
             // create a neural network, without using a factory
             var network = new BasicNetwork();
             network.AddLayer(new BasicLayer(null, true, input[0].Length));
-            var hiddenLayerSize = 80;
+            var hiddenLayerSize = 50;
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, hiddenLayerSize));
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
 
@@ -123,12 +126,13 @@ namespace encog_sample_csharp
             IMLDataSet testSet = new BasicMLDataSet(testInputArr, testResult.ToArray());
 
             // train the neural network
-            IMLTrain train = new ResilientPropagation(network, trainingSet);
+            IMLTrain train = new ScaledConjugateGradient(network, trainingSet);
 
-            for (int i = 0; i < XORInput.Length; i++)
+            for (int epoch = 0; epoch < 1; epoch++)
             {
-                train.Iteration();
-                //Console.WriteLine(@"Epoch #" + i + @" Error:" + train.Error);
+                for (int i = 0; i < XORInput.Length; i++)
+                    train.Iteration();
+                Console.WriteLine(@"Epoch #" + epoch + @" Error:" + train.Error);
             }
 
             train.FinishTraining();
@@ -139,6 +143,7 @@ namespace encog_sample_csharp
                 IMLData output = network.Compute(pair.Input);
                 Console.WriteLine(@"actual=" + Math.Round(output[0],2) + @",ideal=" + pair.Ideal[0]);
             }
+            
             Console.Read();
             EncogFramework.Instance.Shutdown();
         }
