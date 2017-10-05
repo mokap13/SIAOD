@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,7 +14,7 @@ namespace neuroApp
         private string name;
         private string family;
         private string otchestvo;
-        private int age;
+        private string birthday;
 
         public int Id { get; set; }
         public string Name
@@ -43,13 +44,14 @@ namespace neuroApp
                 OnPropertyChanged("Otchestvo");
             }
         }
-        public int Age
+
+        public string Birthday
         {
-            get { return age; }
+            get{ return birthday; }
             set
             {
-                age = value;
-                OnPropertyChanged("Age");
+                birthday = value;
+                OnPropertyChanged("Birthday");
             }
         }
 

@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neuroApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="424" Width="644" Closed="Window_Closed">
     <Grid>
-        <DataGrid Name="dataGrid_Patients" HorizontalAlignment="Left" Height="82" Margin="10,10,0,0" VerticalAlignment="Top" Width="497" Loaded="dataGrid_Patients_Loaded"/>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="394,255,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <DataGrid Name="dataGrid_Patients" HorizontalAlignment="Left" Height="240" Margin="10,10,0,0" VerticalAlignment="Top" Width="616" Loaded="dataGrid_Patients_Loaded" IsReadOnly="True"/>
+        <Button Name="button_AddPatient" Content="Добавить" HorizontalAlignment="Left" Margin="367,349,0,0" VerticalAlignment="Top" Width="75" Click="button_AddPatient_Click"/>
+        <Button Name="buttone_RefreshDataGrid" Content="Обновить" HorizontalAlignment="Left" Margin="287,349,0,0" VerticalAlignment="Top" Width="75" Click="button_RefreshDataGrid_Click"/>
+        <Button Name="button_DeletePatient" Content="Удалить" HorizontalAlignment="Left" Margin="527,349,0,0" VerticalAlignment="Top" Width="75" Click="button_DeletePatient_Click"/>
+        <Button Name="button_ChangePatient" Content="Изменить" HorizontalAlignment="Left" Margin="447,349,0,0" VerticalAlignment="Top" Width="75"/>
 
 
     </Grid>

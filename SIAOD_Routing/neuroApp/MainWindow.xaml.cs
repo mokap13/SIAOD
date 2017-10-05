@@ -20,13 +20,13 @@ namespace neuroApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        ApplicationContext db;
+        ApplicationContext db = new ApplicationContext();
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void button_AddPatient_Click(object sender, RoutedEventArgs e)
         {
             AddPatientWIndow addPatientWindow = new AddPatientWIndow();
             addPatientWindow.Show();
@@ -34,10 +34,48 @@ namespace neuroApp
 
         private void dataGrid_Patients_Loaded(object sender, RoutedEventArgs e)
         {
-            db = new ApplicationContext();
+            try
+            {
+                dataGrid_Patients.ItemsSource = db.Patients.ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось открыть базу данных");
+            }  
+        }
 
+        private void button_DeletePatient_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid_Patients.SelectedItems.Count != 0)
+            {
+                AnswerWindow answerWindow = new AnswerWindow("Вы уверены, что хотите удалить");
+                if (answerWindow.ShowDialog() == true)
+                {
+                    foreach (Patient patient in dataGrid_Patients.SelectedItems)
+                    {
+                        db.Patients.Remove(patient);
+                    }
+                    db.SaveChanges();
+                    var patients = db.Patients.ToList();
+                    dataGrid_Patients.ItemsSource = patients;
+                    dataGrid_Patients.Items.Refresh();
+                }
+            }
+        }
+
+        private void button_RefreshDataGrid_Click(object sender, RoutedEventArgs e)
+        {
             var patients = db.Patients.ToList();
             dataGrid_Patients.ItemsSource = patients;
+            dataGrid_Patients.Items.Refresh();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            foreach (Window window in App.Current.Windows)
+            {
+                window.Close();
+            }
         }
     }
 }

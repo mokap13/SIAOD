@@ -5,30 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neuroApp"
         mc:Ignorable="d"
-        Title="AddPatientWIndow" Height="466.051" Width="724.65">
+        Title="AddPatientWIndow" Height="494.551" Width="724.65">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="405" Margin="10,10,0,0" VerticalAlignment="Top" Width="697">
+        <TabControl TabStripPlacement="Left" Height="405" VerticalAlignment="Top" Width="auto">
             <TabItem x:Name="passportData">
                 <TabItem.Header>
                     Паспортные данные
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
-                        <Button Content="Назад" HorizontalAlignment="Left" Margin="302,276,0,0" VerticalAlignment="Top" Width="75"/>
-                        <Button Content="Далее" HorizontalAlignment="Left" Margin="418,276,0,0" VerticalAlignment="Top" Width="74"/>
                         <Label Content="Паспортные данные" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,57,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216"/>
-                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,84,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216"/>
-                        <TextBox HorizontalAlignment="Left" Height="22" Margin="137,109,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216"/>
-                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,165,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.522,-0.73"/>
-                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,190,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.508,2.159"/>
+                        <TextBox Name="textBox_Family" PreviewTextInput="TextValidationTextBox"  HorizontalAlignment="Left" Height="20" Margin="137,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" TextChanged="textBox_Family_TextChanged"/>
+                        <TextBox Name="textBox_Name" PreviewTextInput="TextValidationTextBox" HorizontalAlignment="Left" Height="20" Margin="137,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" TextChanged="textBox_Name_TextChanged"/>
+                        <TextBox Name="textBox_Otchestvo" PreviewTextInput="TextValidationTextBox" HorizontalAlignment="Left" Height="22" Margin="137,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" TextChanged="textBox_Otchestvo_TextChanged"/>
+                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,165,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.522,-0.73"/>
+                        <TextBox HorizontalAlignment="Left" Height="20" Margin="137,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.508,2.159"/>
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.829,0.442"/>
                         <Label Content="Имя" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
                         <Label Content="Отчество" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top"/>
                         <Label Content="Дата рождения" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top"/>
                         <Label Content="№ отряда" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top"/>
                         <Label Content="Откуда прибыл" HorizontalAlignment="Left" Margin="11,187,0,0" VerticalAlignment="Top"/>
-                        <DatePicker HorizontalAlignment="Left" Margin="137,136,0,0" VerticalAlignment="Top" Height="24" Width="216"/>
+                        <DatePicker Name="datePicker_Birthday" HorizontalAlignment="Left" Margin="137,136,0,0" VerticalAlignment="Top" Height="24" Width="216" SelectedDateChanged="datePicker_Birthday_SelectedDateChanged"/>
+                        <Label Name="label_age" Content="" HorizontalAlignment="Left" Margin="372,135,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -113,9 +112,9 @@
                         <Label Content="Количество CD 4" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <Label Content="Количество CD 8" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
                         <Label Content="Вирусная нагрузка (РНК ВИЧ)" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,44,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,74,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="201,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                         <DatePicker HorizontalAlignment="Left" Margin="351,13,0,0" VerticalAlignment="Top"/>
                         <DatePicker HorizontalAlignment="Left" Margin="351,43,0,0" VerticalAlignment="Top"/>
                         <DatePicker HorizontalAlignment="Left" Margin="351,73,0,0" VerticalAlignment="Top"/>
@@ -155,58 +154,54 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
-                        <Grid Margin="10,10,418,302">
+                        <Grid Margin="10,10,10,364">
                             <Label Content="Гемоглобин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,40,418,272">
+                        <Grid Margin="10,40,10,329">
                             <Label Content="Эритроциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,70,418,242">
+                        <Grid Margin="10,70,10,304">
                             <Label Content="Лейкоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,100,418,212">
+                        <Grid Margin="10,100,10,274">
                             <Label Content="Тромбоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,130,418,182">
+                        <Grid Margin="10,130,10,244">
                             <Label Content="Лимфоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,160,418,100">
+                        <Grid Margin="10,160,10,214">
                             <Label Content="СОЭ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,190,418,122">
+                        <Grid Margin="10,190,10,179">
                             <Label Content="АЛТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,220,418,92">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="53*"/>
-                                <ColumnDefinition Width="210*"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid Margin="10,220,10,154">
                             <Label Content="АСТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="90.295,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="264.295,0,-154,0" VerticalAlignment="Top" Grid.Column="1"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top" />
                         </Grid>
-                        <Grid Margin="10,250,418,62">
+                        <Grid Margin="10,250,10,119">
                             <Label Content="Общий билирубин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
-                        <Grid Margin="10,280,418,32">
+                        <Grid Margin="10,280,10,90">
                             <Label Content="Креатинин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                             <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
                         </Grid>
 
@@ -251,6 +246,7 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
+        <Button Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="117" Click="button_addPatient_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>
