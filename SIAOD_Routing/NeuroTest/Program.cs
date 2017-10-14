@@ -81,30 +81,27 @@ namespace encog_sample_csharp
 
             List<double[]> input = readFile(@"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/all.txt");
             var fileSize = input.Count;
-            result = input
-                .Select(x => new double[] { x.Last() })
-                .ToList();
-            var Sinput = input
-                .Select(x => x.ToList()).ToList();
-            for (int i = 0; i < Sinput.Count(); i++)
-            {
-                Sinput[i].RemoveAt(Sinput[i].Count - 1);
-            }
-            input = Sinput
-                .Select(x => x.ToArray())
-                .ToList();
+
+
+            result = popResult(ref input);
 
             input = OptimizeRange(input.ToArray(), 0, 1).ToList();
 
-            var testInput = input.GetRange(0, 5);
-            var testResult = result.GetRange(0, 5);
-            testInput.AddRange(input.GetRange(105, 15));
-            testResult.AddRange(result.GetRange(105, 15));
+            const int rangeDead = 5;
+            const int rangeAlive = 15;
+            const int startAlive = 100;
 
-            input.RemoveRange(0, 5);
-            result.RemoveRange(0, 5);
-            input.RemoveRange(100, 15);
-            result.RemoveRange(100, 15);
+            var testInput = input.GetRange(0, rangeDead);
+            var testResult = result.GetRange(0, rangeDead);
+
+            testInput.AddRange(input.GetRange(startAlive, rangeAlive));
+            testResult.AddRange(result.GetRange(startAlive, rangeAlive));
+
+            input.RemoveRange(0, rangeDead);
+            result.RemoveRange(0, rangeDead);
+
+            input.RemoveRange(startAlive - rangeDead, rangeAlive);
+            result.RemoveRange(startAlive - rangeDead, rangeAlive);
 
             var testInputArr = testInput.ToArray();
 
@@ -112,9 +109,8 @@ namespace encog_sample_csharp
             XORIdeal = result.ToArray();
             // create a neural network, without using a factory
             var network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(null, true, input[0].Length));
-            var hiddenLayerSize = 50;
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, hiddenLayerSize));
+            network.AddLayer(new BasicLayer(null, false, input[0].Length));
+            //var hiddenLayerSize = 50;
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
 
             network.Structure.FinalizeStructure();
@@ -126,9 +122,9 @@ namespace encog_sample_csharp
             IMLDataSet testSet = new BasicMLDataSet(testInputArr, testResult.ToArray());
 
             // train the neural network
-            IMLTrain train = new ScaledConjugateGradient(network, trainingSet);
+            IMLTrain train = new Backpropagation(network, trainingSet);
 
-            for (int epoch = 0; epoch < 1; epoch++)
+            for (int epoch = 0; epoch < 7; epoch++)
             {
                 for (int i = 0; i < XORInput.Length; i++)
                     train.Iteration();
@@ -141,11 +137,36 @@ namespace encog_sample_csharp
             foreach (IMLDataPair pair in testSet)
             {
                 IMLData output = network.Compute(pair.Input);
-                Console.WriteLine(@"actual=" + Math.Round(output[0],2) + @",ideal=" + pair.Ideal[0]);
+                Console.WriteLine(@"actual=" + Math.Round(output[0], 2) + @",ideal=" + pair.Ideal[0]);
             }
-            
+            string weigths = null;
+            var min = network.Flat.Weights.Min();
+            var max = network.Flat.Weights.Max();
+            var weightItems = OptimizeRange(network.Flat.Weights.Select(x => (new double[] { x })).ToArray(), -startAlive, startAlive);
+            foreach (var item in weightItems)
+            {
+                weigths += item[0].ToString() + " ";
+            }
+
             Console.Read();
             EncogFramework.Instance.Shutdown();
+        }
+
+        private static List<double[]> popResult(ref List<double[]> input)
+        {
+            List<double[]> result = input
+                            .Select(x => new double[] { x.Last() })
+                            .ToList();
+            var withoutResult = input
+.Select(x => x.ToList()).ToList();
+            for (int i = 0; i < withoutResult.Count(); i++)
+            {
+                withoutResult[i].RemoveAt(withoutResult[i].Count - 1);
+            }
+            input = withoutResult
+                .Select(x => x.ToArray())
+                .ToList();
+            return result;
         }
     }
 }
