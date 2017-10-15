@@ -13,11 +13,33 @@ using Encog;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace encog_sample_csharp
 {
     class Program
     {
+        static ConsoleColor ClosestConsoleColor(byte r, byte g, byte b)
+        {
+            ConsoleColor ret = 0;
+            double rr = r, gg = g, bb = b, delta = double.MaxValue;
+
+            foreach (ConsoleColor cc in Enum.GetValues(typeof(ConsoleColor)))
+            {
+                var n = Enum.GetName(typeof(ConsoleColor), cc);
+                var c = System.Drawing.Color.FromName(n == "DarkYellow" ? "Orange" : n); // bug fix
+                var t = Math.Pow(c.R - rr, 2.0) + Math.Pow(c.G - gg, 2.0) + Math.Pow(c.B - bb, 2.0);
+                if (t == 0.0)
+                    return cc;
+                if (t < delta)
+                {
+                    delta = t;
+                    ret = cc;
+                }
+            }
+            return ret;
+        }
+
         public static double[][] XORInput;
 
         public static double[][] XORIdeal;
@@ -82,26 +104,21 @@ namespace encog_sample_csharp
             List<double[]> input = readFile(@"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/all.txt");
             var fileSize = input.Count;
 
+            var testInput = input.GetRange(0, 10);
+            testInput.AddRange(input.GetRange(100, 35));
 
-            result = popResult(ref input);
-
-            input = OptimizeRange(input.ToArray(), 0, 1).ToList();
-
-            const int rangeDead = 5;
-            const int rangeAlive = 15;
+            const int rangeDead = 10;
+            const int rangeAlive = 50;
             const int startAlive = 100;
 
-            var testInput = input.GetRange(0, rangeDead);
-            var testResult = result.GetRange(0, rangeDead);
-
-            testInput.AddRange(input.GetRange(startAlive, rangeAlive));
-            testResult.AddRange(result.GetRange(startAlive, rangeAlive));
-
             input.RemoveRange(0, rangeDead);
-            result.RemoveRange(0, rangeDead);
+            input.RemoveRange(startAlive-rangeDead, rangeAlive);
 
-            input.RemoveRange(startAlive - rangeDead, rangeAlive);
-            result.RemoveRange(startAlive - rangeDead, rangeAlive);
+            result = popResult(ref input);
+            var testResult = popResult(ref testInput);
+
+            input = OptimizeRange(input.ToArray(), 0, 1).ToList();
+            testInput = OptimizeRange(testInput.ToArray(), 0, 1).ToList();
 
             var testInputArr = testInput.ToArray();
 
@@ -110,8 +127,9 @@ namespace encog_sample_csharp
             // create a neural network, without using a factory
             var network = new BasicNetwork();
             network.AddLayer(new BasicLayer(null, false, input[0].Length));
-            //var hiddenLayerSize = 50;
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
+            var hiddenLayerSize = 1;
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, hiddenLayerSize));
+            //network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
 
             network.Structure.FinalizeStructure();
             network.Reset();
@@ -124,7 +142,7 @@ namespace encog_sample_csharp
             // train the neural network
             IMLTrain train = new Backpropagation(network, trainingSet);
 
-            for (int epoch = 0; epoch < 7; epoch++)
+            for (int epoch = 0; epoch < 3; epoch++)
             {
                 for (int i = 0; i < XORInput.Length; i++)
                     train.Iteration();
@@ -134,18 +152,45 @@ namespace encog_sample_csharp
             train.FinishTraining();
             // test the neural network
             Console.WriteLine(@"Neural Network Results:");
+            int count = 0;
+            Console.WriteLine("Deads cases");
             foreach (IMLDataPair pair in testSet)
             {
+                Console.ForegroundColor = ConsoleColor.White;
+                if (count == rangeDead)
+                {
+                    Console.WriteLine("Alive cases");
+                    count += startAlive - rangeDead;
+                }
+                    
+                Console.Write(count++ + "  ");
                 IMLData output = network.Compute(pair.Input);
-                Console.WriteLine(@"actual=" + Math.Round(output[0], 2) + @",ideal=" + pair.Ideal[0]);
+                int color = (int)InterpolationLinear(-220, 220, 0, 1, output[0]);
+
+                
+                if (Math.Abs(color) > 60)
+                {
+                    int red = 0;
+                    int green = 0;
+                    if (color > 0)
+                        red = color;
+                    else
+                        green = Math.Abs(color);
+                    Console.ForegroundColor = ClosestConsoleColor((byte)red, (byte)green, 0);
+                }
+                
+                Console.WriteLine(@"actual=" 
+                    + output[0].ToString("0.00") 
+                    + @",ideal="
+                    + pair.Ideal[0]);
             }
             string weigths = null;
             var min = network.Flat.Weights.Min();
             var max = network.Flat.Weights.Max();
             var weightItems = OptimizeRange(network.Flat.Weights.Select(x => (new double[] { x })).ToArray(), -startAlive, startAlive);
-            foreach (var item in weightItems)
+            foreach (var item in network.Flat.Weights)
             {
-                weigths += item[0].ToString() + " ";
+                weigths += item.ToString() + " ";
             }
 
             Console.Read();
@@ -158,7 +203,7 @@ namespace encog_sample_csharp
                             .Select(x => new double[] { x.Last() })
                             .ToList();
             var withoutResult = input
-.Select(x => x.ToList()).ToList();
+                .Select(x => x.ToList()).ToList();
             for (int i = 0; i < withoutResult.Count(); i++)
             {
                 withoutResult[i].RemoveAt(withoutResult[i].Count - 1);
