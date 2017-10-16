@@ -62,6 +62,7 @@ namespace neuroApp
             patient.Birthday = datePicker_Birthday.SelectedDate.Value.ToString("dd.MM.yyyy");
             db.Patients.Add(patient);
             db.SaveChanges();
+            this.DialogResult = true;
             this.Close();
         }
 

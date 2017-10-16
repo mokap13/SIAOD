@@ -29,7 +29,12 @@ namespace neuroApp
         private void button_AddPatient_Click(object sender, RoutedEventArgs e)
         {
             AddPatientWIndow addPatientWindow = new AddPatientWIndow();
-            addPatientWindow.Show();
+            if(addPatientWindow.ShowDialog() == true)
+            {
+                var patients = db.Patients.ToList();
+                dataGrid_Patients.ItemsSource = patients;
+                dataGrid_Patients.Items.Refresh();
+            }
         }
 
         private void dataGrid_Patients_Loaded(object sender, RoutedEventArgs e)
@@ -75,6 +80,15 @@ namespace neuroApp
             foreach (Window window in App.Current.Windows)
             {
                 window.Close();
+            }
+        }
+
+        private void button_ChangePatient_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePatientWindow changePatientWindow = new ChangePatientWindow();
+            if(changePatientWindow.ShowDialog() == true)
+            {
+
             }
         }
     }
