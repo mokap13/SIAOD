@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neuroApp"
         mc:Ignorable="d"
-        Title="AddPatientWIndow" Height="494.551" Width="724.65">
+        Title="AddPatientWIndow" Height="401.998" Width="724.65">
     <Grid>
-        <TabControl TabStripPlacement="Left" Height="405" VerticalAlignment="Top" Width="auto">
+        <TabControl TabStripPlacement="Left" Height="320" VerticalAlignment="Top" Width="auto" Margin="0">
             <TabItem x:Name="passportData">
                 <TabItem.Header>
                     Паспортные данные
@@ -37,11 +37,6 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
-                        <CheckBox Content="Кашель" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170"/>
-                        <CheckBox Content="Артралгия" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
-                        <CheckBox Content="Снижение аппетита" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
-                        <CheckBox Content="Утомляемость" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
-                        <CheckBox Content="Мышечная слабость" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top"/>
                         <CheckBox Content="Чувство перебоев в работе сердца" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top"/>
                         <CheckBox Content="Снижение массы тела" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top"/>
                         <CheckBox Content="Фибриллитет" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="255"/>
@@ -153,59 +148,54 @@
                     Клинико-лабораторные данные
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5">
-                        <Grid Margin="10,10,10,364">
-                            <Label Content="Гемоглобин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,40,10,329">
-                            <Label Content="Эритроциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,70,10,304">
-                            <Label Content="Лейкоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,100,10,274">
-                            <Label Content="Тромбоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,130,10,244">
-                            <Label Content="Лимфоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,160,10,214">
-                            <Label Content="СОЭ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,190,10,179">
-                            <Label Content="АЛТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,220,10,154">
-                            <Label Content="АСТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top" />
-                        </Grid>
-                        <Grid Margin="10,250,10,119">
-                            <Label Content="Общий билирубин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-                        <Grid Margin="10,280,10,90">
-                            <Label Content="Креатинин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox HorizontalAlignment="Left" Height="23" Margin="143,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="317,0,-154,0" VerticalAlignment="Top"/>
-                        </Grid>
-
-
+                    <Grid Margin="50 20 50 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label      Grid.Row="0" Grid.Column="0"  Content="Гемоглобин"/>
+                        <TextBox    Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label      Grid.Row="1" Grid.Column="0" Content="Эритроциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <Label      Grid.Row="2" Grid.Column="0" Content="Лейкоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <Label      Grid.Row="3" Grid.Column="0" Content="Тромбоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <Label      Grid.Row="4" Grid.Column="0" Content="Лимфоциты" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <Label      Grid.Row="5" Grid.Column="0" Content="СОЭ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <Label      Grid.Row="6" Grid.Column="0" Content="АЛТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label      Grid.Row="7" Grid.Column="0" Content="АСТ" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label      Grid.Row="8" Grid.Column="0" Content="Общий билирубин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label      Grid.Row="9" Grid.Column="0" Content="Креатинин" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox    Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -245,8 +235,36 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
+            <TabItem x:Name="common">
+                <TabItem.Header>
+                    Общий раздел
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FF5E5E5">
+                        <CheckBox Content="Наличие ВИЧ-ассоциированных заболеваний" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Аритмия" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top"/>
+                        <StackPanel Margin="12,154,319,289" Orientation="Horizontal">
+                            <Label Content="Форма туберкулеза" Width="110" />
+                            <ComboBox HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top"/>
+                        </StackPanel>
+                        <CheckBox Content="Наличие парентеральных гепатитов" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Температура" HorizontalAlignment="Left" Margin="10,280,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Тахикардия" HorizontalAlignment="Left" Margin="10,382,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Наркомания(начал до 18 лет)" HorizontalAlignment="Left" Margin="307,417,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Бактериовыделение" HorizontalAlignment="Left" Margin="308,382,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Гепатомегалия" HorizontalAlignment="Left" Margin="10,347,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Сахарный диабет" HorizontalAlignment="Left" Margin="307,315,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Длительность ВИЧ-инфекции(года)" HorizontalAlignment="Left" Margin="10,315,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Спленомегалия" HorizontalAlignment="Left" Margin="307,253,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Кахексия" HorizontalAlignment="Left" Margin="307,193,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Лимфаденопатия" HorizontalAlignment="Left" Margin="307,160,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Инвалидность" HorizontalAlignment="Left" Margin="307,130,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="Прием АРВТ" HorizontalAlignment="Left" Margin="307,100,0,0" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
         </TabControl>
-        <Button Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="117" Click="button_addPatient_Click" IsEnabled="False"/>
+        <Button Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,0,0,31" Width="117" Click="button_addPatient_Click" IsEnabled="False" Height="25" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>
