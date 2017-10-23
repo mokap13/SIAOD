@@ -240,7 +240,7 @@
                     Общий раздел
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FF5E5E5">
+                    <Grid Background="LightGray">
                         <CheckBox Content="Наличие ВИЧ-ассоциированных заболеваний" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <CheckBox Content="Аритмия" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top"/>
                         <StackPanel Margin="12,154,319,289" Orientation="Horizontal">
