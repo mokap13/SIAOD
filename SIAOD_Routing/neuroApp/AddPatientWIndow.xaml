@@ -4,11 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neuroApp"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="AddPatientWIndow" Height="401.998" Width="724.65">
+    <!--<Window.Resources>
+        <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
+            <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="5"></Setter>
+        </Style>
+    </Window.Resources>-->
     <Grid>
         <TabControl TabStripPlacement="Left" Height="320" VerticalAlignment="Top" Width="auto" Margin="0">
-            <TabItem x:Name="passportData">
+            <TabControl.Resources>
+                <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
+                    <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="15"></Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem x:Name="passportData" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Паспортные данные
                 </TabItem.Header>
@@ -26,12 +37,12 @@
                         <Label Content="Дата рождения" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top"/>
                         <Label Content="№ отряда" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top"/>
                         <Label Content="Откуда прибыл" HorizontalAlignment="Left" Margin="11,187,0,0" VerticalAlignment="Top"/>
-                        <DatePicker Name="datePicker_Birthday" HorizontalAlignment="Left" Margin="137,136,0,0" VerticalAlignment="Top" Height="24" Width="216" SelectedDateChanged="datePicker_Birthday_SelectedDateChanged"/>
+                        <DatePicker Name="datePicker_Birthday" HorizontalAlignment="Left" Margin="137,136,0,0" VerticalAlignment="Top" Height="24" Width="216" SelectedDateChanged="datePicker_Birthday_SelectedDateChanged" Loaded="datePicker_Birthday_Loaded"/>
                         <Label Name="label_age" Content="" HorizontalAlignment="Left" Margin="372,135,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="complaints">
+            <TabItem x:Name="complaints" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Жалобы
                 </TabItem.Header>
@@ -43,7 +54,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="somaticStatusSpecials">
+            <TabItem x:Name="somaticStatusSpecials" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Особенности соматического статуса
                 </TabItem.Header>
@@ -65,7 +76,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="anamnesisSpecials">
+            <TabItem x:Name="anamnesisSpecials" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Особенности анамнеза
                 </TabItem.Header>
@@ -78,7 +89,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="hivStatus">
+            <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     ВИЧ-статус
                 </TabItem.Header>
@@ -98,7 +109,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="immunogramIndicators">
+            <TabItem x:Name="immunogramIndicators" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Показатели иммунограммы
                 </TabItem.Header>
@@ -117,7 +128,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="tuberculosisStatus">
+            <TabItem x:Name="tuberculosisStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Статус туберкулёзного процесса
                 </TabItem.Header>
@@ -143,7 +154,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="clinicalLaboratoryData">
+            <TabItem x:Name="clinicalLaboratoryData" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Клинико-лабораторные данные
                 </TabItem.Header>
@@ -199,7 +210,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="bacteriologicalData">
+            <TabItem x:Name="bacteriologicalData" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Бактериологические исследования
                 </TabItem.Header>
@@ -215,7 +226,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="pathologies">
+            <TabItem x:Name="pathologies" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Наличие сопутствующей патологии
                 </TabItem.Header>
@@ -235,7 +246,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="common">
+            <TabItem x:Name="common" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Общий раздел
                 </TabItem.Header>

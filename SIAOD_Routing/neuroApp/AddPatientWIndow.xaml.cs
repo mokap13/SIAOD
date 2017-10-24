@@ -100,5 +100,11 @@ namespace neuroApp
                 button_addPatient.IsEnabled = true;
             }
         }
+
+        private void datePicker_Birthday_Loaded(object sender, RoutedEventArgs e)
+        {
+            const int middleAge = 35;
+            datePicker_Birthday.SelectedDate = new DateTime(DateTime.Now.Year - middleAge, 1, 1);
+        }
     }
 }
