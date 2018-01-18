@@ -6,8 +6,6 @@
         xmlns:local="clr-namespace:neuroApp"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        GlowBrush="MediumBlue"
-        BorderThickness="1"
         Title="MainWindow" Height="424" Width="644" Closed="Window_Closed">
     <Grid>
         <DataGrid Name="dataGrid_Patients" HorizontalAlignment="Left" Height="240" Margin="10,10,0,0" VerticalAlignment="Top" Width="616" Loaded="dataGrid_Patients_Loaded" IsReadOnly="True"/>

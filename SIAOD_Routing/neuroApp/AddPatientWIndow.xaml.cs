@@ -19,7 +19,7 @@ namespace neuroApp
     /// <summary>
     /// Логика взаимодействия для AddPatientWIndow.xaml
     /// </summary>
-    public partial class AddPatientWIndow : Window
+    public partial class AddPatientWIndow
     {
         ApplicationContext db = new ApplicationContext();
         public AddPatientWIndow()
@@ -37,11 +37,11 @@ namespace neuroApp
             Regex regex = new Regex("[^а-яА-ЯёЁa-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-        private void textBox_patientHeight_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_patientHeight_TextChanged(object sender, TextChangedEventArgs e)
         {
-            textBox_patientWeigth_TextChanged(sender,e);
+            TextBox_patientWeigth_TextChanged(sender,e);
         }
-        private void textBox_patientWeigth_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_patientWeigth_TextChanged(object sender, TextChangedEventArgs e)
         {
             if ((textBox_patientHeight.Text != String.Empty)
                 && textBox_patientWeigth.Text != String.Empty)
@@ -53,44 +53,46 @@ namespace neuroApp
             }
         }
 
-        private void button_addPatient_Click(object sender, RoutedEventArgs e)
+        private void Button_addPatient_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = new Patient();
-            patient.Name = textBox_Name.Text;
-            patient.Family = textBox_Family.Text;
-            patient.Otchestvo = textBox_Otchestvo.Text;
-            patient.Birthday = datePicker_Birthday.SelectedDate.Value.ToString("dd.MM.yyyy");
+            Patient patient = new Patient()
+            {
+                Name = textBox_Name.Text,
+                Family = textBox_Family.Text,
+                Otchestvo = textBox_Otchestvo.Text,
+                Birthday = datePicker_Birthday.SelectedDate.Value.ToString("dd.MM.yyyy")
+            };
             db.Patients.Add(patient);
             db.SaveChanges();
             this.DialogResult = true;
             this.Close();
         }
 
-        private void textBox_Family_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Family_TextChanged(object sender, TextChangedEventArgs e)
         {
-            button_addPatient_CheckIsEnabled();
+            Button_addPatient_CheckIsEnabled();
         }
 
-        private void textBox_Name_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            button_addPatient_CheckIsEnabled();
+            Button_addPatient_CheckIsEnabled();
         }
 
-        private void textBox_Otchestvo_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Otchestvo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            button_addPatient_CheckIsEnabled();
+            Button_addPatient_CheckIsEnabled();
         }
 
-        private void datePicker_Birthday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void DatePicker_Birthday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            button_addPatient_CheckIsEnabled();
+            Button_addPatient_CheckIsEnabled();
             var age = (DateTime.Now.Year - datePicker_Birthday.SelectedDate.Value.Year);
             if (datePicker_Birthday.SelectedDate > DateTime.Now.AddYears(-age))
                 age--;
             label_age.Content = age.ToString()+" - возраст";
         }
 
-        private void button_addPatient_CheckIsEnabled()
+        private void Button_addPatient_CheckIsEnabled()
         {
             if( (textBox_Family.Text!=String.Empty)
                 && (textBox_Name.Text != String.Empty)
@@ -101,7 +103,7 @@ namespace neuroApp
             }
         }
 
-        private void datePicker_Birthday_Loaded(object sender, RoutedEventArgs e)
+        private void DatePicker_Birthday_Loaded(object sender, RoutedEventArgs e)
         {
             const int middleAge = 35;
             datePicker_Birthday.SelectedDate = new DateTime(DateTime.Now.Year - middleAge, 1, 1);

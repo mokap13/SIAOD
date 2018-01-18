@@ -16,6 +16,36 @@ namespace neuroApp
         private string otchestvo;
         private string birthday;
 
+        private bool priemARVT;
+        private int formaTuberkuleza;
+        private bool defecitMassTela;
+        private bool recediveTuberkulezProcess;
+        private bool destructionLegochTkan;
+        private int dlitelnVichInfection;
+        private int narkomania;
+        private bool tahicardia;
+        private bool arithmia;
+        private bool povishTempTela;
+        private bool gepotamegalia;
+        private bool splenomegalia;
+        private bool limfodenatopia;
+        private int virusNagruzka;
+        private int CD4;
+        private int gemoglobin;
+        private int SOE;
+        private double leikozit;
+        private double limfozit;
+        private double trombozit;
+        private double ALT;
+        private double AST;
+        private double obhiBilirubin;
+        private double kreatenin;
+        private int bacteriaVidel;
+        private int paranteralGepatit;
+        private bool saharDiabet;
+        private bool vichAssotiationZabol;
+
+
         public int Id { get; set; }
         public string Name
         {
@@ -54,6 +84,153 @@ namespace neuroApp
                 OnPropertyChanged("Birthday");
             }
         }
+
+        //#region HealthIndicators
+        //public bool PriemARVT
+        //{
+        //    get { return priemARVT; }
+        //    set
+        //    {
+        //        priemARVT = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public int FormaTuberkuleza
+        //{
+        //    get { return formaTuberkuleza; }
+        //    set
+        //    {
+        //        formaTuberkuleza = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //public string PriemARVT
+        //{
+        //    get { return birthday; }
+        //    set
+        //    {
+        //        birthday = value;
+        //        OnPropertyChanged("Birthday");
+        //    }
+        //}
+        //#endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

@@ -19,7 +19,7 @@ namespace neuroApp
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow
     {
         ApplicationContext db = new ApplicationContext();
         public MainWindow()
@@ -30,7 +30,7 @@ namespace neuroApp
         private void button_AddPatient_Click(object sender, RoutedEventArgs e)
         {
             AddPatientWIndow addPatientWindow = new AddPatientWIndow();
-            if(addPatientWindow.ShowDialog() == true)
+            if (addPatientWindow.ShowDialog() == true)
             {
                 var patients = db.Patients.ToList();
                 dataGrid_Patients.ItemsSource = patients;
