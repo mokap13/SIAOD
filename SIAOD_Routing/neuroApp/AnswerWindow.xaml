@@ -8,8 +8,8 @@
         Title="AnswerWindow" Height="143.478" Width="280.435">
     <Grid>
         <Label Name="label_Name" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button Name="button_Ok" Content="Ок" HorizontalAlignment="Left" Margin="26,82,0,0" VerticalAlignment="Top" Width="75" Click="button_Ok_Click"/>
-        <Button Name="button_Cancel" Content="Отмена" HorizontalAlignment="Left" Margin="170,82,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.052,0.257" Click="button_Cancel_Click"/>
+        <Button Name="button_Ok" Content="Ок" HorizontalAlignment="Left" Margin="26,82,0,0" VerticalAlignment="Top" Width="75" Click="Button_Ok_Click"/>
+        <Button Name="button_Cancel" Content="Отмена" HorizontalAlignment="Left" Margin="170,82,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.052,0.257" Click="Button_Cancel_Click"/>
 
     </Grid>
 </Window>

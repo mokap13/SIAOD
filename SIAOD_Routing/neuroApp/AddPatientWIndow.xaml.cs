@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -108,5 +107,98 @@ namespace neuroApp
             const int middleAge = 35;
             datePicker_Birthday.SelectedDate = new DateTime(DateTime.Now.Year - middleAge, 1, 1);
         }
-    }
-}
+
+        private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var medicaments = (sender as ListBox).SelectedItems;
+
+            if(medicaments.Count!=0)
+            {
+                if (medicaments.Contains("H")
+                && (medicaments.Contains("R")
+                || medicaments.Contains("Rb")))
+                {
+                    if ((medicaments.Contains("Mfx")
+                        || medicaments.Contains("Lfx")
+                        || medicaments.Contains("Ofx"))
+                        && (medicaments.Contains("Cm")
+                        || medicaments.Contains("Am")
+                        || medicaments.Contains("Km")))
+                    {
+                        label_medicamentResist.Content = "ШЛУ";
+                    }
+                    else
+                    {
+                        label_medicamentResist.Content = "МЛУ";
+                    }
+                }
+                else
+                {
+                    label_medicamentResist.Content = "ЛУ";
+                }
+            }
+            else
+            {
+                label_medicamentResist.Content = "ЛУ отсутствует";
+            }
+        }
+
+        private void ListtBox_medicamentResist_Loaded(object sender, RoutedEventArgs e)
+        {
+            medicamentResist.ItemsSource = new List<string>() {
+                "H", "S", "R", "Rb", "E", "Pt",
+                "Et", "Cm","Am", "Km",
+                "PAS", "Cs", "Lnz", "Mfx",
+                "Lfx", "Ofx", "Trd", "Bq",
+                "Amx", "Imp", "Mp"
+            };
+        }
+
+        private void TextBox_CHSS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = (sender as TextBox).Text;
+            if(!String.IsNullOrEmpty(text))
+            {
+                if (!Double.TryParse(text, out Double chss))
+                {
+                    chss = Double.MaxValue;
+                    (sender as TextBox).Text = chss.ToString();
+                }
+                checkBox_tahicardia.IsChecked =
+                    (chss > 85)
+                    ? true
+                    : false;
+            }
+            else
+            {
+                checkBox_lihoradka.IsChecked = false;
+            }
+        }
+
+        private void TextBox_temperature_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = (sender as TextBox).Text;
+            if (!String.IsNullOrEmpty(text))
+            {
+                if (!Double.TryParse(text, out Double temperature))
+                {
+                    temperature = Double.MaxValue;
+                    (sender as TextBox).Text = temperature.ToString();
+                }
+                checkBox_lihoradka.IsChecked =
+                    (temperature > 37)
+                    ? true
+                    : false;
+            }
+            else
+            {
+                checkBox_lihoradka.IsChecked = false;
+            }
+        }
+    }                                                           
+}                                                               
+
+
+
+
+                                                                

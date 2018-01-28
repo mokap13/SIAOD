@@ -25,12 +25,12 @@ namespace neuroApp
             label_Name.Content = name;
         }
 
-        private void button_Ok_Click(object sender, RoutedEventArgs e)
+        private void Button_Ok_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
 
-        private void button_Cancel_Click(object sender, RoutedEventArgs e)
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
