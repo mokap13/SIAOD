@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Analyzes;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,10 +21,18 @@ namespace neuroApp
     /// </summary>
     public partial class AddPatientWIndow
     {
-        ApplicationContext db = new ApplicationContext();
+        private ApplicationContext db = new ApplicationContext();
+        public ObjectiveStatus ObjectiveStatus { get; set; }
+
         public AddPatientWIndow()
         {
             InitializeComponent();
+
+            ObjectiveStatus = new ObjectiveStatus();
+            Patient patient = new Patient();
+            patient.ObjectiveStatuses.Add(ObjectiveStatus);
+
+            this.DataContext = patient;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -36,32 +45,11 @@ namespace neuroApp
             Regex regex = new Regex("[^а-яА-ЯёЁa-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-        private void TextBox_patientHeight_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox_patientWeigth_TextChanged(sender,e);
-        }
-        private void TextBox_patientWeigth_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if ((textBox_patientHeight.Text != String.Empty)
-                && textBox_patientWeigth.Text != String.Empty)
-            {
-                var weight = double.Parse(textBox_patientWeigth.Text);
-                var heigth = double.Parse(textBox_patientHeight.Text);
-                var IMT = Math.Round((weight / ((heigth * heigth) / 10_000)), 2);
-                label_IMT.Content = string.Format(IMT.ToString(), "000");
-            }
-        }
 
         private void Button_addPatient_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = new Patient()
-            {
-                Name = textBox_Name.Text,
-                Family = textBox_Family.Text,
-                Otchestvo = textBox_Otchestvo.Text,
-                Birthday = datePicker_Birthday.SelectedDate.Value.ToString("dd.MM.yyyy")
-            };
-            db.Patients.Add(patient);
+            
+            db.Patients.Add(this.DataContext as Patient);
             db.SaveChanges();
             this.DialogResult = true;
             this.Close();
@@ -152,48 +140,6 @@ namespace neuroApp
                 "Lfx", "Ofx", "Trd", "Bq",
                 "Amx", "Imp", "Mp"
             };
-        }
-
-        private void TextBox_CHSS_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string text = (sender as TextBox).Text;
-            if(!String.IsNullOrEmpty(text))
-            {
-                if (!Double.TryParse(text, out Double chss))
-                {
-                    chss = Double.MaxValue;
-                    (sender as TextBox).Text = chss.ToString();
-                }
-                checkBox_tahicardia.IsChecked =
-                    (chss > 85)
-                    ? true
-                    : false;
-            }
-            else
-            {
-                checkBox_lihoradka.IsChecked = false;
-            }
-        }
-
-        private void TextBox_temperature_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string text = (sender as TextBox).Text;
-            if (!String.IsNullOrEmpty(text))
-            {
-                if (!Double.TryParse(text, out Double temperature))
-                {
-                    temperature = Double.MaxValue;
-                    (sender as TextBox).Text = temperature.ToString();
-                }
-                checkBox_lihoradka.IsChecked =
-                    (temperature > 37)
-                    ? true
-                    : false;
-            }
-            else
-            {
-                checkBox_lihoradka.IsChecked = false;
-            }
         }
     }                                                           
 }                                                               

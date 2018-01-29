@@ -24,7 +24,7 @@ namespace neuroApp
             InitializeComponent();
         }
 
-        private void button_ChangePatient_Click(object sender, RoutedEventArgs e)
+        private void Button_ChangePatient_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();

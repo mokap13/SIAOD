@@ -27,7 +27,7 @@ namespace neuroApp
             InitializeComponent();
         }
 
-        private void button_AddPatient_Click(object sender, RoutedEventArgs e)
+        private void Button_AddPatient_Click(object sender, RoutedEventArgs e)
         {
             AddPatientWIndow addPatientWindow = new AddPatientWIndow();
             if (addPatientWindow.ShowDialog() == true)
@@ -38,7 +38,7 @@ namespace neuroApp
             }
         }
 
-        private void dataGrid_Patients_Loaded(object sender, RoutedEventArgs e)
+        private void DataGrid_Patients_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace neuroApp
             }  
         }
 
-        private void button_DeletePatient_Click(object sender, RoutedEventArgs e)
+        private void Button_DeletePatient_Click(object sender, RoutedEventArgs e)
         {
             if (dataGrid_Patients.SelectedItems.Count != 0)
             {
@@ -69,7 +69,7 @@ namespace neuroApp
             }
         }
 
-        private void button_RefreshDataGrid_Click(object sender, RoutedEventArgs e)
+        private void Button_RefreshDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var patients = db.Patients.ToList();
             dataGrid_Patients.ItemsSource = patients;
@@ -84,7 +84,7 @@ namespace neuroApp
             }
         }
 
-        private void button_ChangePatient_Click(object sender, RoutedEventArgs e)
+        private void Button_ChangePatient_Click(object sender, RoutedEventArgs e)
         {
             ChangePatientWindow changePatientWindow = new ChangePatientWindow();
             if(changePatientWindow.ShowDialog() == true)

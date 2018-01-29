@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Analyzes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace neuroApp
 {
-    class Patient : INotifyPropertyChanged
+    public class Patient : INotifyPropertyChanged
     {
         private string name;
         private string family;
@@ -45,6 +46,11 @@ namespace neuroApp
         private bool saharDiabet;
         private bool vichAssotiationZabol;
 
+        public Patient()
+        {
+            ObjectiveStatuses = new List<ObjectiveStatus>();
+        }
+        
 
         public int Id { get; set; }
         public string Name
@@ -77,7 +83,7 @@ namespace neuroApp
 
         public string Birthday
         {
-            get{ return birthday; }
+            get { return birthday; }
             set
             {
                 birthday = value;
@@ -85,152 +91,7 @@ namespace neuroApp
             }
         }
 
-        //#region HealthIndicators
-        //public bool PriemARVT
-        //{
-        //    get { return priemARVT; }
-        //    set
-        //    {
-        //        priemARVT = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public int FormaTuberkuleza
-        //{
-        //    get { return formaTuberkuleza; }
-        //    set
-        //    {
-        //        formaTuberkuleza = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //public string PriemARVT
-        //{
-        //    get { return birthday; }
-        //    set
-        //    {
-        //        birthday = value;
-        //        OnPropertyChanged("Birthday");
-        //    }
-        //}
-        //#endregion
+        public List<ObjectiveStatus> ObjectiveStatuses{ get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

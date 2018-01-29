@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ChangePatientWindow" Height="300" Width="300">
     <Grid>
-        <Button Content="Изменить" Margin="10,0,0,10" HorizontalAlignment="Left" Width="76" Height="20" VerticalAlignment="Bottom" Click="button_ChangePatient_Click"/>
+        <Button Content="Изменить" Margin="10,0,0,10" HorizontalAlignment="Left" Width="76" Height="20" VerticalAlignment="Bottom" Click="Button_ChangePatient_Click"/>
 
     </Grid>
 </Window>
