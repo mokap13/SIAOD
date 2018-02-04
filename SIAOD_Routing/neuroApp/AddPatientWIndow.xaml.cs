@@ -30,7 +30,6 @@ namespace neuroApp
 
             ObjectiveStatus = new ObjectiveStatus();
             Patient patient = new Patient();
-            patient.ObjectiveStatuses.Add(ObjectiveStatus);
 
             this.DataContext = patient;
         }

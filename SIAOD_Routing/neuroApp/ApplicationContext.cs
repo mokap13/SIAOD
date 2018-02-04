@@ -15,21 +15,22 @@ namespace neuroApp
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Patient>()
-                .HasMany(p => p.ObjectiveStatuses)
-                .WithMany(o => o.Patients)
-                .Map(m =>
-                {
-                    // Ссылка на промежуточную таблицу
-                    m.ToTable("PatientObjectiveStatuses");
+            //modelBuilder.Entity<Patient>()
+            //    .HasMany(p => p.ObjectiveStatuses)
+            //    .WithMany(o => o.Patients)
+            //    .Map(m =>
+            //    {
+            //        // Ссылка на промежуточную таблицу
+            //        m.ToTable("PatientObjectiveStatuses");
 
-                    // Настройка внешних ключей промежуточной таблицы
-                    m.MapLeftKey("Patient_Id");
-                    m.MapRightKey("ObjectiveStatus_Id");
-                });
+            //        // Настройка внешних ключей промежуточной таблицы
+            //        m.MapLeftKey("Patient_Id");
+            //        m.MapRightKey("ObjectiveStatus_Id");
+            //    });
         }
 
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<ObjectiveStatus> ObjectiveStatuses { get; set; }
+        public DbSet<TuberculosisForm> TuberculosisForms { get; set; }
+        //public DbSet<ObjectiveStatus> ObjectiveStatuses { get; set; }
     }
 }

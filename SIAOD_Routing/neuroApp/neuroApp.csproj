@@ -106,7 +106,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Analyzes\HIVAssociateDisease.cs" />
     <Compile Include="Analyzes\ObjectiveStatus.cs" />
+    <Compile Include="Analyzes\TuberculosisForm.cs" />
     <Compile Include="AnswerWindow.xaml.cs">
       <DependentUpon>AnswerWindow.xaml</DependentUpon>
     </Compile>

@@ -45,6 +45,9 @@
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -66,17 +69,24 @@
                                  PreviewTextInput="TextValidationTextBox" 
                                  TextChanged="TextBox_Otchestvo_TextChanged"/>
 
-                        <Label Content="№ отряда" Grid.Column="0" Grid.Row="3"/>
-                        <TextBox Grid.Column="1" Grid.Row="3"/>
-                        <Label Content="Откуда прибыл" Grid.Column="0" Grid.Row="4"/>
-                        <TextBox Grid.Column="1" Grid.Row="4"/>
-
-                        <Label Content="Дата рождения" Grid.Column="0" Grid.Row="5"/>
-                        <DatePicker x:Name="datePicker_Birthday" Grid.Column="1" Grid.Row="5" 
+                        <Label Content="Дата рождения" Grid.Column="0" Grid.Row="3"/>
+                        <DatePicker x:Name="datePicker_Birthday" Grid.Column="1" Grid.Row="3" 
                                     SelectedDateChanged="DatePicker_Birthday_SelectedDateChanged" 
                                     Loaded="DatePicker_Birthday_Loaded"/>
-                        <Label x:Name="label_age" Content="" Grid.Column="1" Grid.Row="6" 
+                        <Label x:Name="label_age" Content="" Grid.Column="1" Grid.Row="4" 
                                Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+
+                        <Label Content="Статья УК РФ" Grid.Column="0" Grid.Row="5"/>
+                        <TextBox Grid.Column="1" Grid.Row="5"/>
+                        <Label Content="Начало срока" Grid.Column="0" Grid.Row="6"/>
+                        <TextBox Grid.Column="1" Grid.Row="6"/>
+                        <Label Content="Конец срока" Grid.Column="0" Grid.Row="7"/>
+                        <TextBox Grid.Column="1" Grid.Row="7"/>
+                        <Label Content="Адрес" Grid.Column="0" Grid.Row="8"/>
+                        <TextBox Grid.Column="1" Grid.Row="8"/>
+
+                        <Label Content="ФИО лечащего врача" Grid.Column="0" Grid.Row="9"/>
+                        <TextBox Grid.Column="1" Grid.Row="9"/>
                     </Grid>
                 </GroupBox>
             </TabItem>
@@ -111,42 +121,106 @@
                     </Grid>
                 </GroupBox>
             </TabItem>
-            <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
-                <TabItem.Header>ВИЧ</TabItem.Header>
-                <GroupBox Header="ВИЧ">
-                    <StackPanel Margin="3">
-                        <UniformGrid Columns="2">
-                            <Label Content="Длительность ВИЧ-инфекции"/>
-                            <TextBox PreviewTextInput="NumberValidationTextBox"/>
-                        </UniformGrid>
+            <TabItem x:Name="somaticStatusSpecials" Style="{DynamicResource MenuLevel2}">
+                <TabItem.Header>Объективный статус</TabItem.Header>
+                <GroupBox Header="Объективный статус">
+                    <GroupBox.Resources>
+                        <Analyzes:ObjectiveStatus x:Key="ObjectiveStatus"></Analyzes:ObjectiveStatus>
+                    </GroupBox.Resources>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="3">
+                            <UniformGrid Columns="3">
+                                <Label Content="Состояние"/>
+                                <ComboBox SelectedIndex="{Binding Source={StaticResource ObjectiveStatus}, Path=Sostoianie}">
+                                    <ComboBoxItem Content="Удовлетворительное"/>
+                                    <ComboBoxItem Content="Средней степени тяжести"/>
+                                    <ComboBoxItem Content="Тяжёлое"/>
+                                </ComboBox>
+                            </UniformGrid>
 
-                        <UniformGrid Columns="2">
-                            <Label Content="Стадия ВИЧ-инфекции"/>
-                            <ComboBox x:Name="hivGradesList">
-                                <TextBlock><Run Text="1"/></TextBlock>
-                                <TextBlock><Run Text="2"/></TextBlock>
-                                <TextBlock><Run Text="3"/></TextBlock>
-                                <TextBlock><Run Text="4А"/></TextBlock>
-                                <TextBlock><Run Text="4Б"/></TextBlock>
-                                <TextBlock><Run Text="4В"/></TextBlock>
-                                <TextBlock><Run Text="5 (СПИД)"/></TextBlock>
-                            </ComboBox>
-                        </UniformGrid>
+                            <UniformGrid Columns="3" Rows="2" Margin="0 5 0 5">
+                                <Label Content="ЧСС"/>
+                                <TextBox PreviewTextInput="NumberValidationTextBox"
+                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHSS, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="уд/мин"/>
+                                <CheckBox x:Name="checkBox_tahicardia" 
+                                          Content="Тахикардия" 
+                                          IsEnabled="False"
+                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tahicardia, Mode=OneWay}">
+                                    <CheckBox.ToolTip>Вычисляется из ЧСС</CheckBox.ToolTip>
+                                </CheckBox>
 
-                        <UniformGrid Columns="2">
-                            <Label Content="Фаза ВИЧ"/>
-                            <ComboBox x:Name="hivPhase">
-                                <TextBlock><Run Text="Прогрессирование"/></TextBlock>
-                                <TextBlock><Run Text="Ремиссия"/></TextBlock>
-                            </ComboBox>
-                        </UniformGrid>
-                        <CheckBox Content="Отсутствие приверженности к АРВТ"/>
-                        <CheckBox Content="Наркомания"/>
-                    </StackPanel>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="3">
+                                <Label Content="Артериальное давление"/>
+                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialnoeDavlenie, UpdateSourceTrigger=PropertyChanged}" 
+                                         PreviewTextInput="NumberValidationTextBox"/>
+                                <Label Content="мм рт. ст."/>
+                            </UniformGrid>
+                            <UniformGrid Columns="3">
+                                <Label Content="ЧДД"/>
+                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHDD, UpdateSourceTrigger=PropertyChanged}"
+                                         PreviewTextInput="NumberValidationTextBox"/>
+                                <Label Content="/мин"/>
+                            </UniformGrid>
+                            <UniformGrid Columns="3" Margin="0 5 0 5">
+                                <Label Content="Температура"/>
+                                <TextBox PreviewTextInput="NumberValidationTextBox" 
+                                         Text="{Binding Source={StaticResource ObjectiveStatus},Path=Temperature,UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="С°"/>
+                                <CheckBox x:Name="checkBox_lihoradka" 
+                                          ToolTip="Вычисляется из температуры"
+                                          Content="Лихорадка" 
+                                          IsEnabled="False"
+                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Lihoradka,Mode=OneWay}"/>
+
+                            </UniformGrid>
+
+                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Limfadenatopia}"
+                                      Content="Лимфаденатопия"/>
+
+                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Arythmia}"
+                                      Content="Аритмия"/>
+                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Splenomegalia}"
+                                      Content="Спленомегалия"/>
+                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Gepatomegalia}"
+                                      Content="Гепатомегалия"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="3">
+                            <UniformGrid Columns="2">
+                                <Label Content="Рост (см)"/>
+                                <TextBox x:Name="textBox_patientHeight" 
+                                         PreviewTextInput="NumberValidationTextBox" 
+                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
+                            </UniformGrid>
+                            <UniformGrid Columns="2">
+                                <Label Content="Вес (кг)"/>
+                                <TextBox x:Name="textBox_patientWeigth" 
+                                         PreviewTextInput="NumberValidationTextBox"
+                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
+                            </UniformGrid>
+                            <UniformGrid Columns="2">
+                                <Label Content="ИМТ"/>
+                                <Label x:Name="label_IMT" 
+                                       Content="{Binding Source={StaticResource ObjectiveStatus}, Path=IMT, StringFormat=N2}" 
+                                       Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </UniformGrid>
+                            <CheckBox Content="Дефицит массы тела" 
+                                      ToolTip="Вычисляется из ИМТ"
+                                      IsEnabled="False"
+                                      IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=DefecitMassiTela, Mode=OneWay}"/>
+                        </StackPanel>
+                    </Grid>
                 </GroupBox>
             </TabItem>
             <TabItem x:Name="clinicalLaboratoryData" Style="{DynamicResource MenuLevel2}">
-                <TabItem.Header>Клинико-лабораторные данные</TabItem.Header>
+                <TabItem.Header>Клиниколабораторные данные</TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="42*"/>
@@ -201,6 +275,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="85*"/>
@@ -219,6 +294,9 @@
 
                             <Label Content="Креатинин" Grid.Column="0" Grid.Row="4"/>
                             <TextBox Grid.Column="1" Grid.Row="4" PreviewTextInput="NumberValidationTextBox"/>
+                            
+                            <Label Content="Глюкоза" Grid.Column="0" Grid.Row="5"/>
+                            <TextBox Grid.Column="1" Grid.Row="5" PreviewTextInput="NumberValidationTextBox"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Иммунограмма" Grid.Row="1" Grid.ColumnSpan="2"  Padding="1">
@@ -246,104 +324,6 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-            </TabItem>
-            <TabItem x:Name="somaticStatusSpecials" Style="{DynamicResource MenuLevel2}">
-                <TabItem.Header>Объективный статус</TabItem.Header>
-                <GroupBox Header="Объективный статус">
-                    <GroupBox.Resources>
-                        <Analyzes:ObjectiveStatus x:Key="ObjectiveStatus"></Analyzes:ObjectiveStatus>
-                    </GroupBox.Resources>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="3">
-                            <UniformGrid Columns="3">
-                                <Label Content="Состояние"/>
-                                <ComboBox SelectedIndex="{Binding Source={StaticResource ObjectiveStatus}, Path=Sostoianie}">
-                                    <ComboBoxItem Content="Удовлетворительное"/>
-                                    <ComboBoxItem Content="Средней степени тяжести"/>
-                                    <ComboBoxItem Content="Тяжёлое"/>
-                                </ComboBox>
-                            </UniformGrid>
-
-                            <UniformGrid Columns="3" Rows="2" Margin="0 5 0 5">
-                                <Label Content="ЧСС"/>
-                                <TextBox PreviewTextInput="NumberValidationTextBox"
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHSS, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="уд/мин"/>
-                                <CheckBox x:Name="checkBox_tahicardia" 
-                                          ToolTip="Вычисляется из ЧСС"
-                                          Content="Тахикардия" 
-                                          IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tahicardia, Mode=OneWay}"/>
-
-                            </UniformGrid>
-                           
-                            <UniformGrid Columns="3">
-                                <Label Content="Артериальное давление"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialnoeDavlenie, UpdateSourceTrigger=PropertyChanged}" 
-                                         PreviewTextInput="NumberValidationTextBox"/>
-                                <Label Content="мм рт. ст."/>
-                            </UniformGrid>
-                            <UniformGrid Columns="3">
-                                <Label Content="ЧДД"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHDD, UpdateSourceTrigger=PropertyChanged}"
-                                         PreviewTextInput="NumberValidationTextBox"/>
-                                <Label Content="/мин"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="3" Margin="0 5 0 5">
-                                <Label Content="Температура"/>
-                                <TextBox PreviewTextInput="NumberValidationTextBox" 
-                                         Text="{Binding Source={StaticResource ObjectiveStatus},Path=Temperature,UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="С°"/>
-                                <CheckBox x:Name="checkBox_lihoradka" 
-                                          ToolTip="Вычисляется из температуры"
-                                          Content="Лихорадка" 
-                                          IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Lihoradka,Mode=OneWay}"/>
-
-                            </UniformGrid>
-                            
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Limfadenatopia}"
-                                      Content="Лимфаденатопия"/>
-
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Arythmia}"
-                                      Content="Аритмия"/>
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Splenomegalia}"
-                                      Content="Спленомегалия"/>
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Gepatomegalia}"
-                                      Content="Гепатомегалия"/>
-                            </StackPanel>
-
-                        <StackPanel Grid.Column="1" Margin="3">
-                            <UniformGrid Columns="2">
-                                <Label Content="Рост (см)"/>
-                                <TextBox x:Name="textBox_patientHeight" 
-                                         PreviewTextInput="NumberValidationTextBox" 
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Label Content="Вес (кг)"/>
-                                <TextBox x:Name="textBox_patientWeigth" 
-                                         PreviewTextInput="NumberValidationTextBox"
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Label Content="ИМТ"/>
-                                <Label x:Name="label_IMT" 
-                                       Content="{Binding Source={StaticResource ObjectiveStatus}, Path=IMT, StringFormat=N2}" 
-                                       Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
-                            </UniformGrid>
-                            <CheckBox Content="Дефицит массы тела" 
-                                      ToolTip="Вычисляется из ИМТ"
-                                      IsEnabled="False"
-                                      IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=DefecitMassiTela, Mode=OneWay}"/>
-                        </StackPanel>
-
-                    </Grid>
-                </GroupBox>
             </TabItem>
             <TabItem x:Name="tuberculosisStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Туберкулёз</TabItem.Header>
@@ -393,6 +373,68 @@
                                    Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
                                    Content="ЛУ отсутствует"/>
                         </StackPanel>
+                    </Grid>
+                </GroupBox>
+            </TabItem>
+            <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
+                <TabItem.Header>ВИЧ</TabItem.Header>
+                <GroupBox Header="ВИЧ">
+                    <StackPanel Margin="3">
+                        <UniformGrid Columns="2">
+                            <Label Content="Длительность ВИЧ-инфекции"/>
+                            <TextBox PreviewTextInput="NumberValidationTextBox"/>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2">
+                            <Label Content="Стадия ВИЧ-инфекции"/>
+                            <ComboBox x:Name="hivGradesList">
+                                <TextBlock><Run Text="1"/></TextBlock>
+                                <TextBlock><Run Text="2"/></TextBlock>
+                                <TextBlock><Run Text="3"/></TextBlock>
+                                <TextBlock><Run Text="4А"/></TextBlock>
+                                <TextBlock><Run Text="4Б"/></TextBlock>
+                                <TextBlock><Run Text="4В"/></TextBlock>
+                                <TextBlock><Run Text="5 (СПИД)"/></TextBlock>
+                            </ComboBox>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2">
+                            <Label Content="Фаза ВИЧ"/>
+                            <ComboBox x:Name="hivPhase">
+                                <TextBlock><Run Text="Прогрессирование"/></TextBlock>
+                                <TextBlock><Run Text="Ремиссия"/></TextBlock>
+                            </ComboBox>
+                        </UniformGrid>
+                        <CheckBox Content="Отсутствие приверженности к АРВТ"/>
+                        <CheckBox Content="Наркомания"/>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem x:Name="hivAssociateDisease" Style="{DynamicResource MenuLevel2}">
+                <TabItem.Header>
+                    Вич-ассоциированные заболевания
+                </TabItem.Header>
+                <GroupBox>
+                    <GroupBox.Header>Вич-ассоциированные заболевания</GroupBox.Header>
+                    <Grid Margin="10">
+                        <ListView Name="lvUsers">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                                    <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
+                                </GridView>
+                            </ListView.View>
+
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                        </ListView>
                     </Grid>
                 </GroupBox>
             </TabItem>

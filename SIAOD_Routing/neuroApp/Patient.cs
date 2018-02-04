@@ -45,12 +45,12 @@ namespace neuroApp
         private int paranteralGepatit;
         private bool saharDiabet;
         private bool vichAssotiationZabol;
+        private TuberculosisForm tuberculosisForm;
 
         public Patient()
         {
-            ObjectiveStatuses = new List<ObjectiveStatus>();
         }
-        
+
 
         public int Id { get; set; }
         public string Name
@@ -91,7 +91,15 @@ namespace neuroApp
             }
         }
 
-        public List<ObjectiveStatus> ObjectiveStatuses{ get; set; }
+        public TuberculosisForm TuberculosisForm
+        {
+            get { return tuberculosisForm; }
+            set
+            {
+                tuberculosisForm = value;
+                OnPropertyChanged("TuberculosisForm");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
