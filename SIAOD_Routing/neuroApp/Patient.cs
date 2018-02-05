@@ -90,7 +90,7 @@ namespace neuroApp
                 OnPropertyChanged("Birthday");
             }
         }
-
+        public int TuberculosisForm_id { get; set; }
         public TuberculosisForm TuberculosisForm
         {
             get { return tuberculosisForm; }

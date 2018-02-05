@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,11 +43,25 @@ namespace neuroApp
         {
             try
             {
-                dataGrid_Patients.ItemsSource = db.Patients.ToList();
+                //dataGrid_Patients.ItemsSource = db.Patients.ToList();
+                dataGrid_Patients.ItemsSource = db.Patients.Join(db.TuberculosisForms,
+                    patient => patient.TuberculosisForm_id,
+                    t => t.Id,
+                    (p, t) => new
+                    {
+                        Name = p.Name,
+                        TuberculosisForm = t.Name
+                    }).ToList();
             }
-            catch (Exception)
+            
+            catch (Exception exception)
             {
-                MessageBox.Show("Не удалось открыть базу данных");
+                string message = null;
+                message = $"\nНе удалось открыть базу данных\n {exception.Message}\n";
+                
+                if (exception.InnerException != null)
+                    message += $"\n{exception.InnerException.Message}";
+                MessageBox.Show(message);
             }  
         }
 

@@ -36,7 +36,7 @@
             <TabItem x:Name="passportData" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Паспортные данные</TabItem.Header>
                 <GroupBox Header="Паспортные данные">
-                    <Grid VerticalAlignment="Top" Margin="3">
+                    <Grid VerticalAlignment="Top" Margin="2,3,4,0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -54,10 +54,10 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="Фамилия" Grid.Column="0" Grid.Row="0"/>
+                        <Label Content="Фамилия" Grid.Column="0" Grid.Row="0" Margin="3,2,1,2"/>
                         <TextBox x:Name="textBox_Family" Grid.Column="1" Grid.Row="0" 
                                  PreviewTextInput="TextValidationTextBox" 
-                                 TextChanged="TextBox_Family_TextChanged"/>
+                                 TextChanged="TextBox_Family_TextChanged" Margin="1,0,3,4"/>
 
                         <Label Content="Имя" Grid.Column="0" Grid.Row="1"/>
                         <TextBox x:Name="textBox_Name" Grid.Column="1" Grid.Row="1" 
