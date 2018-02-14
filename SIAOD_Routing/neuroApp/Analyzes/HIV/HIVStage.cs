@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace neuroApp.Analyzes
+namespace neuroApp.Analyzes.HIV
 {
-    public class TuberculosisForm
+    public class HIVStage
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Patient> Patients { get; set; }
-        public TuberculosisForm()
+
+        public List<HIV> HIVs { get; set; }
+
+        public HIVStage()
         {
-            Patients = new List<Patient>();
+            HIVs = new List<HIV>();
         }
     }
 }

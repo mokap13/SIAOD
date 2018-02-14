@@ -1,6 +1,10 @@
-﻿using neuroApp.Analyzes;
+﻿using neuroApp.Analyzes.Complaint;
+using neuroApp.Analyzes.ObjectiveStatus;
+using neuroApp.Analyzes.Tuberculosis;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -23,17 +27,43 @@ namespace neuroApp
     {
         private ApplicationContext db = new ApplicationContext();
         public ObjectiveStatus ObjectiveStatus { get; set; }
+        public ObservableCollection<Complaint> Complaints { get; set; }
+        public ObservableCollection<HealthState> HealthStates { get; set; }
+        public ObservableCollection<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
+        public ObservableCollection<DrugResistance> DrugResistances { get; set; }
+        public ObservableCollection<TuberculosisForm> TuberculosisForms { get; set; }
 
         public AddPatientWIndow()
         {
             InitializeComponent();
+            GetComplaintsFromDB();
 
             ObjectiveStatus = new ObjectiveStatus();
             Patient patient = new Patient();
 
-            this.DataContext = patient;
+            this.DataContext = this;
         }
 
+        private void GetComplaintsFromDB()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Complaints = new ObservableCollection<Complaint>(db
+                    .Complaints
+                    .ToList());
+                HealthStates = new ObservableCollection<HealthState>(db
+                    .HealthStates
+                    .ToList());
+                DrugResistances = new ObservableCollection<DrugResistance>(db
+                    .DrugResistances
+                    .ToList());
+                ObjectiveStatusDiseases = new ObservableCollection<ObjectiveStatusDisease>(db
+                    .ObjectiveStatusDiseases
+                    .ToList());
+
+            }
+
+        }
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -47,7 +77,7 @@ namespace neuroApp
 
         private void Button_addPatient_Click(object sender, RoutedEventArgs e)
         {
-            
+
             db.Patients.Add(this.DataContext as Patient);
             db.SaveChanges();
             this.DialogResult = true;
@@ -75,12 +105,12 @@ namespace neuroApp
             var age = (DateTime.Now.Year - datePicker_Birthday.SelectedDate.Value.Year);
             if (datePicker_Birthday.SelectedDate > DateTime.Now.AddYears(-age))
                 age--;
-            label_age.Content = age.ToString()+" - возраст";
+            label_age.Content = age.ToString() + " - возраст";
         }
 
         private void Button_addPatient_CheckIsEnabled()
         {
-            if( (textBox_Family.Text!=String.Empty)
+            if ((textBox_Family.Text != String.Empty)
                 && (textBox_Name.Text != String.Empty)
                 && (textBox_Otchestvo.Text != String.Empty)
                 && (datePicker_Birthday.SelectedDate != null))
@@ -97,20 +127,24 @@ namespace neuroApp
 
         private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var medicaments = (sender as ListBox).SelectedItems;
-
-            if(medicaments.Count!=0)
+            List<string> drugResistances = new List<string>();
+            foreach (DrugResistance item in (sender as ListBox).SelectedItems)
             {
-                if (medicaments.Contains("H")
-                && (medicaments.Contains("R")
-                || medicaments.Contains("Rb")))
+                drugResistances.Add(item.Name);
+            }
+
+            if (drugResistances.Count != 0)
+            {
+                if (drugResistances.Contains("H")
+                && (drugResistances.Contains("R")
+                || drugResistances.Contains("Rb")))
                 {
-                    if ((medicaments.Contains("Mfx")
-                        || medicaments.Contains("Lfx")
-                        || medicaments.Contains("Ofx"))
-                        && (medicaments.Contains("Cm")
-                        || medicaments.Contains("Am")
-                        || medicaments.Contains("Km")))
+                    if ((drugResistances.Contains("Mfx")
+                        || drugResistances.Contains("Lfx")
+                        || drugResistances.Contains("Ofx"))
+                        && (drugResistances.Contains("Cm")
+                        || drugResistances.Contains("Am")
+                        || drugResistances.Contains("Km")))
                     {
                         label_medicamentResist.Content = "ШЛУ";
                     }
@@ -127,23 +161,14 @@ namespace neuroApp
             else
             {
                 label_medicamentResist.Content = "ЛУ отсутствует";
-            }
-        }
+            }        }
 
         private void ListtBox_medicamentResist_Loaded(object sender, RoutedEventArgs e)
         {
-            medicamentResist.ItemsSource = new List<string>() {
-                "H", "S", "R", "Rb", "E", "Pt",
-                "Et", "Cm","Am", "Km",
-                "PAS", "Cs", "Lnz", "Mfx",
-                "Lfx", "Ofx", "Trd", "Bq",
-                "Amx", "Imp", "Mp"
-            };
         }
-    }                                                           
-}                                                               
+    }
+}
 
 
 
 
-                                                                

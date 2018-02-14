@@ -106,9 +106,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Analyzes\HIVAssociateDisease.cs" />
-    <Compile Include="Analyzes\ObjectiveStatus.cs" />
-    <Compile Include="Analyzes\TuberculosisForm.cs" />
+    <Compile Include="Analyzes\ClinicalLaboratoryData\BloodChemistry.cs" />
+    <Compile Include="Analyzes\ClinicalLaboratoryData\CompleteBloodCount.cs" />
+    <Compile Include="Analyzes\ClinicalLaboratoryData\Immunogram.cs" />
+    <Compile Include="Analyzes\Complaint\Complaint.cs" />
+    <Compile Include="Analyzes\HIVAssociateDisease\HIVAssociateDiseaseGroup.cs" />
+    <Compile Include="Analyzes\HIVAssociateDisease\HIVAssociateDisease.cs" />
+    <Compile Include="Analyzes\HIV\HIV.cs" />
+    <Compile Include="Analyzes\HIV\HIVPhase.cs" />
+    <Compile Include="Analyzes\HIV\HIVStage.cs" />
+    <Compile Include="Analyzes\ObjectiveStatus\HealthState.cs" />
+    <Compile Include="Analyzes\ObjectiveStatus\ObjectiveStatus.cs" />
+    <Compile Include="Analyzes\ObjectiveStatus\ObjectiveStatusDisease.cs" />
+    <Compile Include="Analyzes\Tuberculosis\DrugResistance.cs" />
+    <Compile Include="Analyzes\Tuberculosis\TuberculosisStatus.cs" />
+    <Compile Include="Analyzes\Tuberculosis\TuberculosisForm.cs" />
     <Compile Include="AnswerWindow.xaml.cs">
       <DependentUpon>AnswerWindow.xaml</DependentUpon>
     </Compile>
@@ -169,6 +181,7 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

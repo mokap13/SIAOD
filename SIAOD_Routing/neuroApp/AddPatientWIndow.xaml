@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:neuroApp"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Analyzes="clr-namespace:neuroApp.Analyzes" x:Class="neuroApp.AddPatientWIndow"
-        mc:Ignorable="d"
+        xmlns:ObjectiveStatus="clr-namespace:neuroApp.Analyzes.ObjectiveStatus"
+        xmlns:Complaint="clr-namespace:neuroApp.Analyzes.Complaint"
+    mc:Ignorable="d"
         Title="Новый пациент" Height="auto" Width="auto"
         EnableDWMDropShadow="True">
     <mah:MetroWindow.Resources>
@@ -101,15 +103,13 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0">
-                            <CheckBox Content="Общая слабость"/>
-                            <CheckBox Content="Кашель"/>
-                            <CheckBox Content="Потливость"/>
-                            <CheckBox Content="Одышка"/>
-                            <CheckBox Content="Похудание"/>
-                            <CheckBox Content="Снижение аппетита"/>
-                            <CheckBox Content="Кровохарканье"/>
-                        </StackPanel>
+                        <ListBox Grid.Row="0" ItemsSource="{Binding Complaints}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <Grid VerticalAlignment="Stretch" Grid.Row="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -125,7 +125,7 @@
                 <TabItem.Header>Объективный статус</TabItem.Header>
                 <GroupBox Header="Объективный статус">
                     <GroupBox.Resources>
-                        <Analyzes:ObjectiveStatus x:Key="ObjectiveStatus"></Analyzes:ObjectiveStatus>
+                        <ObjectiveStatus:ObjectiveStatus x:Key="ObjectiveStatus"></ObjectiveStatus:ObjectiveStatus>
                     </GroupBox.Resources>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -135,22 +135,25 @@
                         <StackPanel Grid.Column="0" Margin="3">
                             <UniformGrid Columns="3">
                                 <Label Content="Состояние"/>
-                                <ComboBox SelectedIndex="{Binding Source={StaticResource ObjectiveStatus}, Path=Sostoianie}">
-                                    <ComboBoxItem Content="Удовлетворительное"/>
-                                    <ComboBoxItem Content="Средней степени тяжести"/>
-                                    <ComboBoxItem Content="Тяжёлое"/>
+                                <ComboBox ItemsSource="{Binding HealthStates}" 
+                                          SelectedItem="{Binding Path=ObjectiveStatus.HealthState}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </UniformGrid>
 
                             <UniformGrid Columns="3" Rows="2" Margin="0 5 0 5">
                                 <Label Content="ЧСС"/>
                                 <TextBox PreviewTextInput="NumberValidationTextBox"
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHSS, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=HeartRate, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="уд/мин"/>
                                 <CheckBox x:Name="checkBox_tahicardia" 
                                           Content="Тахикардия" 
                                           IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tahicardia, Mode=OneWay}">
+                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tachycardia, Mode=OneWay}">
                                     <CheckBox.ToolTip>Вычисляется из ЧСС</CheckBox.ToolTip>
                                 </CheckBox>
 
@@ -158,13 +161,13 @@
 
                             <UniformGrid Columns="3">
                                 <Label Content="Артериальное давление"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialnoeDavlenie, UpdateSourceTrigger=PropertyChanged}" 
+                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressure, UpdateSourceTrigger=PropertyChanged}" 
                                          PreviewTextInput="NumberValidationTextBox"/>
                                 <Label Content="мм рт. ст."/>
                             </UniformGrid>
                             <UniformGrid Columns="3">
                                 <Label Content="ЧДД"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=CHDD, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=FrequencyOfResperatoryMovements, UpdateSourceTrigger=PropertyChanged}"
                                          PreviewTextInput="NumberValidationTextBox"/>
                                 <Label Content="/мин"/>
                             </UniformGrid>
@@ -177,19 +180,17 @@
                                           ToolTip="Вычисляется из температуры"
                                           Content="Лихорадка" 
                                           IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Lihoradka,Mode=OneWay}"/>
+                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Pirexia,Mode=OneWay}"/>
 
                             </UniformGrid>
 
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Limfadenatopia}"
-                                      Content="Лимфаденатопия"/>
-
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Arythmia}"
-                                      Content="Аритмия"/>
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Splenomegalia}"
-                                      Content="Спленомегалия"/>
-                            <CheckBox IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Gepatomegalia}"
-                                      Content="Гепатомегалия"/>
+                            <ListBox ItemsSource="{Binding ObjectiveStatusDiseases}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Name}"></CheckBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Margin="3">
@@ -358,16 +359,19 @@
                             </UniformGrid>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
-                            <Label Content="Лекарственная устойчивость"/>
-                            <ListBox x:Name="medicamentResist" 
-                                     SelectionMode="Multiple" 
-                                     SelectionChanged="ListBox_medicamentResist_SelectionChanged" 
-                                     Loaded="ListtBox_medicamentResist_Loaded">
+                            <ListBox ItemsSource="{Binding DrugResistances}" 
+                                     SelectionMode="Multiple"
+                                     SelectionChanged="ListBox_medicamentResist_SelectionChanged">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <UniformGrid Columns="6"/>
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>    
+                                </ListBox.ItemTemplate>
                             </ListBox>
                             <Label x:Name="label_medicamentResist" 
                                    Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 

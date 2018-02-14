@@ -1,4 +1,8 @@
-﻿using neuroApp.Analyzes;
+﻿using neuroApp.Analyzes.ClinicalLaboratoryData;
+using neuroApp.Analyzes.Complaint;
+using neuroApp.Analyzes.HIV;
+using neuroApp.Analyzes.HIVAssociateDisease;
+using neuroApp.Analyzes.Tuberculosis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,42 +21,29 @@ namespace neuroApp
         private string otchestvo;
         private string birthday;
 
-        private bool priemARVT;
-        private int formaTuberkuleza;
-        private bool defecitMassTela;
-        private bool recediveTuberkulezProcess;
-        private bool destructionLegochTkan;
-        private int dlitelnVichInfection;
-        private int narkomania;
-        private bool tahicardia;
-        private bool arithmia;
-        private bool povishTempTela;
-        private bool gepotamegalia;
-        private bool splenomegalia;
-        private bool limfodenatopia;
-        private int virusNagruzka;
-        private int CD4;
-        private int gemoglobin;
-        private int SOE;
-        private double leikozit;
-        private double limfozit;
-        private double trombozit;
-        private double ALT;
-        private double AST;
-        private double obhiBilirubin;
-        private double kreatenin;
-        private int bacteriaVidel;
-        private int paranteralGepatit;
-        private bool saharDiabet;
-        private bool vichAssotiationZabol;
         private TuberculosisForm tuberculosisForm;
+        private ICollection<BloodChemistry> bloodChemisrties;
+        private ICollection<CompleteBloodCount> completeBloodCount;
+        private ICollection<Complaint> complaints;
+        private ICollection<DrugResistance> drugResistances;
+        private ICollection<HIVAssociateDisease> hivAssociateDiseases;
+        private ICollection<HIV> hivs;
+        private ICollection<TuberculosisStatus> tuberculosisStatuses;
+        private ICollection<Immunogram> immunograms;
+        private string criminalArticle;
+        private string beginDate;
+        private string endDate;
+        private string address;
 
         public Patient()
         {
+            immunograms = new List<Immunogram>();
+            tuberculosisStatuses = new List<TuberculosisStatus>();
         }
 
 
         public int Id { get; set; }
+        public int TuberculosisForm_id { get; set; }
         public string Name
         {
             get { return name; }
@@ -90,7 +81,47 @@ namespace neuroApp
                 OnPropertyChanged("Birthday");
             }
         }
-        public int TuberculosisForm_id { get; set; }
+
+        public string CriminalArticle
+        {
+            get { return criminalArticle; }
+            set
+            {
+                criminalArticle = value;
+                OnPropertyChanged("CriminalArticle");
+            }
+        }
+
+        public string BeginDate
+        {
+            get { return beginDate; }
+            set
+            {
+                beginDate = value;
+                OnPropertyChanged("BeginDate");
+            }
+        }
+
+        public string EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                endDate = value;
+                OnPropertyChanged("EndDate");
+            }
+        }
+
+        public string Address
+        {
+            get { return address; }
+            set
+            {
+                address = value;
+                OnPropertyChanged("Address");
+            }
+        }
+
         public TuberculosisForm TuberculosisForm
         {
             get { return tuberculosisForm; }
@@ -100,6 +131,79 @@ namespace neuroApp
                 OnPropertyChanged("TuberculosisForm");
             }
         }
+        public ICollection<BloodChemistry> BloodChemistries
+        {
+            get { return bloodChemisrties; }
+            set
+            {
+                bloodChemisrties = value;
+                OnPropertyChanged("BloodChemistries");
+            }
+        }
+        public ICollection<CompleteBloodCount> CompleteBloodCount
+        {
+            get { return completeBloodCount; }
+            set
+            {
+                completeBloodCount = value;
+                OnPropertyChanged("CompleteBloodCount");
+            }
+        }
+        public ICollection<Complaint> Complaints
+        {
+            get { return complaints; }
+            set
+            {
+                complaints = value;
+                OnPropertyChanged("CompleteBloodCount");
+            }
+        }
+        public ICollection<DrugResistance> DrugResistances
+        {
+            get { return drugResistances; }
+            set
+            {
+                drugResistances = value;
+                OnPropertyChanged("DrugResistances");
+            }
+        }
+        public ICollection<HIV> HIVs
+        {
+            get { return hivs; }
+            set
+            {
+                hivs = value;
+                OnPropertyChanged("HIV");
+            }
+        }
+        public ICollection<HIVAssociateDisease> HIVAssociateDiseases
+        {
+            get { return hivAssociateDiseases; }
+            set
+            {
+                hivAssociateDiseases = value;
+                OnPropertyChanged("HIVAssociateDiseases");
+            }
+        }
+        public ICollection<Immunogram> Immunogramms
+        {
+            get { return immunograms; }
+            set
+            {
+                immunograms = value;
+                OnPropertyChanged("Immunogramms");
+            }
+        }
+        public ICollection<TuberculosisStatus> TuberculosisStatuses
+        {
+            get { return tuberculosisStatuses; }
+            set
+            {
+                tuberculosisStatuses = value;
+                OnPropertyChanged("TuberculosisStatuses");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
