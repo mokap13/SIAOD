@@ -44,9 +44,15 @@ namespace neuroApp
             try
             {
 
+                //dataGrid_Patients.ItemsSource = db.Patients
+                //    .SelectMany(p => p.TuberculosisStatuses
+                //    .Select(t => new { NameP = p.Name, TUBER = t.Name })).ToList();
+
                 dataGrid_Patients.ItemsSource = db.Patients
-                    .SelectMany(p => p.TuberculosisStatuses
-                    .Select(t => new { NameP = p.Name, TUBER = t.Name })).ToList();
+                    .SelectMany(p => p.BloodChemistries
+                    .Select(t => new { NameP = p.Name, GlucoseP = t.Glucose, AddressP = p.Address }))
+                    .ToList();
+
             }
             
             catch (Exception exception)

@@ -1,6 +1,7 @@
 ﻿using neuroApp.Analyzes.Complaint;
 using neuroApp.Analyzes.ObjectiveStatus;
 using neuroApp.Analyzes.Tuberculosis;
+using neuroApp.View.AddPatientTabs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,19 +27,22 @@ namespace neuroApp
     public partial class AddPatientWIndow
     {
         private ApplicationContext db = new ApplicationContext();
-        public ObjectiveStatus ObjectiveStatus { get; set; }
+        
         public ObservableCollection<Complaint> Complaints { get; set; }
-        public ObservableCollection<HealthState> HealthStates { get; set; }
-        public ObservableCollection<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
+        
+        
         public ObservableCollection<DrugResistance> DrugResistances { get; set; }
         public ObservableCollection<TuberculosisForm> TuberculosisForms { get; set; }
+
+        TextBoxValid validText = Validator.TextValidationTextBox;
+        TextBoxValid validNumber = Validator.NumberValidationTextBox;
 
         public AddPatientWIndow()
         {
             InitializeComponent();
             GetComplaintsFromDB();
 
-            ObjectiveStatus = new ObjectiveStatus();
+            
             Patient patient = new Patient();
 
             this.DataContext = this;
@@ -51,29 +55,14 @@ namespace neuroApp
                 Complaints = new ObservableCollection<Complaint>(db
                     .Complaints
                     .ToList());
-                HealthStates = new ObservableCollection<HealthState>(db
-                    .HealthStates
-                    .ToList());
+                
                 DrugResistances = new ObservableCollection<DrugResistance>(db
                     .DrugResistances
                     .ToList());
-                ObjectiveStatusDiseases = new ObservableCollection<ObjectiveStatusDisease>(db
-                    .ObjectiveStatusDiseases
-                    .ToList());
-
             }
 
         }
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-        private void TextValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^а-яА-ЯёЁa-zA-Z]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+        
 
         private void Button_addPatient_Click(object sender, RoutedEventArgs e)
         {
@@ -84,46 +73,7 @@ namespace neuroApp
             this.Close();
         }
 
-        private void TextBox_Family_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
-        private void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
-        private void TextBox_Otchestvo_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
-        private void DatePicker_Birthday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-            var age = (DateTime.Now.Year - datePicker_Birthday.SelectedDate.Value.Year);
-            if (datePicker_Birthday.SelectedDate > DateTime.Now.AddYears(-age))
-                age--;
-            label_age.Content = age.ToString() + " - возраст";
-        }
-
-        private void Button_addPatient_CheckIsEnabled()
-        {
-            if ((textBox_Family.Text != String.Empty)
-                && (textBox_Name.Text != String.Empty)
-                && (textBox_Otchestvo.Text != String.Empty)
-                && (datePicker_Birthday.SelectedDate != null))
-            {
-                button_addPatient.IsEnabled = true;
-            }
-        }
-
-        private void DatePicker_Birthday_Loaded(object sender, RoutedEventArgs e)
-        {
-            const int middleAge = 35;
-            datePicker_Birthday.SelectedDate = new DateTime(DateTime.Now.Year - middleAge, 1, 1);
-        }
+       
 
         private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -90,6 +90,31 @@
     <Compile Include="AddPatientWIndow.xaml.cs">
       <DependentUpon>AddPatientWIndow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Validator.cs" />
+    <Compile Include="View\AddPatientTabs\ClinicalLabaratoryDataTab.xaml.cs">
+      <DependentUpon>ClinicalLabaratoryDataTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\ComplaintsTab.xaml.cs">
+      <DependentUpon>ComplaintsTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\HIVAssociateDiseaseTab.xaml.cs">
+      <DependentUpon>HIVAssociateDiseaseTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\HIVStatusTab.xaml.cs">
+      <DependentUpon>HIVStatusTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\PathologiesTab.xaml.cs">
+      <DependentUpon>PathologiesTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\PersonalDataTab.xaml.cs">
+      <DependentUpon>PersonalDataTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\ObjectiveStatusTab.xaml.cs">
+      <DependentUpon>ObjectiveStatusTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPatientTabs\TuberculosisStatusTab.xaml.cs">
+      <DependentUpon>TuberculosisStatusTab.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddPatientWIndow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +168,38 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AddPatientTabs\ClinicalLabaratoryDataTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\ComplaintsTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\HIVAssociateDiseaseTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\HIVStatusTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\PathologiesTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\PersonalDataTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\ObjectiveStatusTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPatientTabs\TuberculosisStatusTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

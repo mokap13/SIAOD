@@ -8,6 +8,7 @@
         xmlns:Analyzes="clr-namespace:neuroApp.Analyzes" x:Class="neuroApp.AddPatientWIndow"
         xmlns:ObjectiveStatus="clr-namespace:neuroApp.Analyzes.ObjectiveStatus"
         xmlns:Complaint="clr-namespace:neuroApp.Analyzes.Complaint"
+        xmlns:AddPatientTabs="clr-namespace:neuroApp.View.AddPatientTabs"
     mc:Ignorable="d"
         Title="Новый пациент" Height="auto" Width="auto"
         EnableDWMDropShadow="True">
@@ -32,300 +33,27 @@
             <TabControl.Resources>
                 <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
                     <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="15"/>
-                    <!--<Setter Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="Aqua"></Setter>-->
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="passportData" Style="{DynamicResource MenuLevel2}">
-                <TabItem.Header>Паспортные данные</TabItem.Header>
-                <GroupBox Header="Паспортные данные">
-                    <Grid VerticalAlignment="Top" Margin="2,3,4,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Фамилия" Grid.Column="0" Grid.Row="0" Margin="3,2,1,2"/>
-                        <TextBox x:Name="textBox_Family" Grid.Column="1" Grid.Row="0" 
-                                 PreviewTextInput="TextValidationTextBox" 
-                                 TextChanged="TextBox_Family_TextChanged" Margin="1,0,3,4"/>
-
-                        <Label Content="Имя" Grid.Column="0" Grid.Row="1"/>
-                        <TextBox x:Name="textBox_Name" Grid.Column="1" Grid.Row="1" 
-                                 PreviewTextInput="TextValidationTextBox" 
-                                 TextChanged="TextBox_Name_TextChanged"/>
-
-                        <Label Content="Отчество" Grid.Column="0" Grid.Row="2"/>
-                        <TextBox x:Name="textBox_Otchestvo" Grid.Column="1" Grid.Row="2" 
-                                 PreviewTextInput="TextValidationTextBox" 
-                                 TextChanged="TextBox_Otchestvo_TextChanged"/>
-
-                        <Label Content="Дата рождения" Grid.Column="0" Grid.Row="3"/>
-                        <DatePicker x:Name="datePicker_Birthday" Grid.Column="1" Grid.Row="3" 
-                                    SelectedDateChanged="DatePicker_Birthday_SelectedDateChanged" 
-                                    Loaded="DatePicker_Birthday_Loaded"/>
-                        <Label x:Name="label_age" Content="" Grid.Column="1" Grid.Row="4" 
-                               Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
-
-                        <Label Content="Статья УК РФ" Grid.Column="0" Grid.Row="5"/>
-                        <TextBox Grid.Column="1" Grid.Row="5"/>
-                        <Label Content="Начало срока" Grid.Column="0" Grid.Row="6"/>
-                        <TextBox Grid.Column="1" Grid.Row="6"/>
-                        <Label Content="Конец срока" Grid.Column="0" Grid.Row="7"/>
-                        <TextBox Grid.Column="1" Grid.Row="7"/>
-                        <Label Content="Адрес" Grid.Column="0" Grid.Row="8"/>
-                        <TextBox Grid.Column="1" Grid.Row="8"/>
-
-                        <Label Content="ФИО лечащего врача" Grid.Column="0" Grid.Row="9"/>
-                        <TextBox Grid.Column="1" Grid.Row="9"/>
-                    </Grid>
-                </GroupBox>
+            <TabItem Header="ABRA">
+                <AddPatientTabs:PersonalDataTab></AddPatientTabs:PersonalDataTab>
             </TabItem>
+            <TabItem x:Name="passportData" Style="{DynamicResource MenuLevel2}">
+                <TabItem.Header>Персональный данные</TabItem.Header>
+                    <AddPatientTabs:PersonalDataTab></AddPatientTabs:PersonalDataTab>
+                </TabItem>
             <TabItem x:Name="complaints" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Жалобы</TabItem.Header>
-                <GroupBox Header="Жалобы">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <ListBox Grid.Row="0" ItemsSource="{Binding Complaints}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox Content="{Binding Name}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <Grid VerticalAlignment="Stretch" Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="5*"/>
-                            </Grid.RowDefinitions>
-                            <Label Content="Прочие" Grid.Row="0"/>
-                            <TextBox Grid.Row="1" Height="auto" SpellCheck.IsEnabled="True"/>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-            </TabItem>
-            <TabItem x:Name="somaticStatusSpecials" Style="{DynamicResource MenuLevel2}">
+                    <AddPatientTabs:ComplaintsTab></AddPatientTabs:ComplaintsTab>
+                </TabItem>
+            <TabItem x:Name="objectiveStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Объективный статус</TabItem.Header>
-                <GroupBox Header="Объективный статус">
-                    <GroupBox.Resources>
-                        <ObjectiveStatus:ObjectiveStatus x:Key="ObjectiveStatus"></ObjectiveStatus:ObjectiveStatus>
-                    </GroupBox.Resources>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="3">
-                            <UniformGrid Columns="3">
-                                <Label Content="Состояние"/>
-                                <ComboBox ItemsSource="{Binding HealthStates}" 
-                                          SelectedItem="{Binding Path=ObjectiveStatus.HealthState}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </UniformGrid>
-
-                            <UniformGrid Columns="3" Rows="2" Margin="0 5 0 5">
-                                <Label Content="ЧСС"/>
-                                <TextBox PreviewTextInput="NumberValidationTextBox"
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=HeartRate, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="уд/мин"/>
-                                <CheckBox x:Name="checkBox_tahicardia" 
-                                          Content="Тахикардия" 
-                                          IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tachycardia, Mode=OneWay}">
-                                    <CheckBox.ToolTip>Вычисляется из ЧСС</CheckBox.ToolTip>
-                                </CheckBox>
-
-                            </UniformGrid>
-
-                            <UniformGrid Columns="3">
-                                <Label Content="Артериальное давление"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressure, UpdateSourceTrigger=PropertyChanged}" 
-                                         PreviewTextInput="NumberValidationTextBox"/>
-                                <Label Content="мм рт. ст."/>
-                            </UniformGrid>
-                            <UniformGrid Columns="3">
-                                <Label Content="ЧДД"/>
-                                <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=FrequencyOfResperatoryMovements, UpdateSourceTrigger=PropertyChanged}"
-                                         PreviewTextInput="NumberValidationTextBox"/>
-                                <Label Content="/мин"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="3" Margin="0 5 0 5">
-                                <Label Content="Температура"/>
-                                <TextBox PreviewTextInput="NumberValidationTextBox" 
-                                         Text="{Binding Source={StaticResource ObjectiveStatus},Path=Temperature,UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="С°"/>
-                                <CheckBox x:Name="checkBox_lihoradka" 
-                                          ToolTip="Вычисляется из температуры"
-                                          Content="Лихорадка" 
-                                          IsEnabled="False"
-                                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Pirexia,Mode=OneWay}"/>
-
-                            </UniformGrid>
-
-                            <ListBox ItemsSource="{Binding ObjectiveStatusDiseases}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Content="{Binding Name}"></CheckBox>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Margin="3">
-                            <UniformGrid Columns="2">
-                                <Label Content="Рост (см)"/>
-                                <TextBox x:Name="textBox_patientHeight" 
-                                         PreviewTextInput="NumberValidationTextBox" 
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Label Content="Вес (кг)"/>
-                                <TextBox x:Name="textBox_patientWeigth" 
-                                         PreviewTextInput="NumberValidationTextBox"
-                                         Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Label Content="ИМТ"/>
-                                <Label x:Name="label_IMT" 
-                                       Content="{Binding Source={StaticResource ObjectiveStatus}, Path=IMT, StringFormat=N2}" 
-                                       Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
-                            </UniformGrid>
-                            <CheckBox Content="Дефицит массы тела" 
-                                      ToolTip="Вычисляется из ИМТ"
-                                      IsEnabled="False"
-                                      IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=DefecitMassiTela, Mode=OneWay}"/>
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
-            </TabItem>
+                <AddPatientTabs:ObjectiveStatusTab></AddPatientTabs:ObjectiveStatusTab>
+                </TabItem>
             <TabItem x:Name="clinicalLaboratoryData" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Клиниколабораторные данные</TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="42*"/>
-                        <RowDefinition Height="23*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Header="Полный анализ крови" Padding="1" Grid.Column="0" Grid.Row="0" Margin="3">
-                        <Grid Margin="2"  VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="85*"/>
-                                <ColumnDefinition Width="63*"/>
-                            </Grid.ColumnDefinitions>
-                            <DatePicker Grid.ColumnSpan="2" Margin="1"/>
-
-                            <Label Content="Гемоглобин" Grid.Row="1" Grid.Column="0"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Эритроциты" Grid.Row="2" Grid.Column="0"/>
-                            <TextBox  Grid.Row="2" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Лейкоциты" Grid.Row="3" Grid.Column="0"/>
-                            <TextBox  Grid.Row="3" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Тромбоциты"  Grid.Row="4" Grid.Column="0"/>
-                            <TextBox  Grid.Row="4" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Лимфоциты" Grid.Row="5" Grid.Column="0"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="СОЭ" Grid.Row="6" Grid.Column="0"/>
-                            <TextBox  Grid.Row="6" Grid.Column="1" PreviewTextInput="NumberValidationTextBox"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Биохимический анализ крови" Padding="1" Grid.Column="1" Grid.Row="0" Margin="3">
-                        <Grid Margin="2,2,2,2" VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="85*"/>
-                                <ColumnDefinition Width="63*"/>
-                            </Grid.ColumnDefinitions>
-                            <DatePicker Grid.ColumnSpan="2" Margin="1"/>
-
-                            <Label Content="АЛТ" Grid.Column="0" Grid.Row="1"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="АСТ" Grid.Column="0" Grid.Row="2"/>
-                            <TextBox Grid.Column="1" Grid.Row="2" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Общий билирубин" Grid.Column="0" Grid.Row="3"/>
-                            <TextBox Grid.Column="1" Grid.Row="3" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Креатинин" Grid.Column="0" Grid.Row="4"/>
-                            <TextBox Grid.Column="1" Grid.Row="4" PreviewTextInput="NumberValidationTextBox"/>
-                            
-                            <Label Content="Глюкоза" Grid.Column="0" Grid.Row="5"/>
-                            <TextBox Grid.Column="1" Grid.Row="5" PreviewTextInput="NumberValidationTextBox"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Иммунограмма" Grid.Row="1" Grid.ColumnSpan="2"  Padding="1">
-                        <Grid VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="173*"/>
-                                <ColumnDefinition Width="51*"/>
-                            </Grid.ColumnDefinitions>
-                            <DatePicker Grid.ColumnSpan="1" Grid.Row="0" Margin="1"/>
-
-                            <Label Content="CD 4" Grid.Column="0" Grid.Row="1"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="CD 8" Grid.Column="0" Grid.Row="2"/>
-                            <TextBox Grid.Column="1" Grid.Row="2" PreviewTextInput="NumberValidationTextBox"/>
-
-                            <Label Content="Вирусная нагрузка (РНК ВИЧ)" Grid.Column="0" Grid.Row="3"/>
-                            <TextBox Grid.Column="1" Grid.Row="3" PreviewTextInput="NumberValidationTextBox"/>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
+                <AddPatientTabs:ClinicalLabaratoryDataTab></AddPatientTabs:ClinicalLabaratoryDataTab>
+                </TabItem>
             <TabItem x:Name="tuberculosisStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Туберкулёз</TabItem.Header>
                 <GroupBox Header="Туберкулёз">
@@ -386,7 +114,7 @@
                     <StackPanel Margin="3">
                         <UniformGrid Columns="2">
                             <Label Content="Длительность ВИЧ-инфекции"/>
-                            <TextBox PreviewTextInput="NumberValidationTextBox"/>
+                            <TextBox PreviewTextInput="validNumber"/>
                         </UniformGrid>
 
                         <UniformGrid Columns="2">
