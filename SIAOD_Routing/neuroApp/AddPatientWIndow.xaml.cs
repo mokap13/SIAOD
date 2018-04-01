@@ -30,10 +30,6 @@ namespace neuroApp
         
         public ObservableCollection<Complaint> Complaints { get; set; }
         
-        
-        public ObservableCollection<DrugResistance> DrugResistances { get; set; }
-        public ObservableCollection<TuberculosisForm> TuberculosisForms { get; set; }
-
         TextBoxValid validText = Validator.TextValidationTextBox;
         TextBoxValid validNumber = Validator.NumberValidationTextBox;
 
@@ -55,14 +51,9 @@ namespace neuroApp
                 Complaints = new ObservableCollection<Complaint>(db
                     .Complaints
                     .ToList());
-                
-                DrugResistances = new ObservableCollection<DrugResistance>(db
-                    .DrugResistances
-                    .ToList());
             }
 
         }
-        
 
         private void Button_addPatient_Click(object sender, RoutedEventArgs e)
         {
@@ -73,45 +64,7 @@ namespace neuroApp
             this.Close();
         }
 
-       
-
-        private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            List<string> drugResistances = new List<string>();
-            foreach (DrugResistance item in (sender as ListBox).SelectedItems)
-            {
-                drugResistances.Add(item.Name);
-            }
-
-            if (drugResistances.Count != 0)
-            {
-                if (drugResistances.Contains("H")
-                && (drugResistances.Contains("R")
-                || drugResistances.Contains("Rb")))
-                {
-                    if ((drugResistances.Contains("Mfx")
-                        || drugResistances.Contains("Lfx")
-                        || drugResistances.Contains("Ofx"))
-                        && (drugResistances.Contains("Cm")
-                        || drugResistances.Contains("Am")
-                        || drugResistances.Contains("Km")))
-                    {
-                        label_medicamentResist.Content = "ШЛУ";
-                    }
-                    else
-                    {
-                        label_medicamentResist.Content = "МЛУ";
-                    }
-                }
-                else
-                {
-                    label_medicamentResist.Content = "ЛУ";
-                }
-            }
-            else
-            {
-                label_medicamentResist.Content = "ЛУ отсутствует";
-            }        }
+        
 
         private void ListtBox_medicamentResist_Loaded(object sender, RoutedEventArgs e)
         {

@@ -56,58 +56,8 @@
                 </TabItem>
             <TabItem x:Name="tuberculosisStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Туберкулёз</TabItem.Header>
-                <GroupBox Header="Туберкулёз">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Margin="3" Grid.Row="0">
-                            <CheckBox Content="Рецидив туберкулёзного процесса в анамнезе"/>
-                            <CheckBox Content="Наличие деструкции лёгочной ткани"/>
-                            <CheckBox Content="Отсутствие приверженности к лечению ПТП"/>
-                            <CheckBox>
-                                <TextBlock><Run Text="Отрицательная рентгенологическая"/><LineBreak/><Run Text="динамика после ближайшего обследования"/></TextBlock>
-                            </CheckBox>
-                            <UniformGrid Columns="2">
-                                <Label Content="Форма туберкулезного процесса"/>
-                                <ComboBox>
-                                    <TextBlock><Run Text="Контакт по туберкулёзу"/></TextBlock>
-                                    <TextBlock><Run Text="Клиническое излечение"/></TextBlock>
-                                    <TextBlock><Run Text="Очаговый"/></TextBlock>
-                                    <TextBlock><Run Text="Инфильтративный"/></TextBlock>
-                                    <TextBlock><Run Text="Диссеминированный"/></TextBlock>
-                                    <TextBlock><Run Text="ТВГЛУ"/></TextBlock>
-                                    <TextBlock><Run Text="Милиарный"/></TextBlock>
-                                    <TextBlock><Run Text="Фиброзно-кавернозный"/></TextBlock>
-                                    <TextBlock><Run Text="Туберкулёзный плеврит"/></TextBlock>
-                                    <TextBlock><Run Text="Внелегочной туберкулёз"/></TextBlock>
-                                    <TextBlock><Run Text="Казеозная пневмония"/></TextBlock>
-                                </ComboBox>
-                            </UniformGrid>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1">
-                            <ListBox ItemsSource="{Binding DrugResistances}" 
-                                     SelectionMode="Multiple"
-                                     SelectionChanged="ListBox_medicamentResist_SelectionChanged">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid Columns="6"/>
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"/>
-                                    </DataTemplate>    
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <Label x:Name="label_medicamentResist" 
-                                   Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
-                                   Content="ЛУ отсутствует"/>
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
-            </TabItem>
+                <AddPatientTabs:TuberculosisStatusTab></AddPatientTabs:TuberculosisStatusTab>
+                </TabItem>
             <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>ВИЧ</TabItem.Header>
                 <GroupBox Header="ВИЧ">
