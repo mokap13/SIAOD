@@ -60,82 +60,17 @@
                 </TabItem>
             <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>ВИЧ</TabItem.Header>
-                <GroupBox Header="ВИЧ">
-                    <StackPanel Margin="3">
-                        <UniformGrid Columns="2">
-                            <Label Content="Длительность ВИЧ-инфекции"/>
-                            <TextBox PreviewTextInput="validNumber"/>
-                        </UniformGrid>
-
-                        <UniformGrid Columns="2">
-                            <Label Content="Стадия ВИЧ-инфекции"/>
-                            <ComboBox x:Name="hivGradesList">
-                                <TextBlock><Run Text="1"/></TextBlock>
-                                <TextBlock><Run Text="2"/></TextBlock>
-                                <TextBlock><Run Text="3"/></TextBlock>
-                                <TextBlock><Run Text="4А"/></TextBlock>
-                                <TextBlock><Run Text="4Б"/></TextBlock>
-                                <TextBlock><Run Text="4В"/></TextBlock>
-                                <TextBlock><Run Text="5 (СПИД)"/></TextBlock>
-                            </ComboBox>
-                        </UniformGrid>
-
-                        <UniformGrid Columns="2">
-                            <Label Content="Фаза ВИЧ"/>
-                            <ComboBox x:Name="hivPhase">
-                                <TextBlock><Run Text="Прогрессирование"/></TextBlock>
-                                <TextBlock><Run Text="Ремиссия"/></TextBlock>
-                            </ComboBox>
-                        </UniformGrid>
-                        <CheckBox Content="Отсутствие приверженности к АРВТ"/>
-                        <CheckBox Content="Наркомания"/>
-                    </StackPanel>
-                </GroupBox>
-            </TabItem>
+                <AddPatientTabs:HIVStatusTab></AddPatientTabs:HIVStatusTab>
+                </TabItem>
             <TabItem x:Name="hivAssociateDisease" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Вич-ассоциированные заболевания
                 </TabItem.Header>
-                <GroupBox>
-                    <GroupBox.Header>Вич-ассоциированные заболевания</GroupBox.Header>
-                    <Grid Margin="10">
-                        <ListView Name="lvUsers">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
-                                    <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
-                                </GridView>
-                            </ListView.View>
-
-                            <ListView.GroupStyle>
-                                <GroupStyle>
-                                    <GroupStyle.HeaderTemplate>
-                                        <DataTemplate>
-                                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
-                                        </DataTemplate>
-                                    </GroupStyle.HeaderTemplate>
-                                </GroupStyle>
-                            </ListView.GroupStyle>
-                        </ListView>
-                    </Grid>
-                </GroupBox>
-            </TabItem>
+                <AddPatientTabs:HIVAssociateDiseaseTab></AddPatientTabs:HIVAssociateDiseaseTab>
+                </TabItem>
             <TabItem x:Name="pathologies" Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Сопутствующие заболевания</TabItem.Header>
-                <GroupBox Header="Сопутствующе заболевания">
-                    <StackPanel Margin="3">
-                        <CheckBox Content="Хронический вирусный гепатит С"/>
-                        <CheckBox Content="Хронический вирусный гепатит B"/>
-                        <CheckBox Content="Токсический гепатит"/>
-                        <CheckBox Content="Болезни почек"/>
-                        <CheckBox Content="Сахарный диабет"/>
-                        <CheckBox Content="Болезни ЖКТ"/>
-                        <CheckBox Content="Остеопороз"/>
-                        <CheckBox Content="Не-СПИД онкология"/>
-                        <CheckBox Content="СПИД-индикаторные заболевания"/>
-                        <CheckBox Content="Болезни сердечно-сосудистой системы"/>
-                    </StackPanel>
-                </GroupBox>
+                <AddPatientTabs:PathologiesTab></AddPatientTabs:PathologiesTab>
             </TabItem>
         </TabControl>
         <Button x:Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,0,0,31" Width="130" Click="Button_addPatient_Click" IsEnabled="False" Height="25" VerticalAlignment="Bottom"/>

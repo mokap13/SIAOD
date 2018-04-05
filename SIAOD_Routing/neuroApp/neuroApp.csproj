@@ -90,6 +90,8 @@
     <Compile Include="AddPatientWIndow.xaml.cs">
       <DependentUpon>AddPatientWIndow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Analyzes\AccompanyingIllness\AccompanyingIllness.cs" />
+    <Compile Include="Analyzes\HIV\HIVStatus.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="View\AddPatientTabs\ClinicalLabaratoryDataTab.xaml.cs">
       <DependentUpon>ClinicalLabaratoryDataTab.xaml</DependentUpon>

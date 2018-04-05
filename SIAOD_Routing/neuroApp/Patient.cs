@@ -1,4 +1,5 @@
-﻿using neuroApp.Analyzes.ClinicalLaboratoryData;
+﻿using neuroApp.Analyzes.AccompanyingIllness;
+using neuroApp.Analyzes.ClinicalLaboratoryData;
 using neuroApp.Analyzes.Complaint;
 using neuroApp.Analyzes.HIV;
 using neuroApp.Analyzes.HIVAssociateDisease;
@@ -22,6 +23,7 @@ namespace neuroApp
         private string birthday;
 
         private TuberculosisForm tuberculosisForm;
+        private ICollection<HIVStatus> hivStatuses;
         private ICollection<BloodChemistry> bloodChemisrties;
         private ICollection<CompleteBloodCount> completeBloodCount;
         private ICollection<Complaint> complaints;
@@ -39,6 +41,7 @@ namespace neuroApp
         {
             immunograms = new List<Immunogram>();
             tuberculosisStatuses = new List<TuberculosisStatus>();
+            hivStatuses = new List<HIVStatus>();
         }
 
 
@@ -204,6 +207,28 @@ namespace neuroApp
             }
         }
 
+        
+        public ICollection<HIVStatus> HIVStatuses
+        {
+            get { return hivStatuses; }
+            set
+            {
+                if (value != null || value != hivStatuses) hivStatuses = value;
+                OnPropertyChanged("HIVStatuses");
+            }
+        }
+
+
+        private ICollection<AccompanyingIllness> _AccompanyingUllnesses;
+        public ICollection<AccompanyingIllness> AccompanyingUllnesses
+        {
+            get { return _AccompanyingUllnesses; }
+            set
+            {
+                if (value != null || value != _AccompanyingUllnesses) _AccompanyingUllnesses = value;
+                OnPropertyChanged("AccompanyingUllnesses");
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

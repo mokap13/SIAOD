@@ -6,7 +6,38 @@
              xmlns:local="clr-namespace:neuroApp.View.AddPatientTabs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <GroupBox>
+        <GroupBox.Header>Вич-ассоциированные заболевания</GroupBox.Header>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="checkBoxHIV"
+                     SelectionMode="Multiple"
+                     ScrollViewer.CanContentScroll="False"
+                     ItemsSource="{Binding HIVAssociateDiseases}"
+                     Grid.Column="0" Grid.Row="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" ></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Grid.Column="1" Grid.Row="0" 
+                     ScrollViewer.CanContentScroll="False"
+                     ItemsSource="{Binding ElementName=checkBoxHIV, Path=SelectedItems}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </GroupBox>
+
 </UserControl>

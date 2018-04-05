@@ -1,5 +1,7 @@
-﻿using System;
+﻿using neuroApp.Analyzes.HIVAssociateDisease;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,18 @@ namespace neuroApp.View.AddPatientTabs
     /// </summary>
     public partial class HIVAssociateDiseaseTab : UserControl
     {
+        public ObservableCollection<HIVAssociateDisease> HIVAssociateDiseases{ get; set; }
+
         public HIVAssociateDiseaseTab()
         {
             InitializeComponent();
+            this.DataContext = this;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                HIVAssociateDiseases = new ObservableCollection<HIVAssociateDisease>(db
+                    .HIVAssociateDiseases
+                    .ToList());
+            }
         }
     }
 }
