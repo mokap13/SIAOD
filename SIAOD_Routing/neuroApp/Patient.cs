@@ -39,9 +39,9 @@ namespace neuroApp
 
         public Patient()
         {
-            immunograms = new List<Immunogram>();
-            tuberculosisStatuses = new List<TuberculosisStatus>();
-            hivStatuses = new List<HIVStatus>();
+            //immunograms = new List<Immunogram>();
+            //tuberculosisStatuses = new List<TuberculosisStatus>();
+            //hivStatuses = new List<HIVStatus>();
         }
 
 
@@ -158,7 +158,7 @@ namespace neuroApp
             set
             {
                 complaints = value;
-                OnPropertyChanged("CompleteBloodCount");
+                OnPropertyChanged("Complaints");
             }
         }
         public ICollection<DrugResistance> DrugResistances
@@ -227,6 +227,17 @@ namespace neuroApp
             {
                 if (value != null || value != _AccompanyingUllnesses) _AccompanyingUllnesses = value;
                 OnPropertyChanged("AccompanyingUllnesses");
+            }
+        }
+
+        private int _HIVInfectionDuration;
+        public int HIVInfectionDuration
+        {
+            get { return _HIVInfectionDuration; }
+            set
+            {
+                if (value != null || value != _HIVInfectionDuration) _HIVInfectionDuration = value;
+                OnPropertyChanged("HIVInfectionDuration");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

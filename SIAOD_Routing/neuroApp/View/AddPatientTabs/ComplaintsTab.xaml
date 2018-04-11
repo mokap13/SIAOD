@@ -18,7 +18,8 @@
             <ListBox Grid.Row="0" ItemsSource="{Binding Complaints}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}"/>
+                        <CheckBox IsChecked="{Binding IsChecked}"
+                                  Content="{Binding Item.Name}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

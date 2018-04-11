@@ -35,45 +35,42 @@
                     <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="15"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="ABRA">
-                <AddPatientTabs:PersonalDataTab></AddPatientTabs:PersonalDataTab>
-            </TabItem>
-            <TabItem x:Name="passportData" Style="{DynamicResource MenuLevel2}">
+            <TabItem  Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Персональный данные</TabItem.Header>
-                    <AddPatientTabs:PersonalDataTab></AddPatientTabs:PersonalDataTab>
-                </TabItem>
-            <TabItem x:Name="complaints" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:PersonalDataTab x:Name="personalDataControl"></AddPatientTabs:PersonalDataTab>
+            </TabItem>
+            <TabItem Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Жалобы</TabItem.Header>
-                    <AddPatientTabs:ComplaintsTab></AddPatientTabs:ComplaintsTab>
-                </TabItem>
-            <TabItem x:Name="objectiveStatus" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:ComplaintsTab x:Name="complaintsControl"></AddPatientTabs:ComplaintsTab>
+            </TabItem>
+            <TabItem  Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Объективный статус</TabItem.Header>
-                <AddPatientTabs:ObjectiveStatusTab></AddPatientTabs:ObjectiveStatusTab>
-                </TabItem>
-            <TabItem x:Name="clinicalLaboratoryData" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:ObjectiveStatusTab x:Name="objectiveStatusControl"></AddPatientTabs:ObjectiveStatusTab>
+            </TabItem>
+            <TabItem Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Клиниколабораторные данные</TabItem.Header>
-                <AddPatientTabs:ClinicalLabaratoryDataTab></AddPatientTabs:ClinicalLabaratoryDataTab>
-                </TabItem>
-            <TabItem x:Name="tuberculosisStatus" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:ClinicalLabaratoryDataTab  x:Name="clinicalLaboratoryDataControl" ></AddPatientTabs:ClinicalLabaratoryDataTab>
+            </TabItem>
+            <TabItem Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Туберкулёз</TabItem.Header>
-                <AddPatientTabs:TuberculosisStatusTab></AddPatientTabs:TuberculosisStatusTab>
-                </TabItem>
-            <TabItem x:Name="hivStatus" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:TuberculosisStatusTab x:Name="tuberculosisStatusControl"></AddPatientTabs:TuberculosisStatusTab>
+            </TabItem>
+            <TabItem Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>ВИЧ</TabItem.Header>
-                <AddPatientTabs:HIVStatusTab></AddPatientTabs:HIVStatusTab>
-                </TabItem>
-            <TabItem x:Name="hivAssociateDisease" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:HIVStatusTab x:Name="hivStatusControl"></AddPatientTabs:HIVStatusTab>
+            </TabItem>
+            <TabItem Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>
                     Вич-ассоциированные заболевания
                 </TabItem.Header>
-                <AddPatientTabs:HIVAssociateDiseaseTab></AddPatientTabs:HIVAssociateDiseaseTab>
-                </TabItem>
-            <TabItem x:Name="pathologies" Style="{DynamicResource MenuLevel2}">
+                <AddPatientTabs:HIVAssociateDiseaseTab x:Name="hivAssociateDiseaseControl" ></AddPatientTabs:HIVAssociateDiseaseTab>
+            </TabItem>
+            <TabItem  Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Сопутствующие заболевания</TabItem.Header>
-                <AddPatientTabs:PathologiesTab></AddPatientTabs:PathologiesTab>
+                <AddPatientTabs:PathologiesTab x:Name="pathologiesControl"></AddPatientTabs:PathologiesTab>
             </TabItem>
         </TabControl>
-        <Button x:Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,0,0,31" Width="130" Click="Button_addPatient_Click" IsEnabled="False" Height="25" VerticalAlignment="Bottom"/>
+        <Button x:Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,0,0,31" Width="130" Click="Button_addPatient_Click" Height="25" VerticalAlignment="Bottom"/>
 
     </Grid>
 </mah:MetroWindow>

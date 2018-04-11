@@ -10,12 +10,13 @@
         <StackPanel Margin="3">
             <UniformGrid Columns="2">
                 <Label Content="Длительность ВИЧ-инфекции"/>
-                <TextBox PreviewTextInput="validNumber"/>
+                <TextBox PreviewTextInput="validNumber"
+                         Text="{Binding HIVInfectionDuration}"/>
             </UniformGrid>
-
             <UniformGrid Columns="2">
                 <Label Content="Стадия ВИЧ-инфекции"/>
-                <ComboBox ItemsSource="{Binding HIVStages}">
+                <ComboBox ItemsSource="{Binding HIVStages}"
+                          SelectedItem="{Binding HIVStage}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"></TextBlock>
@@ -23,10 +24,10 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </UniformGrid>
-
             <UniformGrid Columns="2">
                 <Label Content="Фаза ВИЧ"/>
-                <ComboBox ItemsSource="{Binding HIVPhases}">
+                <ComboBox ItemsSource="{Binding HIVPhases}"
+                          SelectedItem="{Binding HIVPhase}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"></TextBlock>
@@ -34,11 +35,12 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </UniformGrid>
-
             <ListBox ItemsSource="{Binding HIVStatuses}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IsChecked}" 
+                                  Content="{Binding Item.Name}">
+                        </CheckBox>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

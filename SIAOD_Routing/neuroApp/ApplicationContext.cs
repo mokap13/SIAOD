@@ -25,15 +25,6 @@ namespace neuroApp
                 .ToTable("TuberculosisStatuses");
             modelBuilder.Entity<HIVStatus>()
                 .ToTable("HIVStatuses");
-            
-            //modelBuilder.Entity<HIVStatus>()
-            //    .ToTable("HIVStatuses");
-            //modelBuilder.Entity<Patient>()
-            //    .HasMany(p => p.BloodChemistries)
-            //    .WithRequired(b => b.Patient);
-            //modelBuilder.Entity<Patient>()
-            //    .HasMany(p => p.CompleteBloodCount)
-            //    .WithRequired(c => c.Patients);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -61,7 +52,5 @@ namespace neuroApp
         public DbSet<DrugResistance> DrugResistances { get; set; }
         public DbSet<TuberculosisStatus> TuberculosisStatuses { get; set; }
         public DbSet<AccompanyingIllness> AccompanyingIllnesses { get; set; }
-        //public DbSet<HIVStatusPatients> HIVStatusPatients { get; set; }
-        //public DbSet<ObjectiveStatus> ObjectiveStatuses { get; set; }
     }
 }

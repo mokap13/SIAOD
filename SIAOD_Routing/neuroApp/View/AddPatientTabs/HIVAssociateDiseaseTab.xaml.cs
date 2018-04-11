@@ -1,4 +1,5 @@
 ﻿using neuroApp.Analyzes.HIVAssociateDisease;
+using neuroApp.ListItems;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +23,7 @@ namespace neuroApp.View.AddPatientTabs
     /// </summary>
     public partial class HIVAssociateDiseaseTab : UserControl
     {
-        public ObservableCollection<HIVAssociateDisease> HIVAssociateDiseases{ get; set; }
+        public ObservableCollection<CheckedListItem<HIVAssociateDisease>> HIVAssociateDiseases{ get; set; }
 
         public HIVAssociateDiseaseTab()
         {
@@ -30,8 +31,11 @@ namespace neuroApp.View.AddPatientTabs
             this.DataContext = this;
             using (ApplicationContext db = new ApplicationContext())
             {
-                HIVAssociateDiseases = new ObservableCollection<HIVAssociateDisease>(db
+                var queryExecute = new ObservableCollection<HIVAssociateDisease>(db
                     .HIVAssociateDiseases
+                    .ToList());
+                HIVAssociateDiseases = new ObservableCollection<CheckedListItem<HIVAssociateDisease>>(queryExecute
+                    .Select(s => new CheckedListItem<HIVAssociateDisease>(s, false))
                     .ToList());
             }
         }

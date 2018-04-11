@@ -1,4 +1,5 @@
 ﻿using neuroApp.Analyzes.Complaint;
+using neuroApp.ListItems;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,17 +23,24 @@ namespace neuroApp.View.AddPatientTabs
     /// </summary>
     public partial class ComplaintsTab : UserControl
     {
-        public ObservableCollection<Complaint> Complaints { get; set; }
+        public ObservableCollection<CheckedListItem<Complaint>> Complaints { get; set; }
 
         public ComplaintsTab()
         {
             InitializeComponent();
-
+            this.DataContext = this;
             using (ApplicationContext db = new ApplicationContext())
             {
-                Complaints = new ObservableCollection<Complaint>(db
+                List<Complaint> a = new List<Complaint>(db
                     .Complaints
                     .ToList());
+                Complaints = new ObservableCollection<CheckedListItem<Complaint>>(a
+                    .Select(s => new CheckedListItem<Complaint>(s))
+                    .ToList());
+                //Complaints = new ObservableCollection<CheckedListItem<Complaint>>(db
+                //    .Complaints
+                //    .Select(c => new CheckedListItem<Complaint>(c, false))
+                //    .ToList());
             }
         }
     }

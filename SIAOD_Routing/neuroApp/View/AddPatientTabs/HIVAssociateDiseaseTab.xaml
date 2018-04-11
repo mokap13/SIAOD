@@ -22,9 +22,14 @@
                      ScrollViewer.CanContentScroll="False"
                      ItemsSource="{Binding HIVAssociateDiseases}"
                      Grid.Column="0" Grid.Row="0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsChecked}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" ></TextBlock>
+                        <TextBlock Text="{Binding Item.Name}" ></TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -33,7 +38,7 @@
                      ItemsSource="{Binding ElementName=checkBoxHIV, Path=SelectedItems}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <TextBlock Text="{Binding Item.Name}"></TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

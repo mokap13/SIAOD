@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:neuroApp.View.AddPatientTabs"
              xmlns:ClinincalLabaratoryData="clr-namespace:neuroApp.Analyzes.ClinicalLaboratoryData"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             >
     <UserControl.Resources>
         <ClinincalLabaratoryData:CompleteBloodCount x:Key="CompleteBloodCount"></ClinincalLabaratoryData:CompleteBloodCount>
         <ClinincalLabaratoryData:BloodChemistry x:Key="BloodChemistry"></ClinincalLabaratoryData:BloodChemistry>
@@ -90,7 +91,7 @@
                           PreviewTextInput="validNumber"
                           Text="{Binding 
                     Source={StaticResource CompleteBloodCount}, 
-                    Path=Erythrocytes, 
+                    Path=ESR, 
                     UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
