@@ -3,6 +3,7 @@ using neuroApp.Analyzes.ClinicalLaboratoryData;
 using neuroApp.Analyzes.Complaint;
 using neuroApp.Analyzes.HIV;
 using neuroApp.Analyzes.HIVAssociateDisease;
+using neuroApp.Analyzes.ObjectiveStatus;
 using neuroApp.Analyzes.Tuberculosis;
 using System;
 using System.Collections.Generic;
@@ -219,27 +220,28 @@ namespace neuroApp
         }
 
 
-        private ICollection<AccompanyingIllness> _AccompanyingUllnesses;
-        public ICollection<AccompanyingIllness> AccompanyingUllnesses
+        private List<ObjectiveStatus> _ObjectiveStatus;
+        public List<ObjectiveStatus> ObjectiveStatus
         {
-            get { return _AccompanyingUllnesses; }
+            get { return _ObjectiveStatus; }
             set
             {
-                if (value != null || value != _AccompanyingUllnesses) _AccompanyingUllnesses = value;
+                if (value != null || value != _ObjectiveStatus) _ObjectiveStatus = value;
+                OnPropertyChanged("ObjectiveStatus");
+            }
+        }
+
+        private ICollection<AccompanyingIllness> _AccompanyingIllnesses;
+        public ICollection<AccompanyingIllness> AccompanyingIllnesses
+        {
+            get { return _AccompanyingIllnesses; }
+            set
+            {
+                if (value != null || value != _AccompanyingIllnesses) _AccompanyingIllnesses = value;
                 OnPropertyChanged("AccompanyingUllnesses");
             }
         }
 
-        private int _HIVInfectionDuration;
-        public int HIVInfectionDuration
-        {
-            get { return _HIVInfectionDuration; }
-            set
-            {
-                if (value != null || value != _HIVInfectionDuration) _HIVInfectionDuration = value;
-                OnPropertyChanged("HIVInfectionDuration");
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

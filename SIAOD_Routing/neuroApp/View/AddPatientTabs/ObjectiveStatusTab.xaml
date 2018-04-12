@@ -16,9 +16,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="3">
+                <DatePicker SelectedDate="{Binding Source={StaticResource ObjectiveStatus}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
                 <UniformGrid Columns="3">
                     <Label Content="Состояние"/>
-                    <ComboBox ItemsSource="{Binding HealthStates}">
+                    <ComboBox ItemsSource="{Binding HealthStates}"
+                              SelectedItem="{Binding Source={StaticResource ObjectiveStatus}, Path=HealthState, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -32,10 +34,9 @@
                     <TextBox PreviewTextInput="validNumber"
                              Text="{Binding Source={StaticResource ObjectiveStatus}, Path=HeartRate, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="уд/мин"/>
-                    <CheckBox x:Name="checkBox_tahicardia" 
-                            Content="Тахикардия" 
-                            IsEnabled="False"
-                            IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tachycardia, Mode=OneWay}">
+                    <CheckBox Content="Тахикардия" 
+                              IsEnabled="False"
+                              IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tachycardia, Mode=OneWay}">
                         <CheckBox.ToolTip>Вычисляется из ЧСС</CheckBox.ToolTip>
                     </CheckBox>
 
@@ -58,18 +59,18 @@
                     <TextBox PreviewTextInput="validNumber" 
                              Text="{Binding Source={StaticResource ObjectiveStatus},Path=Temperature,UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="С°"/>
-                    <CheckBox x:Name="checkBox_lihoradka" 
-                            ToolTip="Вычисляется из температуры"
-                            Content="Лихорадка" 
-                            IsEnabled="False"
-                            IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Pirexia,Mode=OneWay}"/>
+                    <CheckBox ToolTip="Вычисляется из температуры"
+                              Content="Лихорадка" 
+                              IsEnabled="False"
+                              IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Pirexia,Mode=OneWay}"/>
 
                 </UniformGrid>
 
                 <ListBox ItemsSource="{Binding ObjectiveStatusDiseases}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding Name}"></CheckBox>
+                            <CheckBox IsChecked="{Binding IsChecked}" 
+                                      Content="{Binding Item.Name}"></CheckBox>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -78,26 +79,23 @@
             <StackPanel Grid.Column="1" Margin="3">
                 <UniformGrid Columns="2">
                     <Label Content="Рост (см)"/>
-                    <TextBox x:Name="textBox_patientHeight" 
-                            PreviewTextInput="validNumber" 
-                            Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox PreviewTextInput="validNumber" 
+                             Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
                 </UniformGrid>
                 <UniformGrid Columns="2">
                     <Label Content="Вес (кг)"/>
-                    <TextBox x:Name="textBox_patientWeigth" 
-                            PreviewTextInput="validNumber"
-                            Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox PreviewTextInput="validNumber"
+                             Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
                 </UniformGrid>
                 <UniformGrid Columns="2">
                     <Label Content="ИМТ"/>
-                    <Label x:Name="label_IMT" 
-                            Content="{Binding Source={StaticResource ObjectiveStatus}, Path=IMT, StringFormat=N2}" 
-                            Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                    <Label Content="{Binding Source={StaticResource ObjectiveStatus}, Path=IMT, StringFormat=N2}" 
+                           Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
                 </UniformGrid>
                 <CheckBox Content="Дефицит массы тела" 
-                            ToolTip="Вычисляется из ИМТ"
-                            IsEnabled="False"
-                            IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=DefecitMassiTela, Mode=OneWay}"/>
+                          ToolTip="Вычисляется из ИМТ"
+                          IsEnabled="False"
+                          IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=BodyWeightDefecit, Mode=OneWay}"/>
             </StackPanel>
         </Grid>
     </GroupBox>

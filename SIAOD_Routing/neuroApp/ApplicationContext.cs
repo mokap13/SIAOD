@@ -25,6 +25,8 @@ namespace neuroApp
                 .ToTable("TuberculosisStatuses");
             modelBuilder.Entity<HIVStatus>()
                 .ToTable("HIVStatuses");
+            modelBuilder.Entity<ObjectiveStatus>()
+                .ToTable("ObjectiveStatuses");
 
             base.OnModelCreating(modelBuilder);
         }

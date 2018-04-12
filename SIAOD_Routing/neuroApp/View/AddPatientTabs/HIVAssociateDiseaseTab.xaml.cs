@@ -31,11 +31,35 @@ namespace neuroApp.View.AddPatientTabs
             this.DataContext = this;
             using (ApplicationContext db = new ApplicationContext())
             {
+                var test = db.HIVAssociateDiseases.Join(db.HIVAssociateDiseaseGroups,
+                    hiv => hiv.HIVAssociateDiseaseGroup_id,
+                    g => g.Id,
+                    (hiv, g) => new
+                    {
+                        hiv.Id,
+                        hiv.Name,
+                        hiv.HIVAssociateDiseaseGroup_id,
+                        hiv.Patients,
+                        g
+                    })
+                    .ToList();
+                //var queryExecute = new ObservableCollection<HIVAssociateDisease>(db
+                //    .HIVAssociateDiseases
+                //    .ToList());
+                //HIVAssociateDiseases = new ObservableCollection<CheckedListItem<HIVAssociateDisease>>(queryExecute
+                //    .Select(s => new CheckedListItem<HIVAssociateDisease>(s, false))
+                //    .ToList());
                 var queryExecute = new ObservableCollection<HIVAssociateDisease>(db
                     .HIVAssociateDiseases
                     .ToList());
-                HIVAssociateDiseases = new ObservableCollection<CheckedListItem<HIVAssociateDisease>>(queryExecute
-                    .Select(s => new CheckedListItem<HIVAssociateDisease>(s, false))
+                HIVAssociateDiseases = new ObservableCollection<CheckedListItem<HIVAssociateDisease>>(test
+                    .Select(s => new CheckedListItem<HIVAssociateDisease>(new HIVAssociateDisease() {
+                        HIVAssociateDiseaseGroup = s.g,
+                        HIVAssociateDiseaseGroup_id = s.Id,
+                        Id = s.Id,
+                        Patients = s.Patients,
+                        Name = s.Name
+                    }, false))
                     .ToList());
             }
         }

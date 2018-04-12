@@ -60,11 +60,8 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             }
         }
 
-        public ICollection<Patient> Patients { get; set; }
-        public Immunogram()
-        {
-            Patients = new List<Patient>();
-        }
+        public Patient Patient { get; set; }
+        public int Patient_id { get; set; }
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

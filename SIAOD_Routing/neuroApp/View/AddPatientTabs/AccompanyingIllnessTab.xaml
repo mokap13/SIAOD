@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="neuroApp.View.AddPatientTabs.PathologiesTab"
+﻿<UserControl x:Class="neuroApp.View.AddPatientTabs.AccompanyingIllnessesTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,8 @@
             <ListBox ItemsSource="{Binding AccompanyingIllnesses}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IsChecked}" 
+                                  Content="{Binding Item.Name}"></CheckBox>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

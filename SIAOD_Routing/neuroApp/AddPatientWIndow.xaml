@@ -67,10 +67,13 @@
             </TabItem>
             <TabItem  Style="{DynamicResource MenuLevel2}">
                 <TabItem.Header>Сопутствующие заболевания</TabItem.Header>
-                <AddPatientTabs:PathologiesTab x:Name="pathologiesControl"></AddPatientTabs:PathologiesTab>
+                <AddPatientTabs:AccompanyingIllnessesTab x:Name="accompanyingIllnessControl"></AddPatientTabs:AccompanyingIllnessesTab>
             </TabItem>
         </TabControl>
-        <Button x:Name="button_addPatient" Content="Добавить пациента" HorizontalAlignment="Left" Margin="10,0,0,31" Width="130" Click="Button_addPatient_Click" Height="25" VerticalAlignment="Bottom"/>
+        <Button Content="Добавить пациента" 
+                HorizontalAlignment="Left" 
+                Margin="10,0,0,31" Width="130" 
+                Command="{Binding AddPatient}" Height="25" VerticalAlignment="Bottom"/>
 
     </Grid>
 </mah:MetroWindow>

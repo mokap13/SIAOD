@@ -30,21 +30,6 @@ namespace neuroApp.View.AddPatientTabs
             InitializeComponent();
         }
 
-        private void TextBox_Family_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
-        private void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
-        private void TextBox_Otchestvo_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Button_addPatient_CheckIsEnabled();
-        }
-
         private void DatePicker_Birthday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             Button_addPatient_CheckIsEnabled();

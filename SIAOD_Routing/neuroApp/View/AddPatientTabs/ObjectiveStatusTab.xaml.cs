@@ -1,8 +1,11 @@
 ﻿using neuroApp.Analyzes.ObjectiveStatus;
+using neuroApp.ListItems;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,29 +23,49 @@ namespace neuroApp.View.AddPatientTabs
     /// <summary>
     /// Логика взаимодействия для SomaticStatusSpecials.xaml
     /// </summary>
-    public partial class ObjectiveStatusTab : UserControl
+    public partial class ObjectiveStatusTab : UserControl, INotifyPropertyChanged
     {
         TextBoxValid validText = Validator.TextValidationTextBox;
         TextBoxValid validNumber = Validator.NumberValidationTextBox;
+
+
+        private HealthState _HealthState;
+        public HealthState HealthState
+        {
+            get { return _HealthState; }
+            set
+            {
+                if (value != null || value != _HealthState) _HealthState = value;
+                OnPropertyChanged("HealthState");
+            }
+        }
+
         public ObjectiveStatus ObjectiveStatus { get; set; }
-        public ObservableCollection<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
+        public ObservableCollection<CheckedListItem<ObjectiveStatusDisease>> ObjectiveStatusDiseases { get; set; }
         public ObservableCollection<HealthState> HealthStates { get; set; }
         public ObjectiveStatusTab()
         {
             InitializeComponent();
             this.DataContext = this;
-            ObjectiveStatus = new ObjectiveStatus();
-            ObjectiveStatusDiseases = new ObservableCollection<ObjectiveStatusDisease>();
             using (ApplicationContext db = new ApplicationContext())
             {
-                ObjectiveStatusDiseases = new ObservableCollection<ObjectiveStatusDisease>(db
+                var queryObjectiveStatusDisease = new ObservableCollection<ObjectiveStatusDisease>(db
                     .ObjectiveStatusDiseases
                     .ToList());
+                ObjectiveStatusDiseases = new ObservableCollection<CheckedListItem<ObjectiveStatusDisease>>(queryObjectiveStatusDisease
+                    .Select(s => new CheckedListItem<ObjectiveStatusDisease>(s,false))
+                    .ToList());
+
                 HealthStates = new ObservableCollection<HealthState>(db
                     .HealthStates
                     .ToList());
             }
             
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

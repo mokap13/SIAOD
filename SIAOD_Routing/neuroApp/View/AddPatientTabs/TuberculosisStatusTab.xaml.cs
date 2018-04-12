@@ -1,8 +1,11 @@
 ﻿using neuroApp.Analyzes.Tuberculosis;
+using neuroApp.ListItems;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +23,24 @@ namespace neuroApp.View.AddPatientTabs
     /// <summary>
     /// Логика взаимодействия для TuberculosisStatus.xaml
     /// </summary>
-    public partial class TuberculosisStatusTab : UserControl
+    public partial class TuberculosisStatusTab : UserControl, INotifyPropertyChanged
     {
-        public ObservableCollection<DrugResistance> DrugResistances { get; set; }
+        public ObservableCollection<CheckedListItem<DrugResistance>> DrugResistances { get; set; }
+
         public ObservableCollection<TuberculosisForm> TuberculosisForms { get; set; }
-        public ObservableCollection<TuberculosisStatus> TuberculosisStatuses { get; set; }
+        private TuberculosisForm _TuberculosisForm;
+        public TuberculosisForm TuberculosisForm
+        {
+            get { return _TuberculosisForm; }
+            set
+            {
+                if (value != null || value != _TuberculosisForm) _TuberculosisForm = value;
+                OnPropertyChanged("TuberculosisForm");
+            }
+        }
+
+
+        public ObservableCollection<CheckedListItem<TuberculosisStatus>> TuberculosisStatuses { get; set; }
         public TuberculosisStatusTab()
         {
             InitializeComponent();
@@ -32,14 +48,22 @@ namespace neuroApp.View.AddPatientTabs
 
             using (ApplicationContext db = new ApplicationContext())
             {
-                DrugResistances = new ObservableCollection<DrugResistance>(db
-                        .DrugResistances
-                        .ToList());
                 TuberculosisForms = new ObservableCollection<TuberculosisForm>(db
                     .TuberculosisForms
                     .ToList());
-                TuberculosisStatuses = new ObservableCollection<TuberculosisStatus>(db
+
+                var queryDrugResistances = new ObservableCollection<DrugResistance>(db
+                    .DrugResistances
+                    .ToList());
+                DrugResistances = new ObservableCollection<CheckedListItem<DrugResistance>>(queryDrugResistances
+                    .Select(s => new CheckedListItem<DrugResistance>(s, false))
+                    .ToList());
+
+                var queryTuberculosisStatuses = new ObservableCollection<TuberculosisStatus>(db
                     .TuberculosisStatuses
+                    .ToList());
+                TuberculosisStatuses = new ObservableCollection<CheckedListItem<TuberculosisStatus>>(queryTuberculosisStatuses
+                    .Select(s => new CheckedListItem<TuberculosisStatus>(s, false))
                     .ToList());
             }
         }
@@ -47,7 +71,11 @@ namespace neuroApp.View.AddPatientTabs
         private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<string> drugResistances = new List<string>();
-            foreach (DrugResistance item in (sender as ListBox).SelectedItems)
+
+            foreach (DrugResistance item in DrugResistances
+                .Where(w => w.IsChecked == true)
+                .Select(s => s.Item)
+                .ToList())
             {
                 drugResistances.Add(item.Name);
             }
@@ -81,6 +109,11 @@ namespace neuroApp.View.AddPatientTabs
             {
                 label_medicamentResist.Content = "ЛУ отсутствует";
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

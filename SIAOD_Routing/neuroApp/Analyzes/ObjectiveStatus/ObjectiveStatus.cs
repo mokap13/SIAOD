@@ -63,7 +63,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 growth = value;
                 OnPropertyChanged("Growth");
                 OnPropertyChanged("IMT");
-                OnPropertyChanged("DefecitMassiTela");
+                OnPropertyChanged("BodyWeightDefecit");
             }
         }
         public int Weight
@@ -74,7 +74,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 weight = value;
                 OnPropertyChanged("Weight");
                 OnPropertyChanged("IMT");
-                OnPropertyChanged("DefecitMassiTela");
+                OnPropertyChanged("BodyWeightDefecit");
             }
         }
 
@@ -91,6 +91,17 @@ namespace neuroApp.Analyzes.ObjectiveStatus
         public bool Pirexia => Temperature > 37;
         public bool BodyWeightDefecit => IMT < 18.5;
 
+
+        private string _AnalyzeDate;
+        public string AnalyzeDate
+        {
+            get { return _AnalyzeDate; }
+            set
+            {
+                if (value != null || value != _AnalyzeDate) _AnalyzeDate = value;
+                OnPropertyChanged("AnalyzeDate");
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
