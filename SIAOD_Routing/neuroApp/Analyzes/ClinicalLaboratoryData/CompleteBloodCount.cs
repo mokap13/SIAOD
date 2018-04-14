@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
 {
     public class CompleteBloodCount:INotifyPropertyChanged
     {
-        public Patient Patients { get; set; }
+        public Patient Patient { get; set; }
 
         public int Id { get; set; }
         public int Patient_id { get; set; }
@@ -75,7 +76,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _Leukocytes; }
             set
             {
-                if (value != null || value != _Leukocytes) _Leukocytes = value;
+                if (value != _Leukocytes) _Leukocytes = value;
                 OnPropertyChanged("Leukocytes");
             }
         }

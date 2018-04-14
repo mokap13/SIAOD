@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _ALT; }
             set
             {
-                if (value != null || value != _ALT) _ALT = value;
+                if ( value != _ALT) _ALT = value;
                 OnPropertyChanged("ALT");
             }
         }
@@ -31,18 +32,18 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _AST; }
             set
             {
-                if (value != null || value != _AST) _AST = value;
+                if (value != _AST) _AST = value;
                 OnPropertyChanged("AST");
             }
         }
 
-        private double _TotalBilitubin;
-        public double TotalBilitubin
+        private double _TotalBilirubin;
+        public double TotalBilirubin
         {
-            get { return _TotalBilitubin; }
+            get { return _TotalBilirubin; }
             set
             {
-                if (value != null || value != _TotalBilitubin) _TotalBilitubin = value;
+                if (value != _TotalBilirubin) _TotalBilirubin = value;
                 OnPropertyChanged("TotalBilitubin");
             }
         }
@@ -53,7 +54,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _Creatinine; }
             set
             {
-                if (value != null || value != _Creatinine) _Creatinine = value;
+                if ( value != _Creatinine) _Creatinine = value;
                 OnPropertyChanged("Creatinine");
             }
         }
@@ -64,7 +65,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _Glucose; }
             set
             {
-                if (value != null || value != _Glucose) _Glucose = value;
+                if (value != _Glucose) _Glucose = value;
                 OnPropertyChanged("Glucose");
             }
         }

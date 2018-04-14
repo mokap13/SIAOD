@@ -7,6 +7,7 @@ using neuroApp.Analyzes.ObjectiveStatus;
 using neuroApp.Analyzes.Tuberculosis;
 using neuroApp.Commands;
 using neuroApp.ListItems;
+using neuroApp.Model;
 using neuroApp.View.AddPatientTabs;
 using System;
 using System.Collections.Generic;
@@ -58,8 +59,8 @@ namespace neuroApp
                             .ToList();
                         HIV hiv = new HIV()
                         {
-                            HIVStage = hivStatusControl.HIVStage,
-                            HIVPhase = hivStatusControl.HIVPhase,
+                            Stage = hivStatusControl.HIVStage,
+                            Phase = hivStatusControl.HIVPhase,
                             Duration = hivStatusControl.HIVInfectionDuration
                         };
                         
@@ -91,6 +92,16 @@ namespace neuroApp
 
                         Patient patient = new Patient
                         {
+                            Name = personalDataControl.PatientName,
+                            Family = personalDataControl.Family,
+                            Otchestvo = personalDataControl.Otchestvo,
+                            Birthday = personalDataControl.Birthday,
+
+                            CriminalArticle = personalDataControl.CriminalArticle,
+                            BeginDate = personalDataControl.BeginDate,
+                            EndDate = personalDataControl.EndDate,
+                            Address = personalDataControl.Address,
+
                             BloodChemistries = new List<BloodChemistry>() { bloodChemistry },
                             Immunogramms = new List<Immunogram>() { immunogram },
                             CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
@@ -101,7 +112,8 @@ namespace neuroApp
                             HIVStatuses = hivStatuses,
                             TuberculosisForm = tuberculosisForm,
                             TuberculosisStatuses = tuberculosisStatuses,
-                            AccompanyingIllnesses = accompanyingIllness
+                            AccompanyingIllnesses = accompanyingIllness,
+                            DrugResistances = drugResistances
                         };
 
                         using (ApplicationContext db = new ApplicationContext())
@@ -114,10 +126,22 @@ namespace neuroApp
                     }));
             }
         }
+        private RelayCommand _setDefaultDate;
 
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        /// <summary>
+        /// Gets the SetDefautDate.
+        /// </summary>
+        public RelayCommand SetDefautDate
         {
-            MessageBox.Show("Справка по приложению");
+            get
+            {
+                return _setDefaultDate
+                    ?? (_setDefaultDate = new RelayCommand(
+                    (obj) =>
+                    {
+                        (obj as DatePicker).SelectedDate = DateTime.Now;
+                    }));
+            }
         }
 
         TextBoxValid validText = Validator.TextValidationTextBox;

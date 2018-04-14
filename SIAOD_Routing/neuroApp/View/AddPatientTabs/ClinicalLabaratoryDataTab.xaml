@@ -125,7 +125,7 @@
                 <Label Content="Общий билирубин" Grid.Column="0" Grid.Row="3"/>
                 <TextBox Grid.Column="1" Grid.Row="3" 
                          PreviewTextInput="validNumber"
-                         Text="{Binding Source={StaticResource BloodChemistry}, Path=TotalBilitubin, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding Source={StaticResource BloodChemistry}, Path=TotalBilirubin, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Content="Креатинин" Grid.Column="0" Grid.Row="4"/>
                 <TextBox Grid.Column="1" Grid.Row="4" 

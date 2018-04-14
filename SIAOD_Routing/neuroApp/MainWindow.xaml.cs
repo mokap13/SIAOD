@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using neuroApp.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,8 +50,7 @@ namespace neuroApp
                 //    .Select(t => new { NameP = p.Name, TUBER = t.Name })).ToList();
 
                 dataGrid_Patients.ItemsSource = db.Patients
-                    .SelectMany(p => p.BloodChemistries
-                    .Select(t => new { NameP = p.Name, GlucoseP = t.Glucose, AddressP = p.Address }))
+                    .Select(s => s)
                     .ToList();
 
             }
@@ -73,8 +73,9 @@ namespace neuroApp
                 AnswerWindow answerWindow = new AnswerWindow("Вы уверены, что хотите удалить");
                 if (answerWindow.ShowDialog() == true)
                 {
-                    foreach (Patient patient in dataGrid_Patients.SelectedItems)
+                    foreach (Patient item in dataGrid_Patients.SelectedItems)
                     {
+                        Patient patient = db.Patients.FirstOrDefault(p => p.Id == item.Id);
                         db.Patients.Remove(patient);
                     }
                     db.SaveChanges();

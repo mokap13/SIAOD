@@ -5,6 +5,7 @@ using neuroApp.Analyzes.HIV;
 using neuroApp.Analyzes.HIVAssociateDisease;
 using neuroApp.Analyzes.ObjectiveStatus;
 using neuroApp.Analyzes.Tuberculosis;
+using neuroApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,10 @@ namespace neuroApp
                 .ToTable("HIVStatuses");
             modelBuilder.Entity<ObjectiveStatus>()
                 .ToTable("ObjectiveStatuses");
+            modelBuilder.Entity<CompleteBloodCount>()
+                .ToTable("CompleteBloodCounts");
+            modelBuilder.Entity<HIV>()
+                .ToTable("HIVs");
 
             base.OnModelCreating(modelBuilder);
         }

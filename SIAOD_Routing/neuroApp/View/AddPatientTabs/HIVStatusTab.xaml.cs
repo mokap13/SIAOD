@@ -34,7 +34,7 @@ namespace neuroApp.View.AddPatientTabs
             get { return _HIVInfectionDuration; }
             set
             {
-                if (value != null || value != _HIVInfectionDuration) _HIVInfectionDuration = value;
+                if (value != _HIVInfectionDuration) _HIVInfectionDuration = value;
                 OnPropertyChanged("HIVInfectionDuration");
             }
         }

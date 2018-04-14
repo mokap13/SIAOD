@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _CD4; }
             set
             {
-                if (value != null || value != _CD4) _CD4 = value;
+                if (value != _CD4) _CD4 = value;
                 OnPropertyChanged("CD4");
             }
         }
@@ -30,7 +31,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _CD8; }
             set
             {
-                if (value != null || value != _CD8) _CD8 = value;
+                if (value != _CD8) _CD8 = value;
                 OnPropertyChanged("CD8");
             }
         }
@@ -41,7 +42,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _ViralLoad; }
             set
             {
-                if (value != null || value != _ViralLoad) _ViralLoad = value;
+                if (value != _ViralLoad) _ViralLoad = value;
                 OnPropertyChanged("ViralLoad");
             }
         }
