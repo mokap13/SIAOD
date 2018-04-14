@@ -32,13 +32,13 @@ namespace neuroApp.View.AddPatientTabs
             using (ApplicationContext db = new ApplicationContext())
             {
                 var test = db.HIVAssociateDiseases.Join(db.HIVAssociateDiseaseGroups,
-                    hiv => hiv.HIVAssociateDiseaseGroup_id,
+                    hiv => hiv.HIVAssociateDiseaseGroupId,
                     g => g.Id,
                     (hiv, g) => new
                     {
                         hiv.Id,
                         hiv.Name,
-                        hiv.HIVAssociateDiseaseGroup_id,
+                        hiv.HIVAssociateDiseaseGroupId,
                         hiv.Patients,
                         g
                     })
@@ -55,7 +55,7 @@ namespace neuroApp.View.AddPatientTabs
                 HIVAssociateDiseases = new ObservableCollection<CheckedListItem<HIVAssociateDisease>>(test
                     .Select(s => new CheckedListItem<HIVAssociateDisease>(new HIVAssociateDisease() {
                         HIVAssociateDiseaseGroup = s.g,
-                        HIVAssociateDiseaseGroup_id = s.Id,
+                        HIVAssociateDiseaseGroupId = s.Id,
                         Id = s.Id,
                         Patients = s.Patients,
                         Name = s.Name

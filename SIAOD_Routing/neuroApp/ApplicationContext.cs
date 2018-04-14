@@ -32,6 +32,24 @@ namespace neuroApp
                 .ToTable("CompleteBloodCounts");
             modelBuilder.Entity<HIV>()
                 .ToTable("HIVs");
+            //modelBuilder.Entity<Patient>()
+            //    .HasRequired(r => r.TuberculosisForm)
+            //    .WithMany(m => m.Patients)
+            //    .HasForeignKey(k => k.TuberculosisFormId)
+            //    .WillCascadeOnDelete(true);
+            //modelBuilder.Entity<HIVAssociateDisease>()
+            //    .ToTable("HIVAssociateDiseases");
+            //modelBuilder.Entity<HIVAssociateDiseaseGroup>()
+            //    .ToTable("HIVAssociateDiseaseGroups");
+            //modelBuilder.Entity<Patient>()
+            //    .HasMany(o => o.HIVAssociateDiseases)
+            //    .WithMany(m => m.Patients);
+                
+            //modelBuilder.Entity<HIVAssociateDisease>()
+            //    .HasRequired(r => r.HIVAssociateDiseaseGroup)
+            //    .WithMany(m => m.HIVAssociateDiseases)
+            //    .HasForeignKey(k => k.HIVAssociateDiseaseGroupId)
+            //    .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }

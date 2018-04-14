@@ -12,7 +12,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
     public class BloodChemistry:INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public int Patient_id { get; set; }
+        public int PatientId { get; set; }
 
         private double _ALT;
         public double ALT

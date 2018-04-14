@@ -63,7 +63,7 @@ namespace neuroApp
                             Phase = hivStatusControl.HIVPhase,
                             Duration = hivStatusControl.HIVInfectionDuration
                         };
-                        
+
                         List<HIVStatus> hivStatuses = hivStatusControl.HIVStatuses
                             .Where(w => w.IsChecked == true)
                             .Select(s => s.Item)
@@ -90,34 +90,43 @@ namespace neuroApp
                             .Select(s => s.Item)
                             .ToList();
 
-                        Patient patient = new Patient
-                        {
-                            Name = personalDataControl.PatientName,
-                            Family = personalDataControl.Family,
-                            Otchestvo = personalDataControl.Otchestvo,
-                            Birthday = personalDataControl.Birthday,
-
-                            CriminalArticle = personalDataControl.CriminalArticle,
-                            BeginDate = personalDataControl.BeginDate,
-                            EndDate = personalDataControl.EndDate,
-                            Address = personalDataControl.Address,
-
-                            BloodChemistries = new List<BloodChemistry>() { bloodChemistry },
-                            Immunogramms = new List<Immunogram>() { immunogram },
-                            CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
-                            ObjectiveStatus = new List<ObjectiveStatus> { objectiveStatus },
-                            Complaints = complaints,
-                            HIVAssociateDiseases = hivAssociateDisease,
-                            HIVs = new List<HIV> { hiv },
-                            HIVStatuses = hivStatuses,
-                            TuberculosisForm = tuberculosisForm,
-                            TuberculosisStatuses = tuberculosisStatuses,
-                            AccompanyingIllnesses = accompanyingIllness,
-                            DrugResistances = drugResistances
-                        };
-
                         using (ApplicationContext db = new ApplicationContext())
                         {
+                            Patient patient = new Patient()
+                            {
+                                Name = personalDataControl.PatientName,
+                                Family = personalDataControl.Family,
+                                Otchestvo = personalDataControl.Otchestvo,
+                                Birthday = personalDataControl.Birthday,
+
+                                CriminalArticle = personalDataControl.CriminalArticle,
+                                BeginDate = personalDataControl.BeginDate,
+                                EndDate = personalDataControl.EndDate,
+                                Address = personalDataControl.Address,
+
+                                //BloodChemistries = new List<BloodChemistry>() { bloodChemistry },
+                                //Immunogramms = new List<Immunogram>() { immunogram },
+                                //CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
+                                //ObjectiveStatus = new List<ObjectiveStatus> { objectiveStatus },
+                                //Complaints = complaints,
+                                //HIVAssociateDiseases = hivAssociateDisease,
+                                //HIVs = new List<HIV> { hiv },
+                                //HIVStatuses = hivStatuses,
+                                //TuberculosisStatuses = tuberculosisStatuses,
+                                //DrugResistances = drugResistances
+                            };
+                            patient.TuberculosisForm = db
+                                .TuberculosisForms
+                                .AsEnumerable()
+                                .First(f => f.Name == tuberculosisForm.Name);
+                            foreach (AccompanyingIllness item in accompanyingIllness)
+                            {
+                                patient.AccompanyingIllnesses.Add(db
+                                .AccompanyingIllnesses
+                                .AsEnumerable()
+                                .First(f => f.Name == item.Name));
+                            }
+
                             db.Patients.Add(patient);
                             db.SaveChanges();
                             this.DialogResult = true;
@@ -155,7 +164,3 @@ namespace neuroApp
         }
     }
 }
-
-
-
-

@@ -33,6 +33,7 @@ namespace neuroApp.Model
         private ICollection<HIV> hivs;
         private ICollection<TuberculosisStatus> tuberculosisStatuses;
         private ICollection<Immunogram> immunograms;
+        public virtual ICollection<AccompanyingIllness> AccompanyingIllnesses { get; set; }
         private string criminalArticle;
         private string beginDate;
         private string endDate;
@@ -43,11 +44,12 @@ namespace neuroApp.Model
             //immunograms = new List<Immunogram>();
             //tuberculosisStatuses = new List<TuberculosisStatus>();
             //hivStatuses = new List<HIVStatus>();
+            AccompanyingIllnesses = new List<AccompanyingIllness>();
         }
 
 
         public int Id { get; set; }
-        public int TuberculosisForm_id { get; set; }
+        public int TuberculosisFormId { get; set; }
         public string Name
         {
             get { return name; }
@@ -126,15 +128,7 @@ namespace neuroApp.Model
             }
         }
 
-        public TuberculosisForm TuberculosisForm
-        {
-            get { return tuberculosisForm; }
-            set
-            {
-                tuberculosisForm = value;
-                OnPropertyChanged("TuberculosisForm");
-            }
-        }
+        public virtual TuberculosisForm TuberculosisForm { get; set; }
         public ICollection<BloodChemistry> BloodChemistries
         {
             get { return bloodChemisrties; }
@@ -228,17 +222,6 @@ namespace neuroApp.Model
             {
                 if (value != null || value != _ObjectiveStatus) _ObjectiveStatus = value;
                 OnPropertyChanged("ObjectiveStatus");
-            }
-        }
-
-        private ICollection<AccompanyingIllness> _AccompanyingIllnesses;
-        public ICollection<AccompanyingIllness> AccompanyingIllnesses
-        {
-            get { return _AccompanyingIllnesses; }
-            set
-            {
-                if (value != null || value != _AccompanyingIllnesses) _AccompanyingIllnesses = value;
-                OnPropertyChanged("AccompanyingUllnesses");
             }
         }
 

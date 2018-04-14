@@ -78,8 +78,8 @@ namespace neuroApp.Analyzes.ObjectiveStatus
 
         public int Id { get; set; }
 
-        public int Patient_id { get; set; }
-        public int HealthState_id { get; set; }
+        public int PatientId { get; set; }
+        public int HealthStateId { get; set; }
         public Patient Patient { get; set; }
         public HealthState HealthState { get; set; }
         public List<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }

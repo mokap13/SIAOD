@@ -62,7 +62,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
         }
 
         public Patient Patient { get; set; }
-        public int Patient_id { get; set; }
+        public int PatientId { get; set; }
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

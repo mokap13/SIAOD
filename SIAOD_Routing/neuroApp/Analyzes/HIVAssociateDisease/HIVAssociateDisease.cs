@@ -13,7 +13,7 @@ namespace neuroApp.Analyzes.HIVAssociateDisease
         public string Name { get; set; }
 
         public List<Patient> Patients { get; set; }
-        public int HIVAssociateDiseaseGroup_id { get; set; }
+        public int HIVAssociateDiseaseGroupId { get; set; }
         public HIVAssociateDiseaseGroup HIVAssociateDiseaseGroup { get; set; }
     }
 }

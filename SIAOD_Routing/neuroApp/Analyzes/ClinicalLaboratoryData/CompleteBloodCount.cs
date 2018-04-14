@@ -15,7 +15,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
         public Patient Patient { get; set; }
 
         public int Id { get; set; }
-        public int Patient_id { get; set; }
+        public int PatientId { get; set; }
 
         private double esr;
         private double lymphocytes;

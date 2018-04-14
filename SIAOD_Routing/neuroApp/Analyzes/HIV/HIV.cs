@@ -13,10 +13,10 @@ namespace neuroApp.Analyzes.HIV
         public int Duration { get; set; }
 
         public HIVPhase Phase { get; set; }
-        public int Phase_id { get; set; }
+        public int PhaseId { get; set; }
         public HIVStage Stage { get; set; }
-        public int Stage_id { get; set; }
+        public int StageId { get; set; }
         public Patient Patient { get; set; }
-        public int Patient_id { get; set; }
+        public int PatientId { get; set; }
     }
 }
