@@ -23,17 +23,6 @@ namespace neuroApp.Model
         private string otchestvo;
         private string birthday;
 
-        private TuberculosisForm tuberculosisForm;
-        private ICollection<HIVStatus> hivStatuses;
-        private ICollection<BloodChemistry> bloodChemisrties;
-        private ICollection<CompleteBloodCount> completeBloodCount;
-        private ICollection<Complaint> complaints;
-        private ICollection<DrugResistance> drugResistances;
-        private ICollection<HIVAssociateDisease> hivAssociateDiseases;
-        private ICollection<HIV> hivs;
-        private ICollection<TuberculosisStatus> tuberculosisStatuses;
-        private ICollection<Immunogram> immunograms;
-        public virtual ICollection<AccompanyingIllness> AccompanyingIllnesses { get; set; }
         private string criminalArticle;
         private string beginDate;
         private string endDate;
@@ -41,10 +30,18 @@ namespace neuroApp.Model
 
         public Patient()
         {
-            //immunograms = new List<Immunogram>();
-            //tuberculosisStatuses = new List<TuberculosisStatus>();
-            //hivStatuses = new List<HIVStatus>();
+            Immunograms = new List<Immunogram>();
+            TuberculosisStatuses = new List<TuberculosisStatus>();
+            HIVStatuses = new List<HIVStatus>();
             AccompanyingIllnesses = new List<AccompanyingIllness>();
+            BloodChemistries = new List<BloodChemistry>();
+            CompleteBloodCount = new List<CompleteBloodCount>();
+            Complaints = new List<Complaint>();
+            DrugResistances = new List<DrugResistance>();
+            HIVAssociateDiseases = new List<HIVAssociateDisease>();
+            HIVs = new List<HIV>();
+            ObjectiveStatuses = new List<ObjectiveStatus>();
+            ObjectiveStatusDiseases = new List<ObjectiveStatusDisease>();
         }
 
 
@@ -129,101 +126,18 @@ namespace neuroApp.Model
         }
 
         public virtual TuberculosisForm TuberculosisForm { get; set; }
-        public ICollection<BloodChemistry> BloodChemistries
-        {
-            get { return bloodChemisrties; }
-            set
-            {
-                bloodChemisrties = value;
-                OnPropertyChanged("BloodChemistries");
-            }
-        }
-        public ICollection<CompleteBloodCount> CompleteBloodCount
-        {
-            get { return completeBloodCount; }
-            set
-            {
-                completeBloodCount = value;
-                OnPropertyChanged("CompleteBloodCount");
-            }
-        }
-        public ICollection<Complaint> Complaints
-        {
-            get { return complaints; }
-            set
-            {
-                complaints = value;
-                OnPropertyChanged("Complaints");
-            }
-        }
-        public ICollection<DrugResistance> DrugResistances
-        {
-            get { return drugResistances; }
-            set
-            {
-                drugResistances = value;
-                OnPropertyChanged("DrugResistances");
-            }
-        }
-        public ICollection<HIV> HIVs
-        {
-            get { return hivs; }
-            set
-            {
-                hivs = value;
-                OnPropertyChanged("HIV");
-            }
-        }
-        public ICollection<HIVAssociateDisease> HIVAssociateDiseases
-        {
-            get { return hivAssociateDiseases; }
-            set
-            {
-                hivAssociateDiseases = value;
-                OnPropertyChanged("HIVAssociateDiseases");
-            }
-        }
-        public ICollection<Immunogram> Immunogramms
-        {
-            get { return immunograms; }
-            set
-            {
-                immunograms = value;
-                OnPropertyChanged("Immunogramms");
-            }
-        }
-        public ICollection<TuberculosisStatus> TuberculosisStatuses
-        {
-            get { return tuberculosisStatuses; }
-            set
-            {
-                tuberculosisStatuses = value;
-                OnPropertyChanged("TuberculosisStatuses");
-            }
-        }
-
-        
-        public ICollection<HIVStatus> HIVStatuses
-        {
-            get { return hivStatuses; }
-            set
-            {
-                if (value != null || value != hivStatuses) hivStatuses = value;
-                OnPropertyChanged("HIVStatuses");
-            }
-        }
-
-
-        private List<ObjectiveStatus> _ObjectiveStatus;
-        public List<ObjectiveStatus> ObjectiveStatus
-        {
-            get { return _ObjectiveStatus; }
-            set
-            {
-                if (value != null || value != _ObjectiveStatus) _ObjectiveStatus = value;
-                OnPropertyChanged("ObjectiveStatus");
-            }
-        }
+        public virtual ICollection<HIVStatus> HIVStatuses { get; set; }
+        public virtual ICollection<BloodChemistry> BloodChemistries { get; set; }
+        public virtual ICollection<CompleteBloodCount> CompleteBloodCount { get; set; }
+        public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual ICollection<DrugResistance> DrugResistances { get; set; }
+        public virtual ICollection<HIVAssociateDisease> HIVAssociateDiseases { get; set; }
+        public virtual ICollection<HIV> HIVs { get; set; }
+        public virtual ICollection<TuberculosisStatus> TuberculosisStatuses { get; set; }
+        public virtual ICollection<Immunogram> Immunograms { get; set; }
+        public virtual ICollection<AccompanyingIllness> AccompanyingIllnesses { get; set; }
+        public virtual ICollection<ObjectiveStatus> ObjectiveStatuses { get; set; }
+        public virtual ICollection<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
+using neuroApp.Analyzes.ObjectiveStatus;
 
 namespace neuroApp
 {
@@ -75,7 +77,10 @@ namespace neuroApp
                 {
                     foreach (Patient item in dataGrid_Patients.SelectedItems)
                     {
-                        Patient patient = db.Patients.FirstOrDefault(p => p.Id == item.Id);
+                        Patient patient = db
+                            .Patients
+                            .Include(i => i.ObjectiveStatuses)
+                            .FirstOrDefault(p => p.Id == item.Id);
                         db.Patients.Remove(patient);
                     }
                     db.SaveChanges();

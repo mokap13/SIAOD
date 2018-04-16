@@ -11,6 +11,6 @@ namespace neuroApp.Analyzes.ObjectiveStatus
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<ObjectiveStatus> ObjectiveStatuses { get; set; }
+        public virtual ICollection<ObjectiveStatus> ObjectiveStatuses { get; set; }
     }
 }

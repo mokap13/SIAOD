@@ -32,6 +32,9 @@ namespace neuroApp.View.AddPatientTabs
         {
             InitializeComponent();
             this.DataContext = this;
+            BloodChemestry_AnalyzeDate.SelectedDate = DateTime.Now;
+            CompleteBloodCount_AnalyzeDate.SelectedDate = DateTime.Now;
+            Immunograms_AnalyzeDate.SelectedDate = DateTime.Now;
         }
     }
 }

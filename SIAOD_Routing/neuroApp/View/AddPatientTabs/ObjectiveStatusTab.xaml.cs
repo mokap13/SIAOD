@@ -28,7 +28,6 @@ namespace neuroApp.View.AddPatientTabs
         TextBoxValid validText = Validator.TextValidationTextBox;
         TextBoxValid validNumber = Validator.NumberValidationTextBox;
 
-
         private HealthState _HealthState;
         public HealthState HealthState
         {
@@ -47,6 +46,7 @@ namespace neuroApp.View.AddPatientTabs
         {
             InitializeComponent();
             this.DataContext = this;
+            ObjectiveStatus_AnalyzeDate.SelectedDate = DateTime.Now;
             using (ApplicationContext db = new ApplicationContext())
             {
                 var queryObjectiveStatusDisease = new ObservableCollection<ObjectiveStatusDisease>(db

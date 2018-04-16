@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neuroApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,10 @@ namespace neuroApp.Analyzes.ObjectiveStatus
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<ObjectiveStatus> ObjectiveStatuses { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
         public ObjectiveStatusDisease()
         {
-            ObjectiveStatuses = new List<ObjectiveStatus>();
+            Patients = new List<Patient>();
         }
     }
 }

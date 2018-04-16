@@ -32,6 +32,21 @@ namespace neuroApp
                 .ToTable("CompleteBloodCounts");
             modelBuilder.Entity<HIV>()
                 .ToTable("HIVs");
+
+            //modelBuilder.Entity<Patient>()
+            //    .HasMany(c => c.ObjectiveStatuses)    
+            //    .WithRequired(o => o.Patient)
+            //    .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Patient>()
+                .HasMany(h => h.ObjectiveStatusDiseases)
+                .WithMany(w => w.Patients)
+                .Map(m =>
+                {
+                    m.ToTable("PatientObjectiveStatusDiseases")
+                        .MapRightKey("ObjectiveStatusDisease_Id")
+                        .MapLeftKey("Patient_Id");
+                });
             //modelBuilder.Entity<Patient>()
             //    .HasRequired(r => r.TuberculosisForm)
             //    .WithMany(m => m.Patients)
@@ -44,12 +59,26 @@ namespace neuroApp
             //modelBuilder.Entity<Patient>()
             //    .HasMany(o => o.HIVAssociateDiseases)
             //    .WithMany(m => m.Patients);
-                
+
             //modelBuilder.Entity<HIVAssociateDisease>()
             //    .HasRequired(r => r.HIVAssociateDiseaseGroup)
             //    .WithMany(m => m.HIVAssociateDiseases)
             //    .HasForeignKey(k => k.HIVAssociateDiseaseGroupId)
-            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<ObjectiveStatusDiseaseObjectiveStatus>()
+            //            .HasKey(i => new { i.ObjectiveStatusId, i.ObjectiveStatusDiseaseId });
+
+            //modelBuilder.Entity<ObjectiveStatusDiseaseObjectiveStatus>()
+            //   .HasRequired(i => i.ObjectiveStatus)
+            //   .WithMany(i => i.ObjectiveStatusDiseaseObjectiveStatus)
+            //   .HasForeignKey(i => i.ObjectiveStatusId)
+            //   .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<ObjectiveStatusDiseaseObjectiveStatus>()
+            //   .HasRequired(i => i.ObjectiveStatusDisease)
+            //   .WithMany(i => i.ObjectiveStatusDiseaseObjectiveStatus)
+            //   .HasForeignKey(i => i.ObjectiveStatusDisease)
+            //   .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -72,6 +101,7 @@ namespace neuroApp
         public DbSet<HealthState> HealthStates { get; set; }
         public DbSet<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
         public DbSet<ObjectiveStatus> ObjectiveStatuses { get; set; }
+        //public DbSet<ObjectiveStatusDiseaseObjectiveStatus> ObjectiveStatusDiseaseObjectiveStatus { get; set; }
 
         public DbSet<TuberculosisForm> TuberculosisForms { get; set; }
         public DbSet<DrugResistance> DrugResistances { get; set; }

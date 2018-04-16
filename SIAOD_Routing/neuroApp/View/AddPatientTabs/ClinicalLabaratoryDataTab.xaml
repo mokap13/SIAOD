@@ -40,7 +40,8 @@
                     <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="63*"/>
                 </Grid.ColumnDefinitions>
-                <DatePicker Grid.ColumnSpan="2" Margin="1"
+                <DatePicker x:Name="CompleteBloodCount_AnalyzeDate"
+                            Grid.ColumnSpan="2" Margin="1"
                             SelectedDate="{Binding 
                     Source={StaticResource CompleteBloodCount}, 
                     Path=AnalyzeDate, 
@@ -109,7 +110,8 @@
                     <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="63*"/>
                 </Grid.ColumnDefinitions>
-                <DatePicker Grid.ColumnSpan="2" Margin="1"
+                <DatePicker x:Name="BloodChemestry_AnalyzeDate"
+                            Grid.ColumnSpan="2" Margin="1"
                             SelectedDate="{Binding Source={StaticResource BloodChemistry}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Content="АЛТ" Grid.Column="0" Grid.Row="1"/>
@@ -150,7 +152,8 @@
                     <ColumnDefinition Width="173*"/>
                     <ColumnDefinition Width="51*"/>
                 </Grid.ColumnDefinitions>
-                <DatePicker Grid.ColumnSpan="1" Grid.Row="0" Margin="1"
+                <DatePicker x:Name="Immunograms_AnalyzeDate"
+                            Grid.ColumnSpan="1" Grid.Row="0" Margin="1"
                             SelectedDate="{Binding Source={StaticResource Immunogram}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Content="CD 4" Grid.Column="0" Grid.Row="1"/>

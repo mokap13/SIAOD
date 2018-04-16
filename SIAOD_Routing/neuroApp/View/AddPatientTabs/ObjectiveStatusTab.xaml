@@ -16,11 +16,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="3">
-                <DatePicker SelectedDate="{Binding Source={StaticResource ObjectiveStatus}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <DatePicker x:Name="ObjectiveStatus_AnalyzeDate" SelectedDate="{Binding Source={StaticResource ObjectiveStatus}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
                 <UniformGrid Columns="3">
                     <Label Content="Состояние"/>
                     <ComboBox ItemsSource="{Binding HealthStates}"
-                              SelectedItem="{Binding Source={StaticResource ObjectiveStatus}, Path=HealthState, UpdateSourceTrigger=PropertyChanged}">
+                              SelectedItem="{Binding HealthState}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />

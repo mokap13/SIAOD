@@ -8,14 +8,14 @@ namespace neuroApp.Analyzes.ObjectiveStatus
 {
     public class ObjectiveStatus : INotifyPropertyChanged
     {
-        private int heartRate;
-        private int arterialPressure;
-        private int frequencyOfResperatoryMovements;
-        private double temperature;
-        private int growth;
-        private int weight;
-
-        public int HeartRate
+        private double heartRate;
+        private double arterialPressure;
+        private double frequencyOfResperatoryMovements;
+        private double temperature; 
+        private double growth;
+        private double weight;
+        
+        public double HeartRate
         {
             get { return heartRate; }
             set
@@ -25,7 +25,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 OnPropertyChanged("Tachycardia");
             }
         }
-        public int ArterialPressure
+        public double ArterialPressure
         {
             get { return arterialPressure; }
             set
@@ -34,7 +34,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 OnPropertyChanged("ArterialPressure");
             }
         }
-        public int FrequencyOfResperatoryMovements
+        public double FrequencyOfResperatoryMovements
         {
             get { return frequencyOfResperatoryMovements; }
             set
@@ -53,7 +53,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 OnPropertyChanged("Pirexia");
             }
         }
-        public int Growth
+        public double Growth
         {
             get { return growth; }
             set
@@ -64,7 +64,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 OnPropertyChanged("BodyWeightDefecit");
             }
         }
-        public int Weight
+        public double Weight
         {
             get { return weight; }
             set
@@ -78,11 +78,10 @@ namespace neuroApp.Analyzes.ObjectiveStatus
 
         public int Id { get; set; }
 
-        public int PatientId { get; set; }
-        public int HealthStateId { get; set; }
         public Patient Patient { get; set; }
+        public int PatientId { get; set; }
         public HealthState HealthState { get; set; }
-        public List<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
+        public int HealthStateId { get; set; }
 
         public double IMT => Math.Round(((double)weight / (((double)growth * (double)growth) / 10_000)), 2);
         public bool Tachycardia => HeartRate > 85;

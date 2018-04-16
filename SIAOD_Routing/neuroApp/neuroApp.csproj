@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Analyzes\AccompanyingIllness\AccompanyingIllness.cs" />
     <Compile Include="Analyzes\HIV\HIVStatus.cs" />
+    <Compile Include="Analyzes\ObjectiveStatus\ObjectiveStatusDiseaseObjectiveStatus.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ListItems\CheckedListItem.cs" />
     <Compile Include="Model\PersonalData.cs" />

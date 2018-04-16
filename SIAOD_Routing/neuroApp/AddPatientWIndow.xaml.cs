@@ -57,12 +57,6 @@ namespace neuroApp
                             .Where(c => c.IsChecked == true)
                             .Select(c => c.Item)
                             .ToList();
-                        HIV hiv = new HIV()
-                        {
-                            Stage = hivStatusControl.HIVStage,
-                            Phase = hivStatusControl.HIVPhase,
-                            Duration = hivStatusControl.HIVInfectionDuration
-                        };
 
                         List<HIVStatus> hivStatuses = hivStatusControl.HIVStatuses
                             .Where(w => w.IsChecked == true)
@@ -70,7 +64,7 @@ namespace neuroApp
                             .ToList();
 
                         ObjectiveStatus objectiveStatus = objectiveStatusControl.FindResource("ObjectiveStatus") as ObjectiveStatus;
-                        List<ObjectiveStatusDisease> objectiveStatusDiseases = objectiveStatusControl.ObjectiveStatusDiseases
+                        List<ObjectiveStatusDisease> objectiveStatusDisease = objectiveStatusControl.ObjectiveStatusDiseases
                             .Where(w => w.IsChecked == true)
                             .Select(s => s.Item)
                             .ToList();
@@ -92,29 +86,85 @@ namespace neuroApp
 
                         using (ApplicationContext db = new ApplicationContext())
                         {
+                            HIV hiv = new HIV()
+                            {
+                                Stage = db.HIVStages
+                                    .AsEnumerable()
+                                    .First(f => f.Name == hivStatusControl.HIVStage.Name),
+                                Phase = db.HIVPhases
+                                    .AsEnumerable()
+                                    .First(f => f.Name == hivStatusControl.HIVPhase.Name),
+                                Duration = hivStatusControl.HIVInfectionDuration
+                            };
+
+
+                            objectiveStatus.HealthState = db
+                                .HealthStates
+                                .AsEnumerable()
+                                .First(f => f.Name == objectiveStatusControl.HealthState.Name);
+
                             Patient patient = new Patient()
                             {
-                                Name = personalDataControl.PatientName,
-                                Family = personalDataControl.Family,
-                                Otchestvo = personalDataControl.Otchestvo,
-                                Birthday = personalDataControl.Birthday,
-
+                                Name =            personalDataControl.PatientName,
+                                Family =          personalDataControl.Family,
+                                Otchestvo =       personalDataControl.Otchestvo,
+                                Birthday =        personalDataControl.Birthday,
                                 CriminalArticle = personalDataControl.CriminalArticle,
-                                BeginDate = personalDataControl.BeginDate,
-                                EndDate = personalDataControl.EndDate,
-                                Address = personalDataControl.Address,
+                                BeginDate =       personalDataControl.BeginDate,
+                                EndDate =         personalDataControl.EndDate,
+                                Address =         personalDataControl.Address,
 
-                                //BloodChemistries = new List<BloodChemistry>() { bloodChemistry },
-                                //Immunogramms = new List<Immunogram>() { immunogram },
-                                //CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
-                                //ObjectiveStatus = new List<ObjectiveStatus> { objectiveStatus },
-                                //Complaints = complaints,
-                                //HIVAssociateDiseases = hivAssociateDisease,
-                                //HIVs = new List<HIV> { hiv },
-                                //HIVStatuses = hivStatuses,
-                                //TuberculosisStatuses = tuberculosisStatuses,
-                                //DrugResistances = drugResistances
+                                BloodChemistries = new List<BloodChemistry> { bloodChemistry },
+                                Immunograms = new List<Immunogram>() { immunogram },
+                                CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
+                                ObjectiveStatuses = new List<ObjectiveStatus> { objectiveStatus },
+
+                                HIVs = new List<HIV> { hiv },
                             };
+                            patient.ObjectiveStatuses.Add(objectiveStatus);
+
+                            foreach (ObjectiveStatusDisease item in objectiveStatusDisease)
+                            {
+                                patient.ObjectiveStatusDiseases.Add(db
+                                    .ObjectiveStatusDiseases
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
+                            foreach (HIVAssociateDisease item in hivAssociateDisease)
+                            {
+                                patient.HIVAssociateDiseases.Add(db
+                                    .HIVAssociateDiseases
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
+                            foreach (TuberculosisStatus item in tuberculosisStatuses)
+                            {
+                                patient.TuberculosisStatuses.Add(db
+                                    .TuberculosisStatuses
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
+                            foreach (HIVStatus item in hivStatuses)
+                            {
+                                patient.HIVStatuses.Add(db
+                                    .HIVStatuses
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
+                            foreach (DrugResistance item in drugResistances)
+                            {
+                                patient.DrugResistances.Add(db
+                                    .DrugResistances
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
+                            foreach (Complaint item in complaints)
+                            {
+                                patient.Complaints.Add(db
+                                    .Complaints
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
+                            }
                             patient.TuberculosisForm = db
                                 .TuberculosisForms
                                 .AsEnumerable()
@@ -122,9 +172,9 @@ namespace neuroApp
                             foreach (AccompanyingIllness item in accompanyingIllness)
                             {
                                 patient.AccompanyingIllnesses.Add(db
-                                .AccompanyingIllnesses
-                                .AsEnumerable()
-                                .First(f => f.Name == item.Name));
+                                    .AccompanyingIllnesses
+                                    .AsEnumerable()
+                                    .First(f => f.Name == item.Name));
                             }
 
                             db.Patients.Add(patient);
