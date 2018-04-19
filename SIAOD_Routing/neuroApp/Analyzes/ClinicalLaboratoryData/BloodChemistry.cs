@@ -20,13 +20,13 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _ALT; }
             set
             {
-                if ( value != _ALT) _ALT = value;
+                if ( value != _ALT) _ALT = value/200;
                 OnPropertyChanged("ALT");
             }
         }
         public double AltTreshold
         {
-            get { return 57.0; }
+            get { return 0.285; }
         }
         
         private double _AST;
@@ -35,13 +35,13 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             get { return _AST; }
             set
             {
-                if (value != _AST) _AST = value;
+                if (value != _AST) _AST = value/200;//TODO хак надо будет преобразовываьб велечину
                 OnPropertyChanged("AST");
             }
         }
         public double AstTreshold
         {
-            get { return 192; }
+            get { return 0.96; }
         }
         private double _TotalBilirubin;
         public double TotalBilirubin
