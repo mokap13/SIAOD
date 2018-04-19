@@ -10,7 +10,13 @@ namespace neuroApp.Analyzes.HIV
     public class HIV
     {
         public int Id { get; set; }
-        public int Duration { get; set; }
+        public double Duration { get; set; }
+        public double DurationTreshold
+        { get
+            {
+                return 12.5;
+            }
+        }
 
         public HIVPhase Phase { get; set; }
         public int PhaseId { get; set; }

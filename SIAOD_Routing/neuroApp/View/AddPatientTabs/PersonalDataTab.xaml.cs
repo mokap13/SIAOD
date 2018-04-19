@@ -114,10 +114,21 @@ namespace neuroApp.View.AddPatientTabs
             }
         }
 
+        private string _ResearchDate;
+        public string ResearchDate
+        {
+            get { return _ResearchDate; }
+            set
+            {
+                if (value != null || value != _ResearchDate) _ResearchDate = value;
+                OnPropertyChanged("ResearchDate");
+            }
+        }
         public PersonalDataTab()
         {
             InitializeComponent();
             this.DataContext = this;
+            DatePicker_ReseasrchDate.SelectedDate = DateTime.Now;
         }
 
         private void DatePicker_Birthday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

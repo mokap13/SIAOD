@@ -45,160 +45,175 @@ namespace neuroApp
                 return _addPatient
                     ?? (_addPatient = new RelayCommand(obj =>
                     {
-                        BloodChemistry bloodChemistry = clinicalLaboratoryDataControl.FindResource("BloodChemistry") as BloodChemistry;
-                        Immunogram immunogram = clinicalLaboratoryDataControl.FindResource("Immunogram") as Immunogram;
-                        CompleteBloodCount completeBloodCount = clinicalLaboratoryDataControl.FindResource("CompleteBloodCount") as CompleteBloodCount;
-
-                        List<Complaint> complaints = complaintsControl.Complaints
-                            .Where(c => c.IsChecked == true)
-                            .Select(c => c.Item)
-                            .ToList();
-                        List<HIVAssociateDisease> hivAssociateDisease = hivAssociateDiseaseControl.HIVAssociateDiseases
-                            .Where(c => c.IsChecked == true)
-                            .Select(c => c.Item)
-                            .ToList();
-
-                        List<HIVStatus> hivStatuses = hivStatusControl.HIVStatuses
-                            .Where(w => w.IsChecked == true)
-                            .Select(s => s.Item)
-                            .ToList();
-
-                        ObjectiveStatus objectiveStatus = objectiveStatusControl.FindResource("ObjectiveStatus") as ObjectiveStatus;
-                        List<ObjectiveStatusDisease> objectiveStatusDisease = objectiveStatusControl.ObjectiveStatusDiseases
-                            .Where(w => w.IsChecked == true)
-                            .Select(s => s.Item)
-                            .ToList();
-
-                        TuberculosisForm tuberculosisForm = tuberculosisStatusControl.TuberculosisForm;
-                        List<DrugResistance> drugResistances = tuberculosisStatusControl.DrugResistances
-                            .Where(w => w.IsChecked == true)
-                            .Select(s => s.Item)
-                            .ToList();
-                        List<TuberculosisStatus> tuberculosisStatuses = tuberculosisStatusControl.TuberculosisStatuses
-                            .Where(w => w.IsChecked == true)
-                            .Select(s => s.Item)
-                            .ToList();
-
-                        List<AccompanyingIllness> accompanyingIllness = accompanyingIllnessControl.AccompanyingIllnesses
-                            .Where(w => w.IsChecked == true)
-                            .Select(s => s.Item)
-                            .ToList();
-
-                        using (ApplicationContext db = new ApplicationContext())
+                        try
                         {
-                            HIV hiv = new HIV()
+                            BloodChemistry bloodChemistry = clinicalLaboratoryDataControl.FindResource("BloodChemistry") as BloodChemistry;
+                            Immunogram immunogram = clinicalLaboratoryDataControl.FindResource("Immunogram") as Immunogram;
+                            CompleteBloodCount completeBloodCount = clinicalLaboratoryDataControl.FindResource("CompleteBloodCount") as CompleteBloodCount;
+
+                            List<Complaint> complaints = complaintsControl.Complaints
+                                .Where(c => c.IsChecked == true)
+                                .Select(c => c.Item)
+                                .ToList();
+                            List<HIVAssociateDisease> hivAssociateDisease = hivAssociateDiseaseControl.HIVAssociateDiseases
+                                .Where(c => c.IsChecked == true)
+                                .Select(c => c.Item)
+                                .ToList();
+
+                            List<HIVStatus> hivStatuses = hivStatusControl.HIVStatuses
+                                .Where(w => w.IsChecked == true)
+                                .Select(s => s.Item)
+                                .ToList();
+
+                            ObjectiveStatus objectiveStatus = objectiveStatusControl.FindResource("ObjectiveStatus") as ObjectiveStatus;
+                            List<ObjectiveStatusDisease> objectiveStatusDiseases = objectiveStatusControl.ObjectiveStatusDiseases
+                                .Where(w => w.IsChecked == true)
+                                .Select(s => s.Item)
+                                .ToList();
+
+                            TuberculosisForm tuberculosisForm = tuberculosisStatusControl.TuberculosisForm;
+                            TuberculosisPhase tuberculosisPhase = tuberculosisStatusControl.TuberculosisPhase;
+                            List<DrugResistance> drugResistances = tuberculosisStatusControl.DrugResistances
+                                .Where(w => w.IsChecked == true)
+                                .Select(s => s.Item)
+                                .ToList();
+                            List<TuberculosisStatus> tuberculosisStatuses = tuberculosisStatusControl.TuberculosisStatuses
+                                .Where(w => w.IsChecked == true)
+                                .Select(s => s.Item)
+                                .ToList();
+
+                            List<AccompanyingIllness> accompanyingIllness = accompanyingIllnessControl.AccompanyingIllnesses
+                                .Where(w => w.IsChecked == true)
+                                .Select(s => s.Item)
+                                .ToList();
+
+                            using (ApplicationContext db = new ApplicationContext())
                             {
-                                Stage = db.HIVStages
-                                    .AsEnumerable()
-                                    .First(f => f.Name == hivStatusControl.HIVStage.Name),
-                                Phase = db.HIVPhases
-                                    .AsEnumerable()
-                                    .First(f => f.Name == hivStatusControl.HIVPhase.Name),
-                                Duration = hivStatusControl.HIVInfectionDuration
-                            };
+                                HIV hiv = new HIV()
+                                {
+                                    Stage = db.HIVStages
+                                        .AsEnumerable()
+                                        .First(f => f.Name == hivStatusControl.HIVStage.Name),
+                                    Phase = db.HIVPhases
+                                        .AsEnumerable()
+                                        .First(f => f.Name == hivStatusControl.HIVPhase.Name),
+                                    Duration = hivStatusControl.HIVInfectionDuration
+                                };
 
 
-                            objectiveStatus.HealthState = db
-                                .HealthStates
-                                .AsEnumerable()
-                                .First(f => f.Name == objectiveStatusControl.HealthState.Name);
+                                objectiveStatus.HealthState = db
+                                    .HealthStates
+                                    .AsEnumerable()
+                                    .First(f => f.Name == objectiveStatusControl.HealthState.Name);
 
-                            Patient patient = new Patient()
-                            {
-                                Name =            personalDataControl.PatientName,
-                                Family =          personalDataControl.Family,
-                                Otchestvo =       personalDataControl.Otchestvo,
-                                Birthday =        personalDataControl.Birthday,
-                                CriminalArticle = personalDataControl.CriminalArticle,
-                                BeginDate =       personalDataControl.BeginDate,
-                                EndDate =         personalDataControl.EndDate,
-                                Address =         personalDataControl.Address,
+                                Patient patient = new Patient()
+                                {
+                                    Name = personalDataControl.PatientName,
+                                    Family = personalDataControl.Family,
+                                    Otchestvo = personalDataControl.Otchestvo,
+                                    Birthday = personalDataControl.Birthday,
+                                    CriminalArticle = personalDataControl.CriminalArticle,
+                                    BeginDate = personalDataControl.BeginDate,
+                                    EndDate = personalDataControl.EndDate,
+                                    Address = personalDataControl.Address,
 
-                                BloodChemistries = new List<BloodChemistry> { bloodChemistry },
-                                Immunograms = new List<Immunogram>() { immunogram },
-                                CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
-                                ObjectiveStatuses = new List<ObjectiveStatus> { objectiveStatus },
+                                    BloodChemistries = new List<BloodChemistry> { bloodChemistry },
+                                    Immunograms = new List<Immunogram>() { immunogram },
+                                    CompleteBloodCount = new List<CompleteBloodCount> { completeBloodCount },
+                                    ObjectiveStatuses = new List<ObjectiveStatus> { objectiveStatus },
 
-                                HIVs = new List<HIV> { hiv },
-                            };
-                            patient.ObjectiveStatuses.Add(objectiveStatus);
+                                    HIVs = new List<HIV> { hiv },
+                                };
+                                patient.ObjectiveStatuses.Add(objectiveStatus);
 
-                            foreach (ObjectiveStatusDisease item in objectiveStatusDisease)
-                            {
-                                patient.ObjectiveStatusDiseases.Add(db
-                                    .ObjectiveStatusDiseases
+                                foreach (ObjectiveStatusDisease item in objectiveStatusDiseases)
+                                {
+                                    patient.ObjectiveStatusDiseases.Add(db
+                                        .ObjectiveStatusDiseases
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                foreach (HIVAssociateDisease item in hivAssociateDisease)
+                                {
+                                    patient.HIVAssociateDiseases.Add(db
+                                        .HIVAssociateDiseases
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                foreach (TuberculosisStatus item in tuberculosisStatuses)
+                                {
+                                    patient.TuberculosisStatuses.Add(db
+                                        .TuberculosisStatuses
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                foreach (HIVStatus item in hivStatuses)
+                                {
+                                    patient.HIVStatuses.Add(db
+                                        .HIVStatuses
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                foreach (DrugResistance item in drugResistances)
+                                {
+                                    patient.DrugResistances.Add(db
+                                        .DrugResistances
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                foreach (Complaint item in complaints)
+                                {
+                                    patient.Complaints.Add(db
+                                        .Complaints
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                patient.TuberculosisForm = db
+                                    .TuberculosisForms
                                     .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-                            foreach (HIVAssociateDisease item in hivAssociateDisease)
-                            {
-                                patient.HIVAssociateDiseases.Add(db
-                                    .HIVAssociateDiseases
+                                    .First(f => f.Id == tuberculosisForm.Id);
+                                patient.TuberculosisPhase = db
+                                    .TuberculosisPhases
                                     .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
+                                    .First(f => f.Id == tuberculosisPhase.Id);
+                                foreach (AccompanyingIllness item in accompanyingIllness)
+                                {
+                                    patient.AccompanyingIllnesses.Add(db
+                                        .AccompanyingIllnesses
+                                        .AsEnumerable()
+                                        .First(f => f.Id == item.Id));
+                                }
+                                Risk risk = new Risk
+                                {
+                                    AnalyzeDate = personalDataControl.ResearchDate
+                                };
+                                PatientCalculateData patientCalculateData = new PatientCalculateData
+                                {
+                                    AccompanyingIllnesses = accompanyingIllness,
+                                    BloodChemistry = bloodChemistry,
+                                    CompleteBloodCount = completeBloodCount,
+                                    Immunogram = immunogram,
+                                    HIV = hiv,
+                                    TuberculosisForm = tuberculosisForm,
+                                    HIVStatuses = hivStatuses,
+                                    HIVAssociateDiseases = hivAssociateDisease,
+                                    ObjectiveStatus = objectiveStatus,
+                                    ObjectiveStatusDiseases = objectiveStatusDiseases,
+                                    TuberculosisStatuses = tuberculosisStatuses
+                                };
+                                risk.CalculatedRisk = patientCalculateData.CalculateRisk();
+                                patient.Risks.Add(risk);
+                                db.Patients.Add(patient);
+                                db.SaveChanges();
+                                this.DialogResult = true;
+                                this.Close();
                             }
-                            foreach (TuberculosisStatus item in tuberculosisStatuses)
-                            {
-                                patient.TuberculosisStatuses.Add(db
-                                    .TuberculosisStatuses
-                                    .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-                            foreach (HIVStatus item in hivStatuses)
-                            {
-                                patient.HIVStatuses.Add(db
-                                    .HIVStatuses
-                                    .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-                            foreach (DrugResistance item in drugResistances)
-                            {
-                                patient.DrugResistances.Add(db
-                                    .DrugResistances
-                                    .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-                            foreach (Complaint item in complaints)
-                            {
-                                patient.Complaints.Add(db
-                                    .Complaints
-                                    .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-                            patient.TuberculosisForm = db
-                                .TuberculosisForms
-                                .AsEnumerable()
-                                .First(f => f.Name == tuberculosisForm.Name);
-                            foreach (AccompanyingIllness item in accompanyingIllness)
-                            {
-                                patient.AccompanyingIllnesses.Add(db
-                                    .AccompanyingIllnesses
-                                    .AsEnumerable()
-                                    .First(f => f.Name == item.Name));
-                            }
-
-                            db.Patients.Add(patient);
-                            db.SaveChanges();
-                            this.DialogResult = true;
-                            this.Close();
                         }
-                    }));
-            }
-        }
-        private RelayCommand _setDefaultDate;
+                        catch (Exception ex)
+                        {
 
-        /// <summary>
-        /// Gets the SetDefautDate.
-        /// </summary>
-        public RelayCommand SetDefautDate
-        {
-            get
-            {
-                return _setDefaultDate
-                    ?? (_setDefaultDate = new RelayCommand(
-                    (obj) =>
-                    {
-                        (obj as DatePicker).SelectedDate = DateTime.Now;
+                            MessageBox.Show($"Введены не все данные \n{ex.Message} + \n{ex.InnerException.Message}");
+                        }
                     }));
             }
         }

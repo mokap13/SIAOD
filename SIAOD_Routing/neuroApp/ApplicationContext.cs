@@ -101,11 +101,12 @@ namespace neuroApp
         public DbSet<HealthState> HealthStates { get; set; }
         public DbSet<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
         public DbSet<ObjectiveStatus> ObjectiveStatuses { get; set; }
-        //public DbSet<ObjectiveStatusDiseaseObjectiveStatus> ObjectiveStatusDiseaseObjectiveStatus { get; set; }
 
         public DbSet<TuberculosisForm> TuberculosisForms { get; set; }
         public DbSet<DrugResistance> DrugResistances { get; set; }
         public DbSet<TuberculosisStatus> TuberculosisStatuses { get; set; }
         public DbSet<AccompanyingIllness> AccompanyingIllnesses { get; set; }
+        public DbSet<TuberculosisPhase> TuberculosisPhases{ get; set; }
+        public DbSet<Risk> Risks { get; set; }
     }
 }

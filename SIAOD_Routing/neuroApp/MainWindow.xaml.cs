@@ -20,6 +20,20 @@ using neuroApp.Analyzes.ObjectiveStatus;
 
 namespace neuroApp
 {
+    class DataGridPatient
+    {
+        public string Name { get; set; }
+        public string Family { get; set; }
+        public string Otchestvo { get; set; }
+        public string Birthday { get; set; }
+        public string BeginDate { get; set; }
+        public string EndDate { get; set; }
+        public string ResearchDate { get; set; }
+        public string TuberculosisForm { get; set; }
+        public string TuberculosisPhase { get; set; }
+        public double Risk { get; set; }
+        public int Id { get; set; }
+    }
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -37,7 +51,7 @@ namespace neuroApp
             if (addPatientWindow.ShowDialog() == true)
             {
                 var patients = db.Patients.ToList();
-                dataGrid_Patients.ItemsSource = patients;
+                RefreshDataGridPatient();
                 dataGrid_Patients.Items.Refresh();
             }
         }
@@ -46,26 +60,54 @@ namespace neuroApp
         {
             try
             {
-
-                //dataGrid_Patients.ItemsSource = db.Patients
-                //    .SelectMany(p => p.TuberculosisStatuses
-                //    .Select(t => new { NameP = p.Name, TUBER = t.Name })).ToList();
-
-                dataGrid_Patients.ItemsSource = db.Patients
-                    .Select(s => s)
-                    .ToList();
+                dataGrid_Patients.SetValue(
+                    DataGridUtilities.ColumnHeadersProperty,
+                    new Dictionary<string, string> {
+                        { "Name", "Имя" },
+                        { "Family", "Фамилия" },
+                        { "Otchestvo", "Отчество" },
+                        { "Birthday", "Дата рождения" },
+                        { "BeginDate", "Начало срока" },
+                        { "EndDate", "Конец срока" },
+                        { "TuberculosisForm", "Форма туберкулеза" },
+                        { "TuberculosisPhase", "Фаза туберкулеза" },
+                        { "ResearchDate", "Дата исследования" },
+                        { "Risk", "Риск" },
+                        { "Id", "ID" },
+                    });
+                RefreshDataGridPatient();
 
             }
-            
+
             catch (Exception exception)
             {
                 string message = null;
                 message = $"\nНе удалось открыть базу данных\n {exception.Message}\n";
-                
+
                 if (exception.InnerException != null)
                     message += $"\n{exception.InnerException.Message}";
                 MessageBox.Show(message);
-            }  
+            }
+        }
+
+        private void RefreshDataGridPatient()
+        {
+            dataGrid_Patients.ItemsSource = db.Patients
+                                .Select(s => new DataGridPatient()
+                                {
+                                    Name = s.Name,
+                                    Family = s.Family,
+                                    Otchestvo = s.Otchestvo,
+                                    Birthday = s.Birthday,
+                                    BeginDate = s.BeginDate,
+                                    EndDate = s.EndDate,
+                                    TuberculosisForm = s.TuberculosisForm.Name,
+                                    TuberculosisPhase = s.TuberculosisPhase.Name,
+                                    Risk = s.Risks.FirstOrDefault().CalculatedRisk,
+                                    ResearchDate = s.Risks.FirstOrDefault().AnalyzeDate,
+                                    Id = s.Id,
+                                })
+                                .ToList();
         }
 
         private void Button_DeletePatient_Click(object sender, RoutedEventArgs e)
@@ -75,18 +117,18 @@ namespace neuroApp
                 AnswerWindow answerWindow = new AnswerWindow("Вы уверены, что хотите удалить");
                 if (answerWindow.ShowDialog() == true)
                 {
-                    foreach (Patient item in dataGrid_Patients.SelectedItems)
+                    foreach (DataGridPatient dataGridPatient in dataGrid_Patients.ItemsSource)
                     {
                         Patient patient = db
                             .Patients
                             .Include(i => i.ObjectiveStatuses)
-                            .FirstOrDefault(p => p.Id == item.Id);
+                            .FirstOrDefault(p => p.Id == dataGridPatient.Id);
                         db.Patients.Remove(patient);
                     }
                     db.SaveChanges();
                     var patients = db.Patients.ToList();
                     dataGrid_Patients.ItemsSource = patients;
-                    dataGrid_Patients.Items.Refresh();
+                    RefreshDataGridPatient();
                 }
             }
         }
@@ -109,7 +151,7 @@ namespace neuroApp
         private void Button_ChangePatient_Click(object sender, RoutedEventArgs e)
         {
             ChangePatientWindow changePatientWindow = new ChangePatientWindow();
-            if(changePatientWindow.ShowDialog() == true)
+            if (changePatientWindow.ShowDialog() == true)
             {
 
             }

@@ -25,6 +25,11 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             }
         }
 
+        public double Cd4Treshold
+        {
+            get { return 88; }
+        }
+
         private double _CD8;
         public double CD8
         {
@@ -45,6 +50,10 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
                 if (value != _ViralLoad) _ViralLoad = value;
                 OnPropertyChanged("ViralLoad");
             }
+        }
+        public double ViralLoadTreshold
+        {
+            get { return 595892; }
         }
 
         private string _AnalyzeDate;

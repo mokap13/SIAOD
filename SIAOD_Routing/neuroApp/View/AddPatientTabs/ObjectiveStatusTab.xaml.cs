@@ -60,7 +60,9 @@ namespace neuroApp.View.AddPatientTabs
                     .HealthStates
                     .ToList());
             }
-            
+            HealthState = HealthStates.First();
+
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

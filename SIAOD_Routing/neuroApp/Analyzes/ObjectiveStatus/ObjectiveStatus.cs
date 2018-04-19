@@ -1,4 +1,5 @@
-﻿using neuroApp.Model;
+﻿using neuroApp.Analyzes.Parameters;
+using neuroApp.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,13 +9,14 @@ namespace neuroApp.Analyzes.ObjectiveStatus
 {
     public class ObjectiveStatus : INotifyPropertyChanged
     {
+        
         private double heartRate;
         private double arterialPressure;
         private double frequencyOfResperatoryMovements;
         private double temperature; 
         private double growth;
         private double weight;
-        
+
         public double HeartRate
         {
             get { return heartRate; }

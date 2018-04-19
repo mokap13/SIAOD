@@ -60,9 +60,7 @@
                 <AddPatientTabs:HIVStatusTab x:Name="hivStatusControl"></AddPatientTabs:HIVStatusTab>
             </TabItem>
             <TabItem Style="{DynamicResource MenuLevel2}">
-                <TabItem.Header>
-                    Вич-ассоциированные заболевания
-                </TabItem.Header>
+                <TabItem.Header>Вич-ассоциированные заболевания</TabItem.Header>
                 <AddPatientTabs:HIVAssociateDiseaseTab x:Name="hivAssociateDiseaseControl" ></AddPatientTabs:HIVAssociateDiseaseTab>
             </TabItem>
             <TabItem  Style="{DynamicResource MenuLevel2}">

@@ -32,6 +32,17 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </UniformGrid>
+                <UniformGrid Columns="2">
+                    <Label Content="Фаза туберкулезного процесса"/>
+                    <ComboBox ItemsSource="{Binding TuberculosisPhases}"
+                              SelectedItem="{Binding TuberculosisPhase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </UniformGrid>
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <ListBox ItemsSource="{Binding DrugResistances}" 

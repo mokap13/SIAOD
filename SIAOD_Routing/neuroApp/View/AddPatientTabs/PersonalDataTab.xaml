@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:neuroApp.View.AddPatientTabs"
+             xmlns:validators="clr-namespace:neuroApp.Validators"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <GroupBox Header="Персональные данные">
@@ -19,17 +20,26 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
+            <!--Text="{Binding Family}"-->
+            <!--PreviewTextInput="validText"-->
             <Label Content="Фамилия" Grid.Column="0" Grid.Row="0" Margin="3,2,1,2"/>
             <TextBox Grid.Column="1" Grid.Row="0" 
-                     PreviewTextInput="validText" 
-                     Margin="1,0,3,4"
-                     Text="{Binding Family}"/>
+                     Margin="1,0,3,4">
+                <TextBox.Text>
+                    <Binding Path="Family">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidation></validators:NotEmptyValidation>
+                            <validators:NotDigitStringValidation></validators:NotDigitStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Label Content="Имя" Grid.Column="0" Grid.Row="1"/>
             <TextBox x:Name="textBox_Name" Grid.Column="1" Grid.Row="1" 
@@ -48,23 +58,28 @@
                         Loaded="DatePicker_Birthday_Loaded"
                         SelectedDate="{Binding Birthday}"/>
             <Label x:Name="label_age" Content="" Grid.Column="1" Grid.Row="4" 
-                               Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                    Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
 
             <Label Content="Статья УК РФ" Grid.Column="0" Grid.Row="5"/>
             <TextBox Grid.Column="1" Grid.Row="5"
                      Text="{Binding CriminalArticle}"/>
             <Label Content="Начало срока" Grid.Column="0" Grid.Row="6"/>
-            <TextBox Grid.Column="1" Grid.Row="6"
-                     Text="{Binding BeginDate}"/>
+            <DatePicker Grid.Column="1" Grid.Row="6"
+                     SelectedDate="{Binding BeginDate, StringFormat=\{0:dd.MM.yy\}}"
+                        SelectedDateFormat="Short"/>
             <Label Content="Конец срока" Grid.Column="0" Grid.Row="7"/>
-            <TextBox Grid.Column="1" Grid.Row="7"
-                     Text="{Binding EndDate}"/>
+            <DatePicker Grid.Column="1" Grid.Row="7"
+                     SelectedDate="{Binding EndDate}"/>
             <Label Content="Адрес" Grid.Column="0" Grid.Row="8"/>
             <TextBox Grid.Column="1" Grid.Row="8"
                      Text="{Binding Address}"/>
 
             <Label Content="ФИО лечащего врача" Grid.Column="0" Grid.Row="9"/>
             <TextBox Grid.Column="1" Grid.Row="9"/>
+            <Label Content="Дата исследования" Grid.Column="0" Grid.Row="10"/>
+            <DatePicker x:Name="DatePicker_ReseasrchDate"
+                        Grid.Column="1" Grid.Row="10"
+                        SelectedDate="{Binding ResearchDate}"/>
         </Grid>
     </GroupBox>
 

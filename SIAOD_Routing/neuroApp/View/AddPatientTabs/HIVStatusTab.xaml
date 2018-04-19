@@ -11,11 +11,14 @@
             <UniformGrid Columns="2">
                 <Label Content="Длительность ВИЧ-инфекции"/>
                 <TextBox PreviewTextInput="validNumber"
-                         Text="{Binding HIVInfectionDuration}"/>
+                         Text="{Binding HIVInfectionDuration, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
             </UniformGrid>
             <UniformGrid Columns="2">
                 <Label Content="Стадия ВИЧ-инфекции"/>
-                <ComboBox ItemsSource="{Binding HIVStages}"
+                <ComboBox x:Name="ComboBox_HIVStage"
+                    ItemsSource="{Binding HIVStages}"
                           SelectedItem="{Binding HIVStage}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -26,7 +29,8 @@
             </UniformGrid>
             <UniformGrid Columns="2">
                 <Label Content="Фаза ВИЧ"/>
-                <ComboBox ItemsSource="{Binding HIVPhases}"
+                <ComboBox x:Name="ComboBox_HIVPhase"
+                            ItemsSource="{Binding HIVPhases}"
                           SelectedItem="{Binding HIVPhase}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

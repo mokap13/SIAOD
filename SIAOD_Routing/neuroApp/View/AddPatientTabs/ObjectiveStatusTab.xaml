@@ -19,7 +19,8 @@
                 <DatePicker x:Name="ObjectiveStatus_AnalyzeDate" SelectedDate="{Binding Source={StaticResource ObjectiveStatus}, Path=AnalyzeDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
                 <UniformGrid Columns="3">
                     <Label Content="Состояние"/>
-                    <ComboBox ItemsSource="{Binding HealthStates}"
+                    <ComboBox x:Name="ComboBox_HealthState"
+                              ItemsSource="{Binding HealthStates}"
                               SelectedItem="{Binding HealthState}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -31,33 +32,36 @@
 
                 <UniformGrid Columns="3" Rows="2" Margin="0 5 0 5">
                     <Label Content="ЧСС"/>
-                    <TextBox PreviewTextInput="validNumber"
-                             Text="{Binding Source={StaticResource ObjectiveStatus}, Path=HeartRate, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=HeartRate, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                     <Label Content="уд/мин"/>
                     <CheckBox Content="Тахикардия" 
                               IsEnabled="False"
                               IsChecked="{Binding Source={StaticResource ObjectiveStatus}, Path=Tachycardia, Mode=OneWay}">
-                        <CheckBox.ToolTip>Вычисляется из ЧСС</CheckBox.ToolTip>
                     </CheckBox>
-
                 </UniformGrid>
-
                 <UniformGrid Columns="3">
                     <Label Content="Артериальное давление"/>
-                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressure, UpdateSourceTrigger=PropertyChanged}" 
-                             PreviewTextInput="validNumber"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressure, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                     <Label Content="мм рт. ст."/>
                 </UniformGrid>
                 <UniformGrid Columns="3">
                     <Label Content="ЧДД"/>
-                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=FrequencyOfResperatoryMovements, UpdateSourceTrigger=PropertyChanged}"
-                             PreviewTextInput="validNumber"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=FrequencyOfResperatoryMovements, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                     <Label Content="/мин"/>
                 </UniformGrid>
                 <UniformGrid Columns="3" Margin="0 5 0 5">
                     <Label Content="Температура"/>
-                    <TextBox PreviewTextInput="validNumber" 
-                             Text="{Binding Source={StaticResource ObjectiveStatus},Path=Temperature,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus},
+                        Path=Temperature,
+                        UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                     <Label Content="С°"/>
                     <CheckBox ToolTip="Вычисляется из температуры"
                               Content="Лихорадка" 
@@ -79,13 +83,15 @@
             <StackPanel Grid.Column="1" Margin="3">
                 <UniformGrid Columns="2">
                     <Label Content="Рост (см)"/>
-                    <TextBox PreviewTextInput="validNumber" 
-                             Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Growth, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                 </UniformGrid>
                 <UniformGrid Columns="2">
                     <Label Content="Вес (кг)"/>
-                    <TextBox PreviewTextInput="validNumber"
-                             Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=Weight, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
                 </UniformGrid>
                 <UniformGrid Columns="2">
                     <Label Content="ИМТ"/>

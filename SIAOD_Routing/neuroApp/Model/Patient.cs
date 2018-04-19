@@ -42,11 +42,12 @@ namespace neuroApp.Model
             HIVs = new List<HIV>();
             ObjectiveStatuses = new List<ObjectiveStatus>();
             ObjectiveStatusDiseases = new List<ObjectiveStatusDisease>();
+            Risks = new List<Risk>();
         }
-
 
         public int Id { get; set; }
         public int TuberculosisFormId { get; set; }
+        public int TuberculosisPhaseId { get; set; }
         public string Name
         {
             get { return name; }
@@ -74,17 +75,15 @@ namespace neuroApp.Model
                 OnPropertyChanged("Otchestvo");
             }
         }
-
         public string Birthday
         {
             get { return birthday; }
             set
             {
-                birthday = value;
+                birthday = value.Split(' ').First();
                 OnPropertyChanged("Birthday");
             }
         }
-
         public string CriminalArticle
         {
             get { return criminalArticle; }
@@ -94,27 +93,24 @@ namespace neuroApp.Model
                 OnPropertyChanged("CriminalArticle");
             }
         }
-
         public string BeginDate
         {
             get { return beginDate; }
             set
             {
-                beginDate = value;
+                beginDate = value.Split(' ').First();
                 OnPropertyChanged("BeginDate");
             }
         }
-
         public string EndDate
         {
             get { return endDate; }
             set
             {
-                endDate = value;
+                endDate = value.Split(' ').First();
                 OnPropertyChanged("EndDate");
             }
         }
-
         public string Address
         {
             get { return address; }
@@ -126,6 +122,8 @@ namespace neuroApp.Model
         }
 
         public virtual TuberculosisForm TuberculosisForm { get; set; }
+        public virtual TuberculosisPhase TuberculosisPhase { get; set; }
+        public virtual ICollection<Risk> Risks { get; set; }
         public virtual ICollection<HIVStatus> HIVStatuses { get; set; }
         public virtual ICollection<BloodChemistry> BloodChemistries { get; set; }
         public virtual ICollection<CompleteBloodCount> CompleteBloodCount { get; set; }
@@ -138,6 +136,7 @@ namespace neuroApp.Model
         public virtual ICollection<AccompanyingIllness> AccompanyingIllnesses { get; set; }
         public virtual ICollection<ObjectiveStatus> ObjectiveStatuses { get; set; }
         public virtual ICollection<ObjectiveStatusDisease> ObjectiveStatusDiseases { get; set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

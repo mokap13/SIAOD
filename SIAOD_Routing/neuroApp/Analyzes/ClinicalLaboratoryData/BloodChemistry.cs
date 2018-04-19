@@ -24,8 +24,11 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
                 OnPropertyChanged("ALT");
             }
         }
+        public double AltTreshold
+        {
+            get { return 0.285; }
+        }
         
-
         private double _AST;
         public double AST
         {
@@ -36,7 +39,10 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
                 OnPropertyChanged("AST");
             }
         }
-
+        public double AstTreshold
+        {
+            get { return 0.96; }
+        }
         private double _TotalBilirubin;
         public double TotalBilirubin
         {
@@ -47,7 +53,10 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
                 OnPropertyChanged("TotalBilitubin");
             }
         }
-
+        public double TotalBilirubinTreshold
+        {
+            get { return 25.5; }
+        }
         private double _Creatinine;
         public double Creatinine
         {
@@ -58,7 +67,10 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
                 OnPropertyChanged("Creatinine");
             }
         }
-
+        public double CreatinineTreshold
+        {
+            get { return 180.6; }
+        }
         private double _Glucose;
         public double Glucose
         {

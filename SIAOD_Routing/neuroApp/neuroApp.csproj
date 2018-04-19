@@ -93,10 +93,18 @@
     <Compile Include="Analyzes\AccompanyingIllness\AccompanyingIllness.cs" />
     <Compile Include="Analyzes\HIV\HIVStatus.cs" />
     <Compile Include="Analyzes\ObjectiveStatus\ObjectiveStatusDiseaseObjectiveStatus.cs" />
+    <Compile Include="Analyzes\Parameters\InversedTresholdMedicalParameter.cs" />
+    <Compile Include="Analyzes\Parameters\MedicalParameter.cs" />
+    <Compile Include="Analyzes\Tuberculosis\TuberculosisPhase.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ListItems\CheckedListItem.cs" />
-    <Compile Include="Model\PersonalData.cs" />
-    <Compile Include="Validator.cs" />
+    <Compile Include="Model\DataGridUtilities.cs" />
+    <Compile Include="Model\PatientCalculateData.cs" />
+    <Compile Include="Model\Risk.cs" />
+    <Compile Include="Validators\IsDoubleValidation.cs" />
+    <Compile Include="Validators\NotEmptyValidation.cs" />
+    <Compile Include="Validators\NotDigitStringValidation.cs" />
+    <Compile Include="Validators\Validator.cs" />
     <Compile Include="View\AddPatientTabs\ClinicalLabaratoryDataTab.xaml.cs">
       <DependentUpon>ClinicalLabaratoryDataTab.xaml</DependentUpon>
     </Compile>

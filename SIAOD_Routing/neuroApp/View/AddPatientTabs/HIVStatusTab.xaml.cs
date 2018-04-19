@@ -88,6 +88,8 @@ namespace neuroApp.View.AddPatientTabs
                     .Select(s => new CheckedListItem<HIVStatus>(s, false))
                     .ToList());
             }
+            HIVPhase = HIVPhases.First();
+            HIVStage = HIVStages.First();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

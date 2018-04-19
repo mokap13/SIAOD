@@ -38,6 +38,17 @@ namespace neuroApp.View.AddPatientTabs
                 OnPropertyChanged("TuberculosisForm");
             }
         }
+        public ObservableCollection<TuberculosisPhase> TuberculosisPhases { get; set; }
+        private TuberculosisPhase _TuberculosisPhase;
+        public TuberculosisPhase TuberculosisPhase
+        {
+            get { return _TuberculosisPhase; }
+            set
+            {
+                if (value != null || value != _TuberculosisPhase) _TuberculosisPhase = value;
+                OnPropertyChanged("TuberculosisPhase");
+            }
+        }
 
 
         public ObservableCollection<CheckedListItem<TuberculosisStatus>> TuberculosisStatuses { get; set; }
@@ -50,6 +61,9 @@ namespace neuroApp.View.AddPatientTabs
             {
                 TuberculosisForms = new ObservableCollection<TuberculosisForm>(db
                     .TuberculosisForms
+                    .ToList());
+                TuberculosisPhases = new ObservableCollection<TuberculosisPhase>(db
+                    .TuberculosisPhases
                     .ToList());
 
                 var queryDrugResistances = new ObservableCollection<DrugResistance>(db
@@ -66,6 +80,8 @@ namespace neuroApp.View.AddPatientTabs
                     .Select(s => new CheckedListItem<TuberculosisStatus>(s, false))
                     .ToList());
             }
+            TuberculosisForm = TuberculosisForms.First();
+            TuberculosisPhase = TuberculosisPhases.First();
         }
 
         private void ListBox_medicamentResist_SelectionChanged(object sender, SelectionChangedEventArgs e)
