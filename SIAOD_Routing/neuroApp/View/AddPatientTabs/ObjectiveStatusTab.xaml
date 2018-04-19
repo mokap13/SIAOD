@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ObjectiveStatus="clr-namespace:neuroApp.Analyzes.ObjectiveStatus"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="345">
     <UserControl.Resources>
         <ObjectiveStatus:ObjectiveStatus x:Key="ObjectiveStatus"></ObjectiveStatus:ObjectiveStatus>
     </UserControl.Resources>
@@ -43,9 +43,16 @@
                 </UniformGrid>
                 <UniformGrid Columns="3">
                     <Label Content="Артериальное давление"/>
-                    <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressure, UpdateSourceTrigger=PropertyChanged, 
+                    <UniformGrid Columns="3">
+                        <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressureHigh, UpdateSourceTrigger=PropertyChanged, 
                         StringFormat=\{0:F\}, 
                         FallbackValue=0.00}"/>
+                        <Label Content="/"></Label>
+                        <TextBox Text="{Binding Source={StaticResource ObjectiveStatus}, Path=ArterialPressureLow, UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
+                    </UniformGrid>
+                    
                     <Label Content="мм рт. ст."/>
                 </UniformGrid>
                 <UniformGrid Columns="3">

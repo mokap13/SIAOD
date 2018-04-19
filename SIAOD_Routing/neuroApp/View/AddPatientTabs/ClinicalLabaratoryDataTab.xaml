@@ -132,6 +132,11 @@
                          Text="{Binding Source={StaticResource BloodChemistry}, Path=ALT,UpdateSourceTrigger=PropertyChanged, 
                         StringFormat=\{0:F\}, 
                         FallbackValue=0.00}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" 
+                         PreviewTextInput="validNumber"
+                         Text="{Binding Source={StaticResource BloodChemistry}, Path=ALT,UpdateSourceTrigger=PropertyChanged, 
+                        StringFormat=\{0:F\}, 
+                        FallbackValue=0.00}"/>
 
                 <Label Content="АСТ" Grid.Column="0" Grid.Row="2"/>
                 <TextBox Grid.Column="1" Grid.Row="2" 
@@ -169,6 +174,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="173*"/>
@@ -191,9 +197,12 @@
                          Text="{Binding Source={StaticResource Immunogram}, Path=CD8, UpdateSourceTrigger=PropertyChanged, 
                         StringFormat=\{0:F\}, 
                         FallbackValue=0.00}"/>
+                <Label Content="CD4/CD8" Grid.Column="0" Grid.Row="3"/>
+                <Label Grid.Column="1" Grid.Row="3"
+                        Content="{Binding Source={StaticResource Immunogram}, Path=CDIndex, Mode=OneWay}"/>
 
-                <Label Content="Вирусная нагрузка (РНК ВИЧ)" Grid.Column="0" Grid.Row="3"/>
-                <TextBox Grid.Column="1" Grid.Row="3" 
+                <Label Content="Вирусная нагрузка (РНК ВИЧ)" Grid.Column="0" Grid.Row="4"/>
+                <TextBox Grid.Column="1" Grid.Row="4" 
                          PreviewTextInput="validNumber"
                          Text="{Binding Source={StaticResource Immunogram}, Path=ViralLoad, UpdateSourceTrigger=PropertyChanged, 
                         StringFormat=\{0:F\}, 

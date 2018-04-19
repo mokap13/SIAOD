@@ -11,7 +11,8 @@ namespace neuroApp.Analyzes.ObjectiveStatus
     {
         
         private double heartRate;
-        private double arterialPressure;
+        private double arterialPressureHigh;
+        private double arterialPressureLow;
         private double frequencyOfResperatoryMovements;
         private double temperature; 
         private double growth;
@@ -27,13 +28,22 @@ namespace neuroApp.Analyzes.ObjectiveStatus
                 OnPropertyChanged("Tachycardia");
             }
         }
-        public double ArterialPressure
+        public double ArterialPressureHigh
         {
-            get { return arterialPressure; }
+            get { return arterialPressureHigh; }
             set
             {
-                arterialPressure = value;
-                OnPropertyChanged("ArterialPressure");
+                arterialPressureHigh = value;
+                OnPropertyChanged("ArterialPressureHigh");
+            }
+        }
+        public double ArterialPressureLow
+        {
+            get { return arterialPressureLow; }
+            set
+            {
+                arterialPressureLow = value;
+                OnPropertyChanged("ArterialPressureLow");
             }
         }
         public double FrequencyOfResperatoryMovements

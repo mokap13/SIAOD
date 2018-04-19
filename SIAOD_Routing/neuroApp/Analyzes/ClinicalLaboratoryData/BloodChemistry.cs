@@ -26,7 +26,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
         }
         public double AltTreshold
         {
-            get { return 0.285; }
+            get { return 57.0; }
         }
         
         private double _AST;
@@ -41,7 +41,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
         }
         public double AstTreshold
         {
-            get { return 0.96; }
+            get { return 192; }
         }
         private double _TotalBilirubin;
         public double TotalBilirubin

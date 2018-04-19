@@ -57,6 +57,7 @@ namespace neuroApp.Model
         public virtual Immunogram Immunogram { get; set; }
         public virtual HIV HIV { get; set; }
         public virtual TuberculosisForm TuberculosisForm { get; set; }
+        public virtual TuberculosisPhase TuberculosisPhase{ get; set; }
         public virtual List<HIVStatus> HIVStatuses { get; set; }
         public virtual List<HIVAssociateDisease> HIVAssociateDiseases { get; set; }
         public virtual ObjectiveStatus ObjectiveStatus { get; set; }
@@ -66,7 +67,7 @@ namespace neuroApp.Model
 
         //27
         #region Изменяющиеся уставки
-        public double ViralLoadTreshold
+        private double ViralLoadTreshold
         {
             get
             {
@@ -88,7 +89,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double Cd4Treshold
+        private double Cd4Treshold
         {
             get
             {
@@ -104,7 +105,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double HemoglobinTreshold
+        private double HemoglobinTreshold
         {
             get
             {
@@ -116,7 +117,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double EsrTreshold
+        private double EsrTreshold
         {
             get
             {
@@ -129,7 +130,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double LymphozytesTreshold
+        private double LymphozytesTreshold
         {
             get
             {
@@ -141,7 +142,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double PlateletsTreshold
+        private double PlateletsTreshold
         {
             get
             {
@@ -155,7 +156,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double AltTreshold
+        private double AltTreshold
         {
             get
             {
@@ -170,7 +171,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double AstTreshold
+        private double AstTreshold
         {
             get
             {
@@ -186,7 +187,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double TotalBilirubinTreshold
+        private double TotalBilirubinTreshold
         {
             get
             {
@@ -206,7 +207,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double CreatinineTreshold
+        private double CreatinineTreshold
         {
             get
             {
@@ -218,7 +219,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double HivDurationTreshold
+        private double HivDurationTreshold
         {
             get
             {
@@ -231,7 +232,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double HasParenteralHipotitsTreshold
+        private double HasParenteralHipotitsTreshold
         {
             get
             {
@@ -243,7 +244,7 @@ namespace neuroApp.Model
                 return newTresholds.Min();
             }
         }
-        public double HasHivAssociateDiseasesTreshold
+        private double HasHivAssociateDiseasesTreshold
         {
             get
             {
@@ -282,12 +283,23 @@ namespace neuroApp.Model
         #region Common
         private int TuberculosisFormIdGenralization()
         {
-            if (((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.ContactTuberculosis
-                    || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.ClinicalHeal))
+            if((TuberculosisPhaseEnum)TuberculosisPhase.Id == TuberculosisPhaseEnum.Obsemen)
+            {
+                if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Infiltrative)
+                    return 3;
+                if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.FibroCavernate)
+                    return 5;
+                if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Cavernozni)
+                    return 5;
+            }
+ 
+            if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.ContactTuberculosis
+                    || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.ClinicalHeal)
             {
                 return 0;
             }
-            else if (((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Ochag))
+            else if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Ochag
+                || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.TVGLU)
             {
                 return 1;
             }
@@ -295,11 +307,15 @@ namespace neuroApp.Model
             {
                 return 2;
             }
-            else if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Dissimilar)
+            else if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Dissimilar
+                || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.PlevritTuberculosis
+                || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.LengthOutTubercolosis)
             {
                 return 3;
             }
-            else if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.FibroCavernate)
+            else if ((TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.FibroCavernate
+                || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Cirotichesky
+                || (TuberculosisFormEnum)TuberculosisForm.Id == TuberculosisFormEnum.Cavernozni)
             {
                 return 4;
             }
@@ -627,5 +643,9 @@ namespace neuroApp.Model
         //8	Не-СПИД онкология
         //9	СПИД-индикаторные заболевания
         //10 Болезни сердечно-сосудистой системы
+    }
+    enum TuberculosisPhaseEnum
+    {
+        Obsemen = 2
     }
 }

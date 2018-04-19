@@ -195,6 +195,7 @@ namespace neuroApp
                                     Immunogram = immunogram,
                                     HIV = hiv,
                                     TuberculosisForm = tuberculosisForm,
+                                    TuberculosisPhase = tuberculosisPhase,
                                     HIVStatuses = hivStatuses,
                                     HIVAssociateDiseases = hivAssociateDisease,
                                     ObjectiveStatus = objectiveStatus,

@@ -13,7 +13,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
     {
         public int Id { get; set; }
 
-
+        public double CDIndex => Math.Round(CD4 /CD8,2);
         private double _CD4;
         public double CD4
         {
@@ -22,6 +22,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             {
                 if (value != _CD4) _CD4 = value;
                 OnPropertyChanged("CD4");
+                OnPropertyChanged("CDIndex");
             }
         }
 
@@ -38,6 +39,7 @@ namespace neuroApp.Analyzes.ClinicalLaboratoryData
             {
                 if (value != _CD8) _CD8 = value;
                 OnPropertyChanged("CD8");
+                OnPropertyChanged("CDIndex");
             }
         }
 
