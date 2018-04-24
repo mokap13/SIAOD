@@ -11,15 +11,13 @@
             <UniformGrid Columns="2">
                 <Label Content="Длительность ВИЧ-инфекции"/>
                 <TextBox PreviewTextInput="validNumber"
-                         Text="{Binding HIVInfectionDuration, 
-                        StringFormat=\{0:F\}, 
-                        FallbackValue=0.00}"/>
+                         Text="{Binding HIVInfectionDuration}"/>
             </UniformGrid>
             <UniformGrid Columns="2">
                 <Label Content="Стадия ВИЧ-инфекции"/>
                 <ComboBox x:Name="ComboBox_HIVStage"
-                    ItemsSource="{Binding HIVStages}"
-                          SelectedItem="{Binding HIVStage}">
+                            ItemsSource="{Binding HIVStages}"
+                            SelectedItem="{Binding HIVStage}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"></TextBlock>

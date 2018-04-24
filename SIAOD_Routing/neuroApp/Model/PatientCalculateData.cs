@@ -83,7 +83,7 @@ namespace neuroApp.Model
                     !IsHepatomegaliaNormal ? 128050:double.MaxValue,
                     !IsSplenomegaliaNormal ? 226342:double.MaxValue,
                     CompleteBloodCount.Lymphocytes < 18.5 ? 7000.5:double.MaxValue,
-                    BloodChemistry.ALT > 0.285 ? 341751.5:double.MaxValue,
+                    BloodChemistry.ALT > 0.285*200 ? 341751.5:double.MaxValue,
                     !IsBacteriovidelenieNormal ? 221500:double.MaxValue,
                 };
                 return newTresholds.Min();
@@ -99,7 +99,7 @@ namespace neuroApp.Model
                     !IsHepatomegaliaNormal ? 177:double.MaxValue,
                     !IsSplenomegaliaNormal ? 177:double.MaxValue,
                     CompleteBloodCount.Platelets < 212.5? 177:double.MaxValue,
-                    BloodChemistry.ALT > 1.065 ? 97.5:double.MaxValue,
+                    BloodChemistry.ALT > 1.065*200 ? 97.5:double.MaxValue,
                     BloodChemistry.TotalBilirubin > 21.8 ? 177:double.MaxValue,
                 };
                 return newTresholds.Min();
@@ -125,7 +125,7 @@ namespace neuroApp.Model
                 {
                     CompleteBloodCount.EsrTreshold,
                     CompleteBloodCount.Hemoglobin < 117 ? 33.5:double.MaxValue,
-                    BloodChemistry.AST > 0.245 ? 35.5:double.MaxValue,
+                    BloodChemistry.AST > 0.245*200 ? 35.5:double.MaxValue,
                 };
                 return newTresholds.Min();
             }
@@ -201,7 +201,7 @@ namespace neuroApp.Model
                     !IsHepatomegaliaNormal? 21.8:double.MaxValue,
                     !IsSplenomegaliaNormal? 19.65:double.MaxValue,
                     Immunogram.CD4 < 177 ? 21.8:double.MaxValue,
-                    BloodChemistry.AST > 1.285?  21.8:double.MaxValue,
+                    BloodChemistry.AST > 1.285*200?  21.8:double.MaxValue,
                     !IsHivAssociateDiseassesNormal? 19.65: double.MaxValue,
                 };
                 return newTresholds.Min();
@@ -226,8 +226,8 @@ namespace neuroApp.Model
                 List<double> newTresholds = new List<double>()
                 {
                     HIV.DurationTreshold,
-                    BloodChemistry.ALT > 0.455 ? 11.5:double.MaxValue,
-                    BloodChemistry.AST > 0.6 ? 11.5:double.MaxValue,
+                    BloodChemistry.ALT > 0.455*200 ? 11.5:double.MaxValue,
+                    BloodChemistry.AST > 0.6*200 ? 11.5:double.MaxValue,
                 };
                 return newTresholds.Min();
             }

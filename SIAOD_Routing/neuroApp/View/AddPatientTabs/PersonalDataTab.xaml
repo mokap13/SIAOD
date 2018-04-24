@@ -29,17 +29,9 @@
             <!--Text="{Binding Family}"-->
             <!--PreviewTextInput="validText"-->
             <Label Content="Фамилия" Grid.Column="0" Grid.Row="0" Margin="3,2,1,2"/>
-            <TextBox Grid.Column="1" Grid.Row="0" 
-                     Margin="1,0,3,4">
-                <TextBox.Text>
-                    <Binding Path="Family">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidation></validators:NotEmptyValidation>
-                            <validators:NotDigitStringValidation></validators:NotDigitStringValidation>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <TextBox x:Name="textBox_Family" Grid.Column="1" Grid.Row="0" 
+                     PreviewTextInput="validText" 
+                     Text="{Binding Family}"/>
 
             <Label Content="Имя" Grid.Column="0" Grid.Row="1"/>
             <TextBox x:Name="textBox_Name" Grid.Column="1" Grid.Row="1" 

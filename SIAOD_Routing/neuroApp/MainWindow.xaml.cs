@@ -121,7 +121,6 @@ namespace neuroApp
                     {
                         Patient patient = db
                             .Patients
-                            .Include(i => i.ObjectiveStatuses)
                             .FirstOrDefault(p => p.Id == dataGridPatient.Id);
                         db.Patients.Remove(patient);
                     }

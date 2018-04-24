@@ -12,11 +12,12 @@ namespace neuroApp
     {
         static public void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            //Regex regex = new Regex("[^0-9]+");
+            Regex regex = new Regex("[^0-9.]+");
             //Regex regex = new Regex("^[0-9]*[.][0-9]*$");
             //Regex regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
 
-            e.Handled = false;//regex.IsMatch(e.Text);
+            e.Handled = regex.IsMatch(e.Text);
         }
         static public void TextValidationTextBox(object sender, TextCompositionEventArgs e)
         {

@@ -212,8 +212,10 @@ namespace neuroApp
                         }
                         catch (Exception ex)
                         {
-
-                            MessageBox.Show($"Введены не все данные \n{ex.Message} + \n{ex.InnerException.Message}");
+                            string Inner = "";
+                            if(ex.InnerException != null)
+                                Inner = ex.InnerException.Message;
+                            MessageBox.Show($"Введены не все данные \n{ex.Message} + \n{Inner}");
                         }
                     }));
             }

@@ -97,7 +97,7 @@ namespace neuroApp.Analyzes.ObjectiveStatus
 
         public double IMT => Math.Round(((double)weight / (((double)growth * (double)growth) / 10_000)), 2);
         public bool Tachycardia => HeartRate > 85;
-        public bool Pirexia => Temperature > 37;
+        public bool Pirexia => Temperature >= 37;
         public bool BodyWeightDefecit => IMT < 18.5;
 
 
