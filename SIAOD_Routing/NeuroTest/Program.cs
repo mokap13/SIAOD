@@ -14,6 +14,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using Encog.Neural.Networks.Training.Lma;
+using Encog.Neural.Networks.Training.NM;
 
 namespace encog_sample_csharp
 {
@@ -43,7 +45,7 @@ namespace encog_sample_csharp
         public static double[][] XORInput;
 
         public static double[][] XORIdeal;
-        private static List<double[]> readFile(string path)
+        private static List<double[]> ReadFile(string path)
         {
             List<double[]> inputData = new List<double[]>();
             //List<double> result = new List<double>();
@@ -101,9 +103,10 @@ namespace encog_sample_csharp
         {
             List<double[]> result = new List<double[]>();
 
-            List<double[]> input = readFile(@"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/all.txt");
+            List<double[]> input = ReadFile(@"C:/Users/user/Source/Repos/NewRepo/SIAOD_Routing/NeuroTest/resource/all.txt");
             var fileSize = input.Count;
 
+            /*Отбор данных для теста*/
             var testInput = input.GetRange(0, 10);
             testInput.AddRange(input.GetRange(100, 35));
 
@@ -120,16 +123,16 @@ namespace encog_sample_csharp
             input = OptimizeRange(input.ToArray(), 0, 1).ToList();
             testInput = OptimizeRange(testInput.ToArray(), 0, 1).ToList();
 
-            var testInputArr = testInput.ToArray();
+            double[][] testInputArr = testInput.ToArray();
 
             XORInput = input.ToArray();
             XORIdeal = result.ToArray();
-            // create a neural network, without using a factory
-            var network = new BasicNetwork();
+           
+            BasicNetwork network = new BasicNetwork();
             network.AddLayer(new BasicLayer(null, false, input[0].Length));
-            var hiddenLayerSize = 1;
+            network.AddLayer(new BasicLayer(null, false, 10));
+            int hiddenLayerSize = 1;
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, hiddenLayerSize));
-            //network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
 
             network.Structure.FinalizeStructure();
             network.Reset();
@@ -142,7 +145,7 @@ namespace encog_sample_csharp
             // train the neural network
             IMLTrain train = new Backpropagation(network, trainingSet);
 
-            for (int epoch = 0; epoch < 3; epoch++)
+            for (int epoch = 0; epoch < 50; epoch++)
             {
                 for (int i = 0; i < XORInput.Length; i++)
                     train.Iteration();
