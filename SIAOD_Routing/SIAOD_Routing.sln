@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP_lab2", "OOP_lab2\OOP_la
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP_lab3", "OOP_lab3\OOP_lab3.vcxproj", "{A7D37CDF-A068-43C8-87EC-285F6910F777}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjWin32", "..\..\..\..\Desktop\временная\Учеба\Компьютерная графика\ProjWin32_primer\ProjWin32.vcxproj", "{8B0F3E94-FDC8-4CE0-90DC-5C2E89A66D59}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjWin32", "..\..\..\Desktop\временная\Учеба\Компьютерная графика\ProjWin32_primer\ProjWin32.vcxproj", "{8B0F3E94-FDC8-4CE0-90DC-5C2E89A66D59}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP_kurs2", "OOP_kurs2\OOP_kurs2.vcxproj", "{9146C1F7-73EB-4E25-873B-43444E8625D6}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternAdapter", "PatternAdapter\PatternAdapter.csproj", "{A27FD81F-0E6A-46E4-A33F-1F8B7E8AB4F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OS_lab_1", "OS_lab_1\OS_lab_1.csproj", "{1BBF7EAA-CB66-48D3-AFE8-D728399EE643}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBKursovaia", "DBKursovaia\DBKursovaia.csproj", "{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -281,6 +283,22 @@ Global
 		{1BBF7EAA-CB66-48D3-AFE8-D728399EE643}.Release|x64.Build.0 = Release|Any CPU
 		{1BBF7EAA-CB66-48D3-AFE8-D728399EE643}.Release|x86.ActiveCfg = Release|Any CPU
 		{1BBF7EAA-CB66-48D3-AFE8-D728399EE643}.Release|x86.Build.0 = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|x64.Build.0 = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Debug|x86.Build.0 = Debug|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|ARM.Build.0 = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|x64.ActiveCfg = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|x64.Build.0 = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D6CCC5D-EC90-4817-B21A-F01EF4A85406}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
