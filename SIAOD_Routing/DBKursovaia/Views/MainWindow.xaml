@@ -46,34 +46,60 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!--<dg2d:DataGrid2D Grid.Column="0" Grid.Row="1" 
+        <StackPanel Grid.Column="0" Grid.Row="1" 
+                         Grid.ColumnSpan="1" Grid.RowSpan="2" >
+            <StackPanel Orientation="Horizontal">
+                
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Bytes}" SelectionMode="Single" SelectedIndex="{Binding SelectedIndexCollectionBytes}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ListBox ItemsSource="{Binding}" SelectionMode="Single" SelectedIndex="{Binding SelectedIndexByte}" >
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <!--<Border BorderThickness="1" Padding="1" BorderBrush="Chocolate">-->
+                                    <Label Padding="2" 
+                                               Content="{Binding}"></Label>
+                                    <!--<TextBlock Padding="2" Style="{StaticResource colorBySuspected}" 
+                                               Text="{Binding}">
+                                    </TextBlock>-->
+                                    <!--</Border>-->
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        
+        <!--<ListBox Grid.Column="0" Grid.Row="1" 
                          Grid.ColumnSpan="1" Grid.RowSpan="2" 
-                         ItemsSource2D="{Binding Bytes}">
-            -->
-        <!--</dg2d:DataGrid2D-->
-        <!--
-
-        </dg2d:DataGrid2D>-->
-        <ListBox Grid.Column="0" Grid.Row="1" 
-                         Grid.ColumnSpan="1" Grid.RowSpan="2" 
-                         ItemsSource="{Binding Bytes_2}">
+                         ItemsSource="{Binding Bytes}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBox ItemsSource="{Binding}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel IsItemsHost="True" />
+                                
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Style="{StaticResource colorBySuspected}" 
-                                           Text="{Binding Value}"></TextBlock>
+                                <Border BorderThickness="1" Padding="1" BorderBrush="Chocolate">
+                                    <TextBlock Style="{StaticResource colorBySuspected}" 
+                                               Text="{Binding}"></TextBlock>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
     </Grid>
 </Window>

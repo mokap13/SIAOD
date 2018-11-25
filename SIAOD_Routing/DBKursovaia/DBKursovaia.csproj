@@ -79,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Coverters\MatrixToDataViewConverter.cs" />
+    <Compile Include="Coverters\RichByteConverter.cs" />
     <Compile Include="Models\RichByte.cs" />
     <Compile Include="MVVMHelpers\BaseViewModel.cs" />
     <Compile Include="MVVMHelpers\DelegateCommand.cs" />

@@ -17,15 +17,6 @@ namespace DBKursovaia.Models
         {
             return new RichByte() { IsSelected = false, Value = richByte, IsSuspected = false };
         }
-        
-        //public static implicit operator byte[](RichByte[] richByte)
-        //{
-        //    return richByte.Select(r => r.value).ToArray();
-        //}
-        //public static implicit operator RichByte[](byte[] richByte)
-        //{
-        //    return new RichByte() { Value = richByte };
-        //}
         private byte value;
         public byte Value
         {
@@ -46,7 +37,7 @@ namespace DBKursovaia.Models
         }
         public override string ToString()
         {
-            return this.Value.ToString("X2") + " ";
+            return this.Value.ToString("X02");
         }
     }
 }

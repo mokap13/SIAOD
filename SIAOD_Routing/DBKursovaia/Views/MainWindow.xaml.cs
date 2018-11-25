@@ -27,5 +27,10 @@ namespace DBKursovaia
         {
             InitializeComponent();
         }
+
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }
