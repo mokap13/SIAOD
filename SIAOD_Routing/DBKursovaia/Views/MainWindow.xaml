@@ -1,0 +1,79 @@
+﻿<Window x:Class="DBKursovaia.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DBKursovaia.ViewModels"
+        xmlns:coverters="clr-namespace:DBKursovaia.Coverters"
+        xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="colorBySuspected">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSuspected}" Value="True">
+                    <Setter Property="Background" Value="Aqua"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainVM></local:MainVM>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Button Content="Считать" Command="{Binding ReadServersCommand}" MaxWidth="100"></Button>
+            <Button Content="Считать байты" Command="{Binding ReadBytesCommand}" MaxWidth="100"></Button>
+        </StackPanel>
+        <DataGrid Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" 
+                  ItemsSource="{Binding Servers}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Цех" Binding="{Binding Manufactory}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Участок" Binding="{Binding Sector}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Номер сервера" Binding="{Binding HostNum}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя сервера" Binding="{Binding Host}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--<dg2d:DataGrid2D Grid.Column="0" Grid.Row="1" 
+                         Grid.ColumnSpan="1" Grid.RowSpan="2" 
+                         ItemsSource2D="{Binding Bytes}">
+            -->
+        <!--</dg2d:DataGrid2D-->
+        <!--
+
+        </dg2d:DataGrid2D>-->
+        <ListBox Grid.Column="0" Grid.Row="1" 
+                         Grid.ColumnSpan="1" Grid.RowSpan="2" 
+                         ItemsSource="{Binding Bytes_2}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ListBox ItemsSource="{Binding}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource colorBySuspected}" 
+                                           Text="{Binding Value}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
