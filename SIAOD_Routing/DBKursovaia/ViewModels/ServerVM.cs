@@ -1,5 +1,4 @@
-﻿using DBKursovaia.MVVMHelpers;
-using DBKursovaia.Models;
+﻿using DBKursovaia.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +9,7 @@ using System.Windows.Input;
 
 namespace DBKursovaia.ViewModels
 {
-    public class ServerVM : ObservableObject
+    public class ServerVM
     {
        
     }

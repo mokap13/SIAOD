@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DBKursovaia.Models;
+using MahApps.Metro.Controls;
 using Npgsql;
 
 namespace DBKursovaia
@@ -21,16 +22,11 @@ namespace DBKursovaia
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

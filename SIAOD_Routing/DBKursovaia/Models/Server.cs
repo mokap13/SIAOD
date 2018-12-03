@@ -1,20 +1,20 @@
-﻿using DBKursovaia.MVVMHelpers;
+﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DBKursovaia.Models
 {
-    public class Server : ObservableObject
+    public class Server : ObservableObject, IDataErrorInfo
     {
         private int id;
-
         public int Id
         {
             get { return id; }
-            set { SetProperty(ref id, value); }
+            set { base.Set(ref id, value); }
         }
 
         private string manufactory;
@@ -22,7 +22,7 @@ namespace DBKursovaia.Models
         public string Manufactory
         {
             get { return manufactory; }
-            set { SetProperty(ref manufactory, value); }
+            set { base.Set(ref manufactory, value); }
         }
 
         private string sector;
@@ -30,7 +30,7 @@ namespace DBKursovaia.Models
         public string Sector
         {
             get { return sector; }
-            set { SetProperty(ref sector, value); }
+            set { base.Set(ref sector, value); }
         }
 
         private string hostNum;
@@ -38,7 +38,7 @@ namespace DBKursovaia.Models
         public string HostNum
         {
             get { return hostNum; }
-            set { SetProperty(ref hostNum, value); }
+            set { base.Set(ref hostNum, value); }
         }
 
         private string host;
@@ -46,9 +46,36 @@ namespace DBKursovaia.Models
         public string Host
         {
             get { return host; }
-            set { SetProperty(ref host, value); }
+            set { base.Set(ref host, value); }
         }
 
-        public IReadOnlyList<string> ColumnHeaderNames { get; }
+        public string Error => throw new NotImplementedException();
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string errorMsg = String.Empty;
+                if (columnName.Equals("Manufactory"))
+                {
+                    if (String.IsNullOrEmpty(this.Manufactory))
+                        errorMsg = "Manufactory Name is a mandatory field";
+                    else if (this.Manufactory.Length < 6)
+                        errorMsg = "Manufactory Name must contain at least 6 characters";
+                }
+                //else if (columnName.Equals("EmpSalary"))
+                //{
+                //    int salary;
+                //    if (string.IsNullOrEmpty(this.empSalary))
+                //        errorMsg = "Salary is mandatory field";
+                //    else if (Int32.TryParse(this.empSalary, out salary))
+                //        errorMsg = "Salary must only contain numbers";
+                //}
+                else
+                    errorMsg = String.Empty;
+
+                return errorMsg;
+            }
+        }
     }
 }
