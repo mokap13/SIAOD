@@ -88,13 +88,13 @@ namespace Crypto1.Models.Enigma
             T2 value = this._forward[newFirstObj];
             int indexRevers = this._reverse.Keys.ToList().IndexOf(value);
 
-            List<T2> newSequenceValues = this._forward.Values
-                .ToList()
-                .MoveRange(this._forward[newFirstObj], 0);
-            foreach (KeyValuePair<T1,T2> pair in this._forward)
-            {
-                this._forward[pair.Key] = newSequenceValues[this._forward.ToList().IndexOf(pair)];
-            }
+            //List<T2> newSequenceValues = this._forward.Values
+            //    .ToList()
+            //    .MoveRange(this._forward[newFirstObj], 0);
+            //foreach (KeyValuePair<T1,T2> pair in this._forward)
+            //{
+            //    this._forward[pair.Key] = newSequenceValues[this._forward.ToList().IndexOf(pair)];
+            //}
         }
         //public void SetPosition(T1 newFirstObj)
         //{

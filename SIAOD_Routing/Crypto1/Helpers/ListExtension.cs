@@ -8,12 +8,12 @@ namespace Crypto1.Helpers
 {
     public static class ListExtension
     {
-        public static List<T> MoveRange<T>(this List<T> list, T firstElement, int index)
+        public static IEnumerable<T> MoveRange<T>(this IEnumerable<T> list, T firstElement, int index)
         {
             var tempList = list.ToList();
             int indexFirstElement = tempList.IndexOf(firstElement);
-            List<T> range = tempList.GetRange(indexFirstElement, list.Count - indexFirstElement);
-            tempList.RemoveRange(indexFirstElement, list.Count - indexFirstElement);
+            IEnumerable<T> range = tempList.GetRange(indexFirstElement, list.Count() - indexFirstElement);
+            tempList.RemoveRange(indexFirstElement, list.Count() - indexFirstElement);
             tempList.InsertRange(index, range);
 
             return tempList;

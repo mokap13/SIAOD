@@ -8,21 +8,9 @@ namespace Crypto1.Models.Enigma
 {
     public class Enigma
     {
-        private readonly IReadOnlyDictionary<char, int> alphabet = new Dictionary<char, int>()
-        {
-            {'A', 0}, {'B', 1}, {'C', 2}, {'D', 3}, {'E', 4},
-            {'F', 5}, {'G', 6}, {'H', 7}, {'I', 8}, {'J', 9},
-            {'K', 10}, {'L', 11}, {'M', 12}, {'N', 13}, {'O', 14},
-            {'P', 15}, {'Q', 16}, {'R', 17}, {'S', 18}, {'T', 19},
-            {'U', 20}, {'V', 21}, {'W', 22}, {'X', 23}, {'Y', 24}, {'Z', 25},
-        };
-        //private readonly IReadOnlyDictionary<char, int> alphabet = new Dictionary<char>()
-        //{
-        //    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-        //    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        //};
-        private int[,] Rotor1CrossTable;
-        private readonly Rotor<char, char> Rotor1Dictionary = new Rotor<char, char>()
+        private readonly List<Rotor2> rotors;
+
+        private readonly Dictionary<char, char> Rotor1Dictionary = new Dictionary<char, char>()
         {
             {'A', 'E'}, {'B', 'K'}, {'C', 'M'}, {'D', 'F'}, {'E', 'L'},
             {'F', 'G'}, {'G', 'D'}, {'H', 'Q'}, {'I', 'V'}, {'J', 'Z'},
@@ -30,7 +18,7 @@ namespace Crypto1.Models.Enigma
             {'P', 'H'}, {'Q', 'X'}, {'R', 'U'}, {'S', 'S'}, {'T', 'P'},
             {'U', 'A'}, {'V', 'I'}, {'W', 'B'}, {'X', 'R'}, {'Y', 'C'}, {'Z', 'J'},
         };
-        private readonly Rotor<char, char> Rotor2Dictionary = new Rotor<char, char>()
+        private readonly Dictionary<char, char> Rotor2Dictionary = new Dictionary<char, char>()
         {
             {'A', 'A'}, {'B', 'J'}, {'C', 'D'}, {'D', 'K'}, {'E', 'S'},
             {'F', 'I'}, {'G', 'R'}, {'H', 'U'}, {'I', 'X'}, {'J', 'B'},
@@ -38,7 +26,7 @@ namespace Crypto1.Models.Enigma
             {'P', 'C'}, {'Q', 'Q'}, {'R', 'G'}, {'S', 'Z'}, {'T', 'N'},
             {'U', 'P'}, {'V', 'Y'}, {'W', 'F'}, {'X', 'V'}, {'Y', 'O'}, {'Z', 'E'},
         };
-        private readonly Rotor<char, char> Rotor3Dictionary = new Rotor<char, char>()
+        private readonly Dictionary<char, char> Rotor3Dictionary = new Dictionary<char, char>()
         {
             {'A', 'B'}, {'B', 'D'}, {'C', 'F'}, {'D', 'H'}, {'E', 'J'},
             {'F', 'L'}, {'G', 'C'}, {'H', 'P'}, {'I', 'R'}, {'J', 'T'},
@@ -46,8 +34,7 @@ namespace Crypto1.Models.Enigma
             {'P', 'E'}, {'Q', 'I'}, {'R', 'W'}, {'S', 'G'}, {'T', 'A'},
             {'U', 'K'}, {'V', 'M'}, {'W', 'U'}, {'X', 'S'}, {'Y', 'Q'}, {'Z', 'O'},
         };
-
-        private readonly Rotor<char, char> ReflectorBDictionary = new Rotor<char, char>()
+        private readonly Dictionary<char, char> ReflectorBDictionary = new Dictionary<char, char>()
         {
             {'A', 'Y'}, {'B', 'R'}, {'C', 'U'}, {'D', 'H'}, {'E', 'Q'},
             {'F', 'S'}, {'G', 'L'}, {'H', 'D'}, {'I', 'P'}, {'J', 'X'},
@@ -55,42 +42,78 @@ namespace Crypto1.Models.Enigma
             {'P', 'I'}, {'Q', 'E'}, {'R', 'B'}, {'S', 'F'}, {'T', 'Z'},
             {'U', 'C'}, {'V', 'W'}, {'W', 'V'}, {'X', 'J'}, {'Y', 'A'}, {'Z', 'T'},
         };
-         
+        
         public Enigma()
         {
-            Rotor1CrossTable = new int[this.alphabet.Count, 2];
-
+            rotors = new List<Rotor2>
+            {
+                new Rotor2(Rotor1Dictionary),
+                new Rotor2(Rotor2Dictionary),
+                new Rotor2(Rotor3Dictionary),
+                new Rotor2(ReflectorBDictionary),
+            };
         }
-
-        public Enigma(char Rotar1Position, char Rotar2Position, char Rotar3Position)
+        public Enigma(List<Rotor2> rotors)
         {
-            Rotor1Dictionary.SetPosition(Rotar1Position);
-            Rotor2Dictionary.SetPosition(Rotar3Position);
-            Rotor2Dictionary.SetPosition(Rotar3Position);
+            this.rotors = rotors;
         }
-
+        public void SetPositionRotor(int index, char ch)
+        {
+            if (index > rotors.Count - 2)
+                throw new ArgumentException("Указанный индек больше чем число роторов");
+            this.rotors[index].SetPosition(ch);
+        }
+        
         public char CryptChar(char ch)
         {
-            char ch1 = Rotor1Dictionary.Forward[ch];
-            char ch2 = Rotor2Dictionary.Forward[ch1];
-            char ch3 = Rotor3Dictionary.Forward[ch2];
-            char chReflector = ReflectorBDictionary.Forward[ch3];
-            char ch3Reverse = Rotor3Dictionary.Reverse[chReflector];
-            char ch2Reverse = Rotor2Dictionary.Reverse[ch3Reverse];
-            char ch1Reverse = Rotor1Dictionary.Reverse[ch2Reverse];
-            return ch1Reverse;
-        }
-        //public string CryptString(string source)
-        //{
-        //    char ch1 = Rotor1Dictionary.Forward[ch];
-        //    char ch2 = Rotor2Dictionary.Forward[ch1];
-        //    char ch3 = Rotor3Dictionary.Forward[ch2];
-        //    char chReflector = ReflectorBDictionary.Forward[ch3];
-        //    char ch3Reverse = Rotor3Dictionary.Reverse[chReflector];
-        //    char ch2Reverse = Rotor2Dictionary.Reverse[ch3Reverse];
-        //    char ch1Reverse = Rotor1Dictionary.Reverse[ch2Reverse];
-        //    return ch1Reverse;
-        //}
+            ch = rotors[0].Sum(ch, rotors[0].Position);
+            ch = rotors[0].CryptForward(ch);
 
+            ch = rotors[1].Sum(ch, rotors[1].Position);
+            ch = rotors[1].Subcribe(ch, rotors[0].Position);
+            ch = rotors[1].CryptForward(ch);
+
+            ch = rotors[2].Sum(ch, rotors[2].Position);
+            ch = rotors[2].Subcribe(ch, rotors[1].Position);
+            ch = rotors[2].CryptForward(ch);
+
+            //Рефлектор
+            ch = rotors[2].Subcribe(ch, rotors[2].Position);
+            ch = rotors[3].CryptForward(ch);
+            ch = rotors[2].Sum(ch, rotors[2].Position);
+
+            ch = rotors[2].CryptBack(ch);
+            ch = rotors[2].Subcribe(ch, rotors[2].Position);
+            ch = rotors[2].Sum(ch, rotors[1].Position);
+
+            ch = rotors[1].CryptBack(ch);
+            ch = rotors[1].Subcribe(ch, rotors[1].Position);
+            ch = rotors[1].Sum(ch, rotors[0].Position);
+
+            ch = rotors[0].CryptBack(ch);
+            ch = rotors[0].Subcribe(ch, rotors[0].Position);
+            //foreach (Rotor2 rotor in this.rotors)
+            //    ch = rotor.CryptForward(ch);
+            //foreach (Rotor2 rotor in this.rotors.Take(this.rotors.Count-1).Reverse())
+            //    ch = rotor.CryptBack(ch);
+            return ch;
+        }
+        public string CryptString(string source)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (char item in source)
+            {
+                char ch = item;
+                ch = this.rotors.First().CryptForward(ch);
+                this.rotors.First().RotateForwardOneStep();
+                foreach (Rotor2 rotor in this.rotors.Skip(1))
+                    ch = rotor.CryptForward(ch);
+                foreach (Rotor2 rotor in this.rotors.Take(this.rotors.Count - 1).Reverse())
+                    ch = rotor.CryptBack(ch);
+                str.Append(ch);
+            }
+            
+            return str.ToString();
+        }
     }
 }
