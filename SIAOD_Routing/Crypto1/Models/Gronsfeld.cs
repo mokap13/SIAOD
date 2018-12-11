@@ -15,14 +15,13 @@ namespace Crypto1.Models
             {'с', 17}, {'т', 18}, {'у', 19}, {'ф', 20}, {'х', 21}, {'ц', 22},
             {'ч', 23}, {'ш', 24}, {'щ', 25}, {'ъ', 26}, {'ы', 27}, {'ь', 28},
             {'э', 29}, {'ю', 30}, {'я', 31}};
-        private readonly static char[] alphabet = {
+        public static char[] Alphabet { get; } = {
             'а', 'б', 'в', 'г', 'д', 'е',
             'ж', 'з', 'и', 'й', 'к',
             'л', 'м', 'н', 'о', 'п', 'р',
             'с', 'т', 'у', 'ф', 'х', 'ц',
             'ч', 'ш', 'щ', 'ъ', 'ы', 'ь',
             'э', 'ю', 'я' };
-        public static char[] Alphabet => alphabet; 
 
         private int[] key;
 
@@ -34,13 +33,13 @@ namespace Crypto1.Models
         {
             if (!alphabetDictionary.ContainsKey(ch))
                 throw new Exception("Символ недопустим");
-            return alphabet[(alphabetDictionary[ch] + this.key[0]) % alphabet.Length];
+            return Alphabet[(alphabetDictionary[ch] + this.key[0]) % Alphabet.Length];
         }
         public char DeсryptChar(char ch)
         {
             if (!alphabetDictionary.ContainsKey(ch))
                 throw new Exception("Символ недопустим");
-            return alphabet[(alphabetDictionary[ch] - this.key[0]) % alphabet.Length];
+            return Alphabet[(alphabetDictionary[ch] - this.key[0]) % Alphabet.Length];
         }
         public string CryptText(string text)
         {
@@ -54,8 +53,8 @@ namespace Crypto1.Models
                         throw new Exception("Символ недопустим");
                     int currentCharPosition = alphabetDictionary[text[i]];
                     int newCharPosition = (currentCharPosition + this.key[i % key.Length]) %
-                        alphabet.Length;
-                    str.Append(alphabet[newCharPosition]);
+                        Alphabet.Length;
+                    str.Append(Alphabet[newCharPosition]);
                 }
             }
             return str.ToString();
@@ -74,9 +73,9 @@ namespace Crypto1.Models
                     int currentCharPosition = alphabetDictionary[text[i]];
                     int newCharPosition = 
                         ((currentCharPosition - this.key[i % key.Length]) %
-                        alphabet.Length + alphabet.Length) % alphabet.Length;
+                        Alphabet.Length + Alphabet.Length) % Alphabet.Length;
 
-                    str.Append(alphabet[newCharPosition]);
+                    str.Append(Alphabet[newCharPosition]);
                 }
             }
             return str.ToString();
