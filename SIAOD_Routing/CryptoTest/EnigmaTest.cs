@@ -12,7 +12,7 @@ namespace CryptoTest
         public void TestCryptChar()
         {
             Enigma enigma = new Enigma();
-            char expected = 'N';
+            char expected = 'F';
             char actual = enigma.CryptChar('A');
 
             Assert.AreEqual(expected, actual);
@@ -24,7 +24,7 @@ namespace CryptoTest
             enigma.SetPositionRotor(0, 'R');
             enigma.SetPositionRotor(1, 'V');
             enigma.SetPositionRotor(2, 'C');
-            char expected = 'W';
+            char expected = 'T';
             char actual = enigma.CryptChar('A');
 
             Assert.AreEqual(expected, actual);
@@ -34,18 +34,17 @@ namespace CryptoTest
         {
             Enigma enigma = new Enigma();
             enigma.SetPositionRotor(0, 'B');
-            char expected = 'F';
+            char expected = 'T';
             char actual = enigma.CryptChar('A');
 
             Assert.AreEqual(expected, actual);
         }
-
         [TestMethod]
         public void TestCryptText_Alphabet()
         {
             Enigma enigma = new Enigma();
             string testString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string expected = "NFXUHBJERGOPWAKLSIQVDTMCZY";
+            string expected = "FUVEPUMWARVQKEFGHGDIJFMFXI";
             
             string actual = new string(testString.Select(c => enigma.CryptChar(c)).ToArray());
 
@@ -59,7 +58,7 @@ namespace CryptoTest
             enigma.SetPositionRotor(1, 'Z');
             enigma.SetPositionRotor(2, 'R');
             string testString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string expected = "NVZMQPTIHKJRDASFELOGWBUYXC";
+            string expected = "LOBWTRKUFSICZJCFZKDMRSHWRM";
 
             string actual = new string(testString.Select(c => enigma.CryptChar(c)).ToArray());
 

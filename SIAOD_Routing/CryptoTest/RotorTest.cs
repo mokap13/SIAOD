@@ -19,7 +19,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestSetPosition()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
 
             Assert.AreEqual('E', rotor.SymbolPairs['A']);
 
@@ -33,7 +33,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestCryptForward()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
 
             Assert.AreEqual('E', rotor.CryptForward('A'));
             Assert.AreEqual('J', rotor.CryptForward('Z'));
@@ -41,7 +41,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestCryptBack()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
 
             Assert.AreEqual('A', rotor.CryptBack('E'));
             Assert.AreEqual('Z', rotor.CryptBack('J'));
@@ -49,7 +49,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestSetPositionsWithCryptBack()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
 
             Assert.AreEqual('R', rotor.Subcribe(rotor.CryptBack('U'), rotor.Position));
             rotor.SetPosition('R');
@@ -59,7 +59,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestSum()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
             char expected = 'D';
             char actual = rotor.Sum('B', 'C');
 
@@ -78,7 +78,7 @@ namespace CryptoTest
         [TestMethod]
         public void TestSubscribe()
         {
-            Rotor2 rotor = new Rotor2(rotorDictionary);
+            Rotor rotor = new Rotor(rotorDictionary);
 
             char expected = 'Y';
             char actual = rotor.Subcribe('Z', 'B');

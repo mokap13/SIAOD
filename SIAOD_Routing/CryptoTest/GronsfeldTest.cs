@@ -73,7 +73,6 @@ namespace CryptoTest
         {
             Gronsfeld crypt = new Gronsfeld(new int[] { 3, 1, 4 });
 
-            //string expected = "ФПЖИСЬИОССAХИЛФИУСС".ToLower();
             string expected = "ФПЖИСЬИОССАХИЛФИУСС".ToLower();
             string actual = crypt.CryptText("СОВЕРШЕННОЯСЕКРЕТНО");
 

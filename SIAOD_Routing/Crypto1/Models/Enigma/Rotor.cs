@@ -1,125 +1,79 @@
-﻿using Crypto1.Helpers;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Crypto1.Helpers;
 
 namespace Crypto1.Models.Enigma
 {
-    public class MapEnumerator<T1, T2> : IEnumerator
+    public class Rotor
     {
-        public Rotor<T1, T2>[] charPairs;
-
-        // Enumerators are positioned before the first element
-        // until the first MoveNext() call.
-        int position = -1;
-
-        public MapEnumerator(Rotor<T1, T2>[] list)
+        private static readonly IReadOnlyDictionary<char, int> alphabet = new Dictionary<char, int>()
         {
-            charPairs = list;
-        }
-
-        public bool MoveNext()
+            {'A', 0}, {'B', 1}, {'C', 2}, {'D', 3}, {'E', 4},
+            {'F', 5}, {'G', 6}, {'H', 7}, {'I', 8}, {'J', 9},
+            {'K', 10}, {'L', 11}, {'M', 12}, {'N', 13}, {'O', 14},
+            {'P', 15}, {'Q', 16}, {'R', 17}, {'S', 18}, {'T', 19},
+            {'U', 20}, {'V', 21}, {'W', 22}, {'X', 23}, {'Y', 24}, {'Z', 25},
+        };
+        private static readonly IReadOnlyDictionary<int, char> alphabetReverse = new Dictionary<int, char>()
         {
-            position++;
-            return (position < charPairs.Length);
-        }
-
-        public void Reset()
-        {
-            position = -1;
-        }
-
-        object IEnumerator.Current => Current;
-
-        public Rotor<T1, T2> Current
+            {0, 'A'}, {1, 'B'}, {2, 'C'}, {3, 'D'}, {4, 'E'},
+            {5, 'F'}, {6, 'G'}, {7, 'H'}, {8, 'I'}, {9, 'J'},
+            {10, 'K'}, {11, 'L'}, {12, 'M'}, {13, 'N'}, {14, 'O'},
+            {15, 'P'}, {16, 'Q'}, {17, 'R'}, {18, 'S'}, {19, 'T'},
+            {20, 'U'}, {21, 'V'}, {22, 'W'}, {23, 'X'}, {24, 'Y'}, {25, 'Z'},
+        };
+        public static Dictionary<char, int> Alphabet => alphabet as Dictionary<char, int>;
+        public char Position { get; set; }
+        private int[] symbolIndexes;
+        public Dictionary<char, char> SymbolPairs
         {
             get
             {
-                try
+                Dictionary<char, char> dictionary = new Dictionary<char, char>();
+                for (int i = 0; i < symbolIndexes.Length; i++)
                 {
-                    return charPairs[position];
+                    dictionary.Add(alphabetReverse[i], alphabetReverse[symbolIndexes[i]]);
                 }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
+                return dictionary;
             }
+        }
+        public Rotor(Dictionary<char, char> symbolPairs)
+        {
+            Position = 'A';
+            symbolIndexes = symbolPairs
+                .OrderBy(o => o.Key)
+                .Select(d => alphabet[d.Value])
+                .ToArray();
+        }
+        public void SetPosition(char firstSymbol)
+        {
+            Position = firstSymbol;
+        }
+        public void RotateForwardOneStep()
+        {
+            int index = alphabet[this.Position];
+            index++;
+            Position = alphabetReverse[index % alphabet.Count];
+        }
+        public char CryptForward(char ch)
+        {
+            return alphabetReverse[symbolIndexes[alphabet[ch]]];
+        }
+        public char CryptBack(char ch)
+        {
+            int index = symbolIndexes.ToList().IndexOf(alphabet[ch]);
+            return alphabetReverse[index];
+        }
+        public char Sum(char ch1, char ch2)
+        {
+            return alphabetReverse[(alphabet[ch1] + alphabet[ch2]) % (alphabet.Count)];
+        }
+        public char Subcribe(char ch1, char ch2)
+        {
+            return alphabetReverse[(alphabet[ch1] - alphabet[ch2] + (alphabet.Count)) % alphabet.Count];
         }
     }
-    public class Rotor<T1, T2> : IEnumerable
-    {
-        public class Indexer<T3, T4>
-        {
-            private Dictionary<T3, T4> _dictionary;
-            public Indexer(Dictionary<T3, T4> dictionary)
-            {
-                _dictionary = dictionary;
-            }
-            public T4 this[T3 index]
-            {
-                get { return _dictionary[index]; }
-                set { _dictionary[index] = value; }
-            }
-        }
-        public Indexer<T1, T2> Forward { get; private set; }
-        public Indexer<T2, T1> Reverse { get; private set; }
-
-        private Dictionary<T1, T2> _forward = new Dictionary<T1, T2>();
-        private Dictionary<T2, T1> _reverse = new Dictionary<T2, T1>();
-
-        public Rotor()
-        {
-            this.Forward = new Indexer<T1, T2>(_forward);
-            this.Reverse = new Indexer<T2, T1>(_reverse);
-        }
-
-        public void Add(T1 t1, T2 t2)
-        {
-            _forward.Add(t1, t2);
-            _reverse.Add(t2, t1);
-        }
-
-        public void SetPosition(T1 newFirstObj)
-        {
-            int indexForward = this._forward.Keys.ToList().IndexOf(newFirstObj);
-            T2 value = this._forward[newFirstObj];
-            int indexRevers = this._reverse.Keys.ToList().IndexOf(value);
-
-            //List<T2> newSequenceValues = this._forward.Values
-            //    .ToList()
-            //    .MoveRange(this._forward[newFirstObj], 0);
-            //foreach (KeyValuePair<T1,T2> pair in this._forward)
-            //{
-            //    this._forward[pair.Key] = newSequenceValues[this._forward.ToList().IndexOf(pair)];
-            //}
-        }
-        //public void SetPosition(T1 newFirstObj)
-        //{
-        //    this._forward.ToList().
-        //}
-
-        private readonly Rotor<T1, T2>[] charPairs;
-        public Rotor(Rotor<T1, T2>[] pArray)
-        {
-            charPairs = new Rotor<T1, T2>[pArray.Length];
-
-            for (int i = 0; i < pArray.Length; i++)
-            {
-                charPairs[i] = pArray[i];
-            }
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new MapEnumerator<T1, T2>(charPairs);
-        }
-
-        public void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

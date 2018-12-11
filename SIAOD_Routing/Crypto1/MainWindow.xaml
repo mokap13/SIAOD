@@ -16,13 +16,54 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DockPanel>
-            <StackPanel DockPanel.Dock="Left" MaxWidth="100">
-                <Button Content="Зашифровать"></Button>
-                <TextBox></TextBox>
-                <Label>ч</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="ENIGMA">
+            <StackPanel>
+                <Button Content="Шифровка/Дешифровка" Command="{Binding Path=CryptCommand}"></Button>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox SelectedIndex="0" SelectedValue="{Binding Path=Rotor1Position}" ItemsSource="{Binding Path=Alphabet}"></ComboBox>
+                    <ComboBox SelectedIndex="0" SelectedValue="{Binding Path=Rotor2Position}" ItemsSource="{Binding Path=Alphabet}"></ComboBox>
+                    <ComboBox SelectedIndex="0" SelectedValue="{Binding Path=Rotor3Position}" ItemsSource="{Binding Path=Alphabet}"></ComboBox>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Ввод" Grid.Column="0">
+                        <TextBox Text="{Binding Path=InputText}"></TextBox>
+                    </GroupBox>
+                    <GroupBox Header="Вывод" Grid.Column="1">
+                        <TextBox Text="{Binding Path=OutText}"></TextBox>
+                    </GroupBox>
+                </Grid>
             </StackPanel>
-        </DockPanel>
-
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="GRONSFELD">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Зашифровать" Command="{Binding Path=CryptCommandGronsfeld}"></Button>
+                    <Button Content="Дешифровать" Command="{Binding Path=DeCryptCommandGronsfeld}"></Button>
+                    <Label Content="Ключ: "></Label>
+                    <TextBox Text="{Binding Path=Key}" MinWidth="50"></TextBox>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32*"></ColumnDefinition>
+                        <ColumnDefinition Width="162*"/>
+                        <ColumnDefinition Width="193*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Ввод" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBox Text="{Binding Path=InputTextGronsfeld}"></TextBox>
+                    </GroupBox>
+                    <GroupBox Header="Вывод" Grid.Column="2">
+                        <TextBox Text="{Binding Path=OutTextGronsfeld}"></TextBox>
+                    </GroupBox>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Controls:MetroWindow>
