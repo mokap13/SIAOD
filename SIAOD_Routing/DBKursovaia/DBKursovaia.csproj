@@ -99,6 +99,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\Indicator.cs" />
+    <Compile Include="Models\S7Data.cs" />
     <Compile Include="Validators\NotEmptyValidationRule.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\ServerVM.cs" />

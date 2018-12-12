@@ -37,7 +37,7 @@
         <StackPanel Orientation="Vertical">
             <Button Content="Обновить" 
                         Style="{StaticResource bStyle}"
-                        Command="{Binding ReadServersCommand}" ></Button>
+                        Command="{Binding ReadDevicesCommand}" ></Button>
             <Button Content="Сохранить" 
                         Style="{StaticResource bStyle}"
                         Command="{Binding ReadServersCommand}"></Button>
@@ -56,24 +56,12 @@
                             Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}"
                             Controls:TextBoxHelper.Watermark="IP адрес"></TextBox>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Path=Servers}" 
+        <DataGrid ItemsSource="{Binding Path=Devices}" 
                         Style="{StaticResource dgStyle}"
                         dg:DataGridFilter.IsAutoFilterEnabled="True"
                         AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Цех" Binding="{Binding Manufactory, ValidatesOnDataErrors=True}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="DataGridCell.ToolTip"
-                                    Value="{Binding RelativeSource={RelativeSource Self},
-                                            Path=(Validation.Errors)[0].ErrorContent}"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <DataGridTextColumn Header="Участок" Binding="{Binding Sector}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Номер хоста" Binding="{Binding HostNum}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Имя хоста" Binding="{Binding Host}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя устройства/Конфигурации" Binding="{Binding Name}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

@@ -19,13 +19,23 @@ namespace DBKursovaia.ViewModels
     {
         public MainVM()
         {
-            this.Servers = new ObservableCollection<Server>();
+            this.Devices = new ObservableCollection<Device>();
         }
         private readonly Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         private const string connectionString = "Host=localhost;Username=postgres;Password=freeman123;Database=demo";
         private const string getAllServers = @"select s.host, s.host_num, d.manufactory, d.sector
                                                 from Server as s join 
                                                 department as d on s.department_id = d.id;";
+        //private const string getParametersByDeviceId = @"select s.host, s.host_num, d.manufactory, d.sector
+        //                                        from Server as s join 
+        //                                        department as d on s.department_id = d.id;";
+        private const string getAllDevices = @"select d.Name from Device as d";
+        //NpgsqlCommand cmd = new NpgsqlCommand("insert into table1 values(1, 1)", conn);
+        //cmd.ExecuteNonQuery();
+        //cmd.Parameters.Add(new NpgsqlParameter("name", tb1.Text));
+        //cmd.Parameters.Add(new NpgsqlParameter("pw", tb2.Text));
+        //NpgsqlCommand cmd = new NpgsqlCommand("insert into login (Name, Password) values(:name, :pw)", conn);
+        //cmd.ExecuteNonQuery();
         private NpgsqlConnection psql;
         private string ipAddress;
         public string IpAddress
@@ -33,13 +43,12 @@ namespace DBKursovaia.ViewModels
             get { return ipAddress; }
             set
             {
-
                 Set(ref ipAddress, value);
                 connectServersCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public ObservableCollection<Server> Servers { get; }
+        public ObservableCollection<Device> Devices { get; }
         private int selectedIndexCollectionBytes;
 
         public int SelectedIndexCollectionBytes
@@ -61,49 +70,52 @@ namespace DBKursovaia.ViewModels
             get { return isBusy; }
             set { Set(ref isBusy, value); }
         }
+        private int myVar;
+
+        public int MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
         private RelayCommand readServersCommand;
-        public ICommand ReadServersCommand
+        public ICommand ReadDevicesCommand
         {
             get
             {
                 return readServersCommand ?? (readServersCommand = new RelayCommand(() =>
-                 {
-                     Task.Factory.StartNew(() =>
-                     {
-                         this.IsBusy = true;
-                         dispatcher.Invoke(() => { this.Servers.Clear(); });
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        this.IsBusy = true;
+                        dispatcher.Invoke(() => { this.Devices.Clear(); });
 
-                         if (psql == null)
-                             psql = new NpgsqlConnection(connectionString);
+                        if (psql == null)
+                            psql = new NpgsqlConnection(connectionString);
+                        psql.Open();
 
-                         lock (psql)
-                         {
-                             psql.Open();
+                        lock (psql)
+                        {
+                            
 
-                             using (NpgsqlCommand command = new NpgsqlCommand(getAllServers, psql))
-                             {
-                                 NpgsqlDataReader dbData = command.ExecuteReader();
+                            using (NpgsqlCommand command = new NpgsqlCommand(getAllDevices, psql))
+                            {
+                                NpgsqlDataReader dbData = command.ExecuteReader();
 
-                                 dispatcher.Invoke(() =>
-                                 {
-                                     while (dbData.Read())
-                                     {
-                                         Servers.Add(new Server
-                                         {
-                                             Manufactory = dbData[3].ToString(),
-                                             Sector = dbData[2].ToString(),
-                                             HostNum = dbData[1].ToString(),
-                                             Host = dbData[0].ToString()
-                                         });
-                                     }
-                                 });
-                             };
+                                dispatcher.Invoke(() =>
+                                {
+                                    while (dbData.Read())
+                                    {
+                                        Devices.Add(new Device(dbData[0].ToString()));
+                                    }
+                                });
+                            };
 
-                             psql.Close();
-                             this.IsBusy = false;
-                         }
-                     });
-                 }));
+                            psql.Close();
+                            this.IsBusy = false;
+                        }
+                    });
+                }));
             }
         }
         private RelayCommand<string> connectServersCommand;
