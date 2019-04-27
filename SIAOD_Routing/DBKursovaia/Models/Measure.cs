@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DBKursovaia.Models
 {
-    public class Indicator
+    public class Measure
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string IndicatorName { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public double Value { get; set; }
     }
 }

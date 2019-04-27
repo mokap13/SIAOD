@@ -11,10 +11,11 @@
         BorderThickness="0" 
         GlowBrush="Black"
         ResizeMode="CanResizeWithGrip"
-        
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:fmt="clr-namespace:DBKursovaia.Helpers"
         WindowTransitionsEnabled="False"
         WindowStartupLocation="CenterScreen"
-        Title="Конфигуратор системы опроса" Height="450" Width="800">
+        Title="Монитор показателей ЧПУ" Height="450" Width="986">
 
     <Window.Resources>
         <Style TargetType="Button" x:Key="bStyle" BasedOn="{StaticResource AccentedSquareButtonStyle}">
@@ -32,37 +33,122 @@
         <local:MainVM></local:MainVM>
     </Window.DataContext>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" HorizontalAlignment="Left">
+            <GroupBox Header="Меню">
+                <StackPanel Orientation="Vertical">
+                    <Button Content="Обновить цеха" 
+                        Style="{StaticResource bStyle}"
+                        Command="{Binding ReadDepartmentsCommand}" ></Button>
 
-    <DockPanel HorizontalAlignment="Right">
-        <StackPanel Orientation="Vertical">
-            <Button Content="Обновить" 
+
+                    <Button Content="Подключиться к БД" 
                         Style="{StaticResource bStyle}"
-                        Command="{Binding ReadDevicesCommand}" ></Button>
-            <Button Content="Сохранить" 
-                        Style="{StaticResource bStyle}"
-                        Command="{Binding ReadServersCommand}"></Button>
-            <Button Content="Удалить" 
-                        Style="{StaticResource bStyle}"
-                        Command="{Binding ReadServersCommand}"></Button>
-            <Controls:ProgressRing  IsActive="{Binding Path=IsBusy}" 
-                                        Foreground="{DynamicResource AccentColorBrush}"/>
-            <Button Content="Подключить" 
-                        Style="{StaticResource bStyle}"
-                        Command="{Binding Path=ConnectServersCommand}"
-                           
+                        Command="{Binding Path=ConnectCommand}"
                         CommandParameter="{Binding Text,ElementName=textIpAddress}"></Button>
 
-            <TextBox x:Name="textIpAddress"
-                            Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}"
-                            Controls:TextBoxHelper.Watermark="IP адрес"></TextBox>
-        </StackPanel>
-        <DataGrid ItemsSource="{Binding Path=Devices}" 
-                        Style="{StaticResource dgStyle}"
-                        dg:DataGridFilter.IsAutoFilterEnabled="True"
-                        AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя устройства/Конфигурации" Binding="{Binding Name}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </DockPanel>
+                    <TextBox x:Name="textIpAddress"
+                        Text="{Binding ConnIp, UpdateSourceTrigger=PropertyChanged}"
+                        Controls:TextBoxHelper.Watermark="IP адрес"></TextBox>
+                    <TextBox Text="{Binding ConnDb, UpdateSourceTrigger=PropertyChanged}"
+                        Controls:TextBoxHelper.Watermark="Имя базы"></TextBox>
+                    <TextBox Text="{Binding ConnLogin, UpdateSourceTrigger=PropertyChanged}"
+                        Controls:TextBoxHelper.Watermark="Логин"></TextBox>
+                    <TextBox Text="{Binding ConnPass, UpdateSourceTrigger=PropertyChanged}"
+                        Controls:TextBoxHelper.Watermark="Пароль"></TextBox>
+                    <Controls:ProgressRing  IsActive="{Binding Path=IsBusy}" 
+                                        Foreground="{DynamicResource AccentColorBrush}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Цех">
+                <ListBox ItemsSource="{Binding Departments}"
+                 SelectedItem="{Binding SelectedDepartment}"
+                 SelectionChanged="ListBox_Department_Changed"
+                 MinWidth="75">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <GroupBox Header="Участок">
+                <ListBox ItemsSource="{Binding Sectors}"
+                 SelectedItem="{Binding SelectedSector}"
+                 SelectionChanged="ListBox_Sector_Changed"
+                 MinWidth="120">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}">
+
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <GroupBox Header="Станок">
+                <ListBox ItemsSource="{Binding CncMachines}"
+                         SelectedItem="{Binding SelectedCncMachine}"
+                         SelectionChanged="ListBox_CncMachine_Changed"
+                         MinWidth="220">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                        <Run Text="{Binding Name}"/>
+                        <Run Text=": "/>
+                        <Run Text="{Binding InventaryNumber}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+        </DockPanel>
+
+        <GroupBox Grid.Column="1"
+                      Header="Показатели">
+            <Grid Height="Auto" x:Name="LayoutRoot">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="53*"></RowDefinition>
+                    <RowDefinition Height="319*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Left">
+                        <Label Content="Период показаний, Дни" MaxWidth="200"></Label>
+                        <TextBox Text="{Binding MeasureDayRange}" MaxWidth="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button Content="Обновить графики" 
+                            Click="Button_UpdateCharts"
+                            Style="{StaticResource bStyle}">
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <ScrollViewer Grid.Row="1" CanContentScroll="False">
+                    <ListBox ItemsSource="{Binding MeasureSeries}"
+                                Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}">
+                                    </TextBlock>
+                                    <lvc:CartesianChart Series="{Binding}"
+                                                        MinHeight="120">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis LabelsRotation="120" Labels="">
+                                            </lvc:Axis>
+                                        </lvc:CartesianChart.AxisX>
+                                    </lvc:CartesianChart>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </Grid>
+        </GroupBox>
+    </Grid>
+
 </Controls:MetroWindow>

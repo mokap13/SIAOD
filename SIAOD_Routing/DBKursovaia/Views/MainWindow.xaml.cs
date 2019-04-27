@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DBKursovaia.Models;
+using DBKursovaia.ViewModels;
 using MahApps.Metro.Controls;
 using Npgsql;
 
@@ -24,9 +25,35 @@ namespace DBKursovaia
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private MainVM vm;
         public MainWindow()
         {
             InitializeComponent();
+            this.vm = (MainVM)this.DataContext;
+        }
+
+        private void ListBox_Department_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (vm.SelectedDepartment != null)
+                vm.ReadSectorsCommand.Execute(vm.SelectedDepartment);
+        }
+
+        private void ListBox_Sector_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (vm.SelectedSector != null)
+                vm.ReadCncMachinesCommand.Execute(vm.SelectedSector);
+        }
+
+        private void ListBox_CncMachine_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (vm.SelectedCncMachine != null)
+                vm.ReadMeasuresCommand.Execute(vm.SelectedCncMachine);
+        }
+
+        private void Button_UpdateCharts(object sender, RoutedEventArgs e)
+        {
+            if (vm.SelectedCncMachine != null)
+                vm.ReadMeasuresCommand.Execute(vm.SelectedCncMachine);
         }
     }
 }

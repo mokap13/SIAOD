@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DBKursovaia.Models
 {
-    public class Indicator
+    public class Sector
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public List<CncMachine> CncMachines { get; set; }
     }
 }
