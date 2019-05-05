@@ -1,0 +1,196 @@
+﻿<Controls:MetroWindow x:Class="EconomicKurs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:EconomicKurs.ViewModel"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:EconomicKurs"
+        mc:Ignorable="d"
+        xmlns:chart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:add="clr-namespace:EconomicKurs.View"
+        Title="MainWindow" Height="594" Width="1206.5">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="bStyle" BasedOn="{StaticResource AccentedSquareButtonStyle}">
+            <Setter Property="Margin" Value="1"></Setter>
+            <Setter Property="FontFamily" Value="Inconsolata"></Setter>
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style TargetType="DataGrid" x:Key="dgStyle" BasedOn="{StaticResource MetroDataGrid}">
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainViewModel></vm:MainViewModel>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Создание заказа" Grid.Column="0" Grid.Row="0">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Доступный инструмент">
+                        <StackPanel MinWidth="100">
+                            <Button Content="&gt;" Command="{Binding MoveToolToOrderCommand}"></Button>
+                            <ListBox ItemsSource="{Binding Path=AvalableTools}"
+                             SelectedItem="{Binding Path=SelectedWareHouseTool}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Инструмент заказа">
+                        <StackPanel MinWidth="100">
+                            <Button Content="&lt;" Command="{Binding MoveToolToWareHouseCommand}"></Button>
+                            <ListBox ItemsSource="{Binding Path=OrderTools}"
+                             SelectedItem="{Binding Path=SelectedOrderTool}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="comboTenants"
+                          ItemsSource="{Binding Tenants}"
+                          IsEditable="True"
+                          MinWidth="150"
+                          Text="{Binding TenantName}"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <DatePicker Text="Выдача"
+                            SelectedDate="{Binding OrderStartDate}"></DatePicker>
+                    <DatePicker Text="Возврат" 
+                            SelectedDate="{Binding OrderEndDate}"></DatePicker>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Создать" Command="{Binding CreateOrderCommand}"></Button>
+                    <Button Content="Закрыть" Command="{Binding CloseOrderCommand}"></Button>
+                    <Button Content="Удалить" Command="{Binding DeleteOrderCommand}"></Button>
+                </StackPanel>
+
+            </StackPanel>
+
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Все Заказы">
+            <DataGrid ItemsSource="{Binding Path=AllOrders}" 
+                      AutoGenerateColumns="False"
+                      SelectedItem="{Binding SelectedOrder}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Арендатор" Binding="{Binding Tenant}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Выдача" Binding="{Binding StartDate}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Возврат" Binding="{Binding EndDate}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding TotalPrice}" ></DataGridTextColumn>
+                    <DataGridCheckBoxColumn IsReadOnly="True" 
+                                        Header="Действующий" 
+                                        Binding="{Binding IsOpened}" ></DataGridCheckBoxColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </GroupBox>
+        
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <DatePicker Text="Начало" SelectedDate="{Binding StartDateSeries}"></DatePicker>
+                <DatePicker Text="Конец" SelectedDate="{Binding EndDateSeries}"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Инструмент" MinWidth="120"></Label>
+                <Label Content="График" MinWidth="250"></Label>
+                <Label Content="Дни"></Label>
+                <Label Content="Прибыль"></Label>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Path=RentToolStats}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid MinHeight="20" MinWidth="350" Height="35">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Label Grid.Column="0" Content="{Binding Tool.Name}" MinWidth="120"></Label>
+                            </StackPanel>
+
+                            <chart:CartesianChart Grid.Column="1" Series="{Binding Series}" MinWidth="250">
+                                <chart:CartesianChart.AxisY>
+                                    <chart:Axis Labels="-" >
+                                    </chart:Axis>
+                                </chart:CartesianChart.AxisY>
+                                <chart:CartesianChart.AxisX>
+                                    <chart:Axis ShowLabels="False" LabelFormatter="{Binding Formatter}" LabelsRotation="110">
+                                        <chart:Axis.Separator>
+                                            <chart:Separator StrokeThickness="1" Step="5"></chart:Separator>
+                                        </chart:Axis.Separator>
+                                    </chart:Axis>
+                                </chart:CartesianChart.AxisX>
+                            </chart:CartesianChart>
+                            <StackPanel Grid.Column="2" MinWidth="50">
+                                <Label Content="{Binding TotalDays}"></Label>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3" MinWidth="50">
+                                <Label Content="{Binding TotalPrice}"></Label>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Итого прибыли за период: "></Label>
+                <Label Content="{Binding TotalBenefit}"></Label>
+            </StackPanel>
+        </StackPanel>
+
+        <GroupBox Header="Инструменты" Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2">
+                    <Button MaxWidth="100" Content="Сохранить" 
+                        Command="{Binding SaveDataCommand}"></Button>
+                    <Button MaxWidth="100" Content="Отменить"
+                        Command="{Binding CancelDataCommand}"></Button>
+                </StackPanel>
+
+                <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding Path=AllTools}"
+                      AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="100" Header="Наименование" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Инв. Номер" Binding="{Binding InventoryNumber}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Дата покупки" Binding="{Binding PurshaceDate,StringFormat=d}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Цена покупки" Binding="{Binding SourcePrice,StringFormat=n}"></DataGridTextColumn>
+                        <DataGridCheckBoxColumn Header="Арендован" 
+                                                Binding="{Binding IsRented}"
+                                                IsReadOnly="True"></DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        
+
+    </Grid>
+</Controls:MetroWindow>
